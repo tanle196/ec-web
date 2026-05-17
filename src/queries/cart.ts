@@ -32,8 +32,17 @@ export function useAddToCart() {
 export function useUpdateCartItem() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ itemId, body }: { itemId: string; body: UpdateCartItemDto }) =>
-      mainService.request(cartsControllerUpdateItem)({ path: { itemId }, body }),
+    mutationFn: ({
+      itemId,
+      body,
+    }: {
+      itemId: string;
+      body: UpdateCartItemDto;
+    }) =>
+      mainService.request(cartsControllerUpdateItem)({
+        path: { itemId },
+        body,
+      }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: cartKeys.all }),
   });
 }
