@@ -1,55 +1,39 @@
-"use client";
-
-import Link from "next/link";
-import { useProducts } from "@/queries/products";
-import { ProductCard } from "@/components/product/product-card";
+import { ProductCard } from "@/components/commons/product-card";
+import { SectionHeader } from "@/components/commons/section-header";
+import { FLAGSHIP, MID_RANGE } from "@/app/(shop)/categories/_data/phones";
 
 export function FeaturedProducts() {
-  const { data, isLoading } = useProducts({ status: "published", limit: 8 });
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="space-y-3">
-            <div className="aspect-square rounded-lg bg-zinc-100 animate-pulse" />
-            <div className="h-4 w-3/4 rounded bg-zinc-100 animate-pulse" />
-            <div className="h-4 w-1/2 rounded bg-zinc-100 animate-pulse" />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  const products = data?.data ?? [];
-
-  if (!products.length) return null;
-
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          id={product.id}
-          name={product.name}
-          price={product.basePrice}
-          slug={product.slug}
+    <>
+      {/* Flagship deals */}
+      <section className="max-w-360 mx-auto px-16 pt-16">
+        <SectionHeader
+          eyebrow="Ưu đãi hôm nay · kết thúc sau 4 giờ"
+          title="Tiết kiệm lớn với điện thoại"
+          action="Xem tất cả deals"
+          href="/phones"
         />
-      ))}
-    </div>
-  );
-}
+        <div className="grid grid-cols-4 gap-4">
+          {FLAGSHIP.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </section>
 
-export function FeaturedProductsHeader() {
-  return (
-    <div className="flex items-center justify-between mb-6">
-      <h2 className="text-xl font-semibold">Sản phẩm mới</h2>
-      <Link
-        href="/products"
-        className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
-      >
-        Xem tất cả →
-      </Link>
-    </div>
+      {/* Mid-range picks */}
+      <section className="max-w-360 mx-auto px-16 pt-16">
+        <SectionHeader
+          eyebrow="Tầm giá 5–15 triệu"
+          title="Hiệu năng cao, giá cực tốt"
+          action="Xem thêm"
+          href="/phones"
+        />
+        <div className="grid grid-cols-4 gap-4">
+          {MID_RANGE.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </section>
+    </>
   );
 }

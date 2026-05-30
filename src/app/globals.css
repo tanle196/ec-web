@@ -5,6 +5,33 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Marlo Design System tokens */
+  --color-cream: #F6F1E8;
+  --color-cream-2: #EFE8DB;
+  --color-ink: #141210;
+  --color-ink-2: #1F1B18;
+  --color-persimmon: #FF5B2E;
+  --color-persimmon-hover: #E84A1E;
+  --color-persimmon-soft: #FFE7DD;
+  --color-sale-red: #D7263D;
+  --color-sale-soft: #FBE5E8;
+  --color-marlo-border: #E6DFD4;
+  --color-marlo-border-strong: #D4CCBE;
+  --color-text-primary: #141210;
+  --color-text-secondary: #5C5853;
+  --color-text-tertiary: #8A857E;
+  --color-text-disabled: #B5AFA5;
+  --color-gold: #FFD83D;
+  --color-deep-green: #1F4D3C;
+
+  --font-display: var(--font-bricolage);
+  --font-sans-marlo: var(--font-hanken);
+  --font-mono-marlo: var(--font-jetbrains);
+
+  --shadow-card-sm: 0 1px 2px rgba(20,18,16,0.04), 0 1px 3px rgba(20,18,16,0.06);
+  --shadow-card-md: 0 4px 8px rgba(20,18,16,0.06), 0 8px 24px rgba(20,18,16,0.08);
+  --shadow-card-lg: 0 8px 16px rgba(20,18,16,0.08), 0 24px 48px rgba(20,18,16,0.12);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
