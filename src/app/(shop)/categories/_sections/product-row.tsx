@@ -1,0 +1,33 @@
+import { ProductCard } from "@/components/commons/product-card";
+import { SectionHeader } from "@/components/commons/section-header";
+import type { Phone } from "../_data/phones";
+
+export function ProductRow({
+  phones,
+  eyebrow,
+  title,
+  action,
+  href = "#",
+}: {
+  phones: Phone[];
+  eyebrow?: string;
+  title: string;
+  action?: string;
+  href?: string;
+}) {
+  return (
+    <section className="max-w-360 mx-auto px-16 pt-16">
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        action={action}
+        href={href}
+      />
+      <div className="grid grid-cols-4 gap-4">
+        {phones.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </section>
+  );
+}
