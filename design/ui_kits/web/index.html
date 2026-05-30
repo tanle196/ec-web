@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>Marlo — Web UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<style>
+  body { background: var(--bg-cream); }
+  * { box-sizing: border-box; }
+  input, select, button { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="Marlo.jsx"></script>
+<script type="text/babel" src="ProductData.jsx"></script>
+<script type="text/babel" src="Homepage.jsx"></script>
+<script type="text/babel" src="ListingPage.jsx"></script>
+<script type="text/babel" src="DetailPage.jsx"></script>
+<script type="text/babel" src="CartPage.jsx"></script>
+<script type="text/babel" src="AccountPage.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "heroVariant": "editorial"
+}/*EDITMODE-END*/;
+
+const App = () => {
+  const [page, setPage] = React.useState('home');
+  const [cart, setCart] = React.useState([
+    { lineId: 'l1', id: 'halo-pro-14', name: 'Halo Pro 14 — Unlocked, 5G', seller: 'Bayside Mobile', img: '../../assets/placeholders/phone-orange.svg', price: 649, was: 799, qty: 1, variant: 'Persimmon · 256 GB' },
+    { lineId: 'l2', id: 'overhead-3', name: 'Overhead 3 wireless', seller: 'Bayside Mobile', img: '../../assets/placeholders/headphones.svg', price: 229, qty: 1, variant: 'Onyx' },
+  ]);
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  const navigate = (p) => { setPage(p); window.scrollTo(0, 0); };
+  const addToCart = () => {
+    setCart(c => [...c, { lineId: 'l' + Date.now(), id: 'halo-pro-14', name: 'Halo Pro 14 — Unlocked, 5G', seller: 'Bayside Mobile', img: '../../assets/placeholders/phone-orange.svg', price: 649, was: 799, qty: 1, variant: 'Persimmon · 256 GB' }]);
+    navigate('cart');
+  };
+  const updateQty = (lineId, qty) => setCart(c => c.map(i => i.lineId === lineId ? { ...i, qty } : i));
+  const removeItem = (lineId) => setCart(c => c.filter(i => i.lineId !== lineId));
+
+  return (
+    <div data-screen-label={`Marlo Web · ${page}`}>
+      <Header cartCount={cart.reduce((s, i) => s + i.qty, 0)} onNavigate={navigate} />
+      {page === 'home' && <Homepage onNavigate={navigate} heroVariant={t.heroVariant} />}
+      {page === 'listing' && <ListingPage onNavigate={navigate} />}
+      {page === 'detail' && <DetailPage onNavigate={navigate} onAddToCart={addToCart} />}
+      {page === 'cart' && <CartPage items={cart} onUpdateQty={updateQty} onRemove={removeItem} onNavigate={navigate} />}
+      {page === 'account' && <AccountPage onNavigate={navigate} />}
+      <Footer />
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Homepage hero">
+          <TweakRadio
+            label="Hero variant"
+            value={t.heroVariant}
+            options={[
+              { value: 'editorial', label: 'Editorial' },
+              { value: 'products', label: 'Products' },
+            ]}
+            onChange={(v) => setTweak('heroVariant', v)}
+          />
+        </TweakSection>
+        <TweakSection title="Jump to page">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
+            {[['home', 'Home'], ['listing', 'Listing'], ['detail', 'Detail'], ['cart', 'Cart'], ['account', 'Account']].map(([id, label]) => (
+              <TweakButton key={id} onClick={() => navigate(id)} active={page === id}>{label}</TweakButton>
+            ))}
+          </div>
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

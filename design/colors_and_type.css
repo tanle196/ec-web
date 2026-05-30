@@ -1,0 +1,228 @@
+/* Marlo Design System — Colors & Type
+   Load this once at the root. All UI kits depend on it. */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ─── Surfaces ─────────────────────────────────────────── */
+  --bg-cream:        #F6F1E8;   /* the brand canvas */
+  --bg-cream-2:      #EFE8DB;   /* deeper cream — section breaks */
+  --bg-white:        #FFFFFF;   /* card / elevated surface */
+  --bg-ink:          #141210;   /* dark surface — footer, modals */
+  --bg-ink-2:        #1F1B18;   /* dark elevated */
+
+  /* ─── Ink (text on light) ─────────────────────────────── */
+  --ink-1:           #141210;   /* primary text */
+  --ink-2:           #5C5853;   /* secondary text */
+  --ink-3:           #8A857E;   /* tertiary / meta */
+  --ink-4:           #B5AFA5;   /* disabled / placeholder */
+
+  /* ─── Ink (text on dark) ──────────────────────────────── */
+  --cream-1:         #F6F1E8;   /* primary on dark */
+  --cream-2:         #C9C2B5;   /* secondary on dark */
+  --cream-3:         #8A857E;   /* tertiary on dark */
+
+  /* ─── Borders ─────────────────────────────────────────── */
+  --border:          #E6DFD4;   /* default hairline */
+  --border-strong:   #D4CCBE;   /* emphasized */
+  --border-ink:      #141210;   /* high-contrast (rare) */
+  --border-dark:     #2C2823;   /* on dark surfaces */
+
+  /* ─── Brand ───────────────────────────────────────────── */
+  --persimmon:       #FF5B2E;   /* the one brand color */
+  --persimmon-hover: #E84A1E;
+  --persimmon-press: #C73A12;
+  --persimmon-soft:  #FFE7DD;   /* tint surface */
+
+  /* ─── Functional ──────────────────────────────────────── */
+  --sale:            #D7263D;   /* discount / price drop */
+  --sale-soft:       #FBE5E8;
+  --success:         #1F8A5B;
+  --success-soft:    #E0F2EA;
+  --info:            #2A6FDB;
+  --info-soft:       #E0EBFB;
+  --warning:         #B8841A;
+  --warning-soft:    #FCF1D9;
+  --gold:            #FFD83D;   /* badge highlight (Bestseller etc) */
+  --deep-green:      #1F4D3C;   /* trust badge */
+
+  /* ─── Type Families ───────────────────────────────────── */
+  --font-display:    'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:       'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:       'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ─── Type Scale ──────────────────────────────────────── */
+  --t-display:       clamp(48px, 6vw, 88px);
+  --t-h1:            clamp(36px, 4vw, 56px);
+  --t-h2:            clamp(28px, 3vw, 40px);
+  --t-h3:            24px;
+  --t-h4:            20px;
+  --t-body-lg:       18px;
+  --t-body:          15px;
+  --t-body-sm:       13px;
+  --t-caption:       12px;
+  --t-eyebrow:       11px;
+
+  /* ─── Line Heights ────────────────────────────────────── */
+  --lh-tight:        1.02;
+  --lh-snug:         1.15;
+  --lh-normal:       1.4;
+  --lh-loose:        1.6;
+
+  /* ─── Letter Spacing ──────────────────────────────────── */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-eyebrow:0.14em;
+
+  /* ─── Spacing (4px base) ──────────────────────────────── */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-14: 56px;
+  --s-18: 72px;
+  --s-24: 96px;
+
+  /* ─── Radii ───────────────────────────────────────────── */
+  --r-1:   4px;
+  --r-2:   8px;
+  --r-3:   12px;
+  --r-4:   16px;
+  --r-6:   24px;
+  --r-full:999px;
+
+  /* ─── Shadows (warm-tinted) ───────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(20, 18, 16, 0.04), 0 1px 3px rgba(20, 18, 16, 0.06);
+  --shadow-md: 0 4px 8px rgba(20, 18, 16, 0.06), 0 8px 24px rgba(20, 18, 16, 0.08);
+  --shadow-lg: 0 8px 16px rgba(20, 18, 16, 0.08), 0 24px 48px rgba(20, 18, 16, 0.12);
+
+  /* ─── Motion ──────────────────────────────────────────── */
+  --ease-out:   cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out:cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:   150ms;
+  --dur-base:   220ms;
+  --dur-slow:   320ms;
+
+  /* ─── Layout ──────────────────────────────────────────── */
+  --container-product:  1280px;
+  --container-marketing:1440px;
+  --gutter-mobile:  24px;
+  --gutter-tablet:  48px;
+  --gutter-desktop: 64px;
+  --header-h:       64px;
+  --header-h-mobile:56px;
+}
+
+/* ─── Semantic element styles ─────────────────────────── */
+
+html, body {
+  background: var(--bg-cream);
+  color: var(--ink-1);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-1);
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--t-h2);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-size: var(--t-h4);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-normal);
+  color: var(--ink-1);
+  margin: 0;
+}
+
+.body-lg { font-size: var(--t-body-lg); line-height: var(--lh-loose); }
+.body-sm { font-size: var(--t-body-sm); }
+
+.caption {
+  font-size: var(--t-caption);
+  color: var(--ink-2);
+  line-height: var(--lh-normal);
+}
+
+.eyebrow {
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+code, .code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-cream-2);
+  padding: 1px 6px;
+  border-radius: var(--r-1);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+::selection {
+  background: var(--persimmon);
+  color: var(--bg-white);
+}

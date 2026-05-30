@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 28px; background: var(--bg-cream); display: flex; gap: 32px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 6px; }
+  .lbl { font: 500 11px/1 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .price-big { font-family: var(--font-mono); font-size: 48px; font-weight: 500; color: var(--ink-1); letter-spacing: -1px; }
+  .price-mid { font-family: var(--font-mono); font-size: 24px; font-weight: 500; color: var(--ink-1); }
+  .strike { font-family: var(--font-mono); font-size: 16px; color: var(--ink-3); text-decoration: line-through; }
+  .chip { display: inline-flex; align-items: center; padding: 4px 10px; background: var(--persimmon); color: white; font: 600 13px/1 var(--font-mono); border-radius: 999px; }
+  .sale-chip { background: var(--sale); }
+  .row { display: flex; gap: 14px; align-items: baseline; }
+</style></head>
+<body>
+  <div class="col">
+    <span class="lbl">Hero price</span>
+    <span class="price-big">$899</span>
+  </div>
+  <div class="col">
+    <span class="lbl">With discount</span>
+    <div class="row">
+      <span class="price-mid">$229</span>
+      <span class="strike">$299</span>
+      <span class="chip sale-chip">−23%</span>
+    </div>
+  </div>
+  <div class="col">
+    <span class="lbl">SKU / code</span>
+    <code style="font-size:14px;">SKU-9412-BL</code>
+  </div>
+</body></html>

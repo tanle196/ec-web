@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); }
+  .row { display: flex; gap: 14px; }
+  .tile { flex: 1; background: white; border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: all 150ms cubic-bezier(.2,.8,.2,1); cursor: pointer; }
+  .tile:hover { box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+  .tile img { width: 56px; height: 56px; }
+  .tile .name { font: 600 13px var(--font-sans); color: var(--ink-1); }
+</style></head>
+<body>
+  <div class="row">
+    <div class="tile"><img src="../assets/icons/categories/phones.svg" alt=""/><span class="name">Phones</span></div>
+    <div class="tile"><img src="../assets/icons/categories/laptops.svg" alt=""/><span class="name">Laptops</span></div>
+    <div class="tile"><img src="../assets/icons/categories/audio.svg" alt=""/><span class="name">Audio</span></div>
+    <div class="tile"><img src="../assets/icons/categories/home.svg" alt=""/><span class="name">Home</span></div>
+    <div class="tile"><img src="../assets/icons/categories/fashion.svg" alt=""/><span class="name">Fashion</span></div>
+    <div class="tile"><img src="../assets/icons/categories/grocery.svg" alt=""/><span class="name">Grocery</span></div>
+    <div class="tile"><img src="../assets/icons/categories/beauty.svg" alt=""/><span class="name">Beauty</span></div>
+    <div class="tile"><img src="../assets/icons/categories/sports.svg" alt=""/><span class="name">Sports</span></div>
+  </div>
+</body></html>

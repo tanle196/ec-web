@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 36px 24px; background: var(--bg-cream); }
+  .row { display: flex; gap: 32px; }
+  .col { flex: 1; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .card { width: 100%; height: 84px; background: white; border-radius: 12px; }
+  .sm { box-shadow: 0 1px 2px rgba(20,18,16,0.04), 0 1px 3px rgba(20,18,16,0.06); }
+  .md { box-shadow: 0 4px 8px rgba(20,18,16,0.06), 0 8px 24px rgba(20,18,16,0.08); }
+  .lg { box-shadow: 0 8px 16px rgba(20,18,16,0.08), 0 24px 48px rgba(20,18,16,0.12); }
+  .name { font: 600 13px/1 var(--font-mono); color: var(--ink-1); }
+  .desc { font: 500 11px/1.3 var(--font-sans); color: var(--ink-3); text-align: center; }
+</style></head>
+<body>
+  <div class="row">
+    <div class="col"><div class="card sm"></div><span class="name">shadow-sm</span><span class="desc">rest · hover surfaces</span></div>
+    <div class="col"><div class="card md"></div><span class="name">shadow-md</span><span class="desc">card hover · sticky header</span></div>
+    <div class="col"><div class="card lg"></div><span class="name">shadow-lg</span><span class="desc">modals · popovers</span></div>
+  </div>
+</body></html>

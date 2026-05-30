@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Marlo — Mobile UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<style>
+  body { background: var(--bg-cream); margin: 0; padding: 56px 0; }
+  .stage { display: flex; gap: 32px; padding: 0 40px; justify-content: flex-start; align-items: flex-start; overflow-x: auto; }
+  .label { font-family: 'Hanken Grotesk', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); text-align: center; margin-top: 24px; }
+  .device-wrap { display: flex; flex-direction: column; align-items: center; }
+  h1.kit-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 36px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink-1); margin: 0 0 40px 64px; }
+</style>
+</head>
+<body>
+<h1 class="kit-title">Marlo — mobile app</h1>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="../web/Marlo.jsx"></script>
+<script type="text/babel" src="../web/ProductData.jsx"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="MobileScreens.jsx"></script>
+
+<script type="text/babel">
+const App = () => (
+  <div className="stage">
+    <div className="device-wrap">
+      <IOSDevice width={380} height={820}>
+        <MobileHome/>
+      </IOSDevice>
+      <div className="label">Home</div>
+    </div>
+    <div className="device-wrap">
+      <IOSDevice width={380} height={820}>
+        <MobileDetail/>
+      </IOSDevice>
+      <div className="label">Product detail</div>
+    </div>
+    <div className="device-wrap">
+      <IOSDevice width={380} height={820}>
+        <MobileCart/>
+      </IOSDevice>
+      <div className="label">Cart</div>
+    </div>
+    <div className="device-wrap">
+      <IOSDevice width={380} height={820}>
+        <MobileAccount/>
+      </IOSDevice>
+      <div className="label">Account</div>
+    </div>
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(4, auto); align-items: center; justify-content: start; }
+  .btn {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 12px 22px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 150ms cubic-bezier(.2,.8,.2,1);
+    line-height: 1;
+    letter-spacing: -0.005em;
+  }
+  .primary { background: var(--persimmon); color: white; }
+  .primary.hover { background: var(--persimmon-hover); }
+  .primary.press { background: var(--persimmon-press); transform: scale(.96); }
+  .primary.disabled { background: #F1D9CF; color: #C9A599; cursor: not-allowed; }
+  .secondary { background: var(--ink-1); color: white; }
+  .ghost { background: transparent; color: var(--ink-1); border-color: var(--border-strong); }
+  .ghost.hover { background: var(--bg-cream-2); }
+  .link { background: transparent; color: var(--ink-1); padding: 8px 0; border: 0; text-decoration: underline; text-underline-offset: 3px; }
+  .lbl { font: 500 11px/1 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+</style></head>
+<body>
+  <div class="grid">
+    <span class="lbl">Primary</span>
+    <button class="btn primary">Add to cart</button>
+    <button class="btn primary hover">Hover state</button>
+    <button class="btn primary disabled">Disabled</button>
+
+    <span class="lbl">Secondary</span>
+    <button class="btn secondary">Buy now</button>
+    <button class="btn ghost">Save for later</button>
+    <button class="btn link">View details →</button>
+  </div>
+</body></html>

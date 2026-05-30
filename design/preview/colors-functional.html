@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .swatch { display: flex; flex-direction: column; gap: 6px; }
+  .chip { height: 88px; border-radius: var(--r-3); display: flex; align-items: flex-end; padding: 10px; color: white; font: 600 12px var(--font-sans); }
+  .name { font: 600 13px/1.1 var(--font-sans); color: var(--ink-1); }
+  .hex { font: 500 11px/1 var(--font-mono); color: var(--ink-3); letter-spacing: .04em; }
+</style></head>
+<body>
+  <div class="grid">
+    <div class="swatch"><div class="chip" style="background:#D7263D;">Sale</div><span class="name">Sale</span><span class="hex">#D7263D</span></div>
+    <div class="swatch"><div class="chip" style="background:#1F8A5B;">Success</div><span class="name">Success</span><span class="hex">#1F8A5B</span></div>
+    <div class="swatch"><div class="chip" style="background:#2A6FDB;">Info</div><span class="name">Info</span><span class="hex">#2A6FDB</span></div>
+    <div class="swatch"><div class="chip" style="background:#B8841A;">Warning</div><span class="name">Warning</span><span class="hex">#B8841A</span></div>
+    <div class="swatch"><div class="chip" style="background:#FFD83D; color:#141210;">Gold</div><span class="name">Gold</span><span class="hex">#FFD83D</span></div>
+  </div>
+</body></html>

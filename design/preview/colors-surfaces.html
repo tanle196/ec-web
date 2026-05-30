@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .swatch { display: flex; flex-direction: column; gap: 6px; }
+  .chip { height: 88px; border-radius: var(--r-3); border: 1px solid var(--border); }
+  .name { font: 600 13px/1.1 var(--font-sans); color: var(--ink-1); }
+  .hex { font: 500 11px/1 var(--font-mono); color: var(--ink-3); letter-spacing: .04em; }
+</style></head>
+<body>
+  <div class="grid">
+    <div class="swatch"><div class="chip" style="background:#F6F1E8;"></div><span class="name">Cream</span><span class="hex">#F6F1E8 · --bg-cream</span></div>
+    <div class="swatch"><div class="chip" style="background:#EFE8DB;"></div><span class="name">Cream 2</span><span class="hex">#EFE8DB · --bg-cream-2</span></div>
+    <div class="swatch"><div class="chip" style="background:#FFFFFF;"></div><span class="name">White</span><span class="hex">#FFFFFF · --bg-white</span></div>
+    <div class="swatch"><div class="chip" style="background:#141210; border-color:#141210;"></div><span class="name">Ink</span><span class="hex">#141210 · --bg-ink</span></div>
+  </div>
+</body></html>

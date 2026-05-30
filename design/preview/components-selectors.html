@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+  .group { display: flex; flex-direction: column; gap: 8px; }
+  .lbl { font: 500 11px var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .stepper { display: inline-flex; align-items: center; background: white; border: 1px solid var(--border); border-radius: 999px; height: 40px; padding: 0 4px; }
+  .stepper button { width: 32px; height: 32px; border-radius: 999px; border: 0; background: transparent; cursor: pointer; font-size: 18px; color: var(--ink-1); display: flex; align-items: center; justify-content: center; }
+  .stepper button:hover { background: var(--bg-cream-2); }
+  .stepper .val { font: 600 14px var(--font-mono); color: var(--ink-1); padding: 0 12px; min-width: 28px; text-align: center; }
+  .swatches { display: flex; gap: 8px; align-items: center; }
+  .sw { width: 28px; height: 28px; border-radius: 999px; border: 2px solid var(--bg-cream); outline: 1px solid var(--border); cursor: pointer; }
+  .sw.active { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+  .sizes { display: flex; gap: 6px; }
+  .sz { font: 600 13px var(--font-sans); padding: 8px 14px; background: white; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .sz.active { border-color: var(--ink-1); background: var(--ink-1); color: white; }
+  .sz.dis { color: var(--ink-4); text-decoration: line-through; cursor: not-allowed; }
+</style></head>
+<body>
+  <div class="group">
+    <span class="lbl">Quantity stepper</span>
+    <div class="stepper">
+      <button>−</button>
+      <span class="val">2</span>
+      <button>+</button>
+    </div>
+  </div>
+  <div class="group">
+    <span class="lbl">Color · Persimmon</span>
+    <div class="swatches">
+      <span class="sw active" style="background:#FF5B2E;"></span>
+      <span class="sw" style="background:#141210;"></span>
+      <span class="sw" style="background:#3A4A3A;"></span>
+      <span class="sw" style="background:#F6F1E8;"></span>
+    </div>
+  </div>
+  <div class="group">
+    <span class="lbl">Storage</span>
+    <div class="sizes">
+      <span class="sz">128 GB</span>
+      <span class="sz active">256 GB</span>
+      <span class="sz">512 GB</span>
+      <span class="sz dis">1 TB</span>
+    </div>
+  </div>
+</body></html>

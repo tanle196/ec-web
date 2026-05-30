@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font: 600 12px var(--font-sans); letter-spacing: -0.005em; line-height: 1; }
+  .sale     { background: #D7263D; color: white; }
+  .discount { background: #FFE7DD; color: #C73A12; font-family: var(--font-mono); }
+  .new      { background: #141210; color: white; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+  .gold     { background: #FFD83D; color: #141210; }
+  .green    { background: #1F4D3C; color: #F6F1E8; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+  .stock    { background: #E0F2EA; color: #15643F; }
+  .low      { background: #FCF1D9; color: #7A5510; }
+  .info     { background: #E0EBFB; color: #1F4FA0; }
+  .ghost    { background: transparent; color: var(--ink-1); border: 1px solid var(--border-strong); }
+  .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+</style></head>
+<body>
+  <span class="badge sale">SALE</span>
+  <span class="badge discount">−23%</span>
+  <span class="badge new">NEW</span>
+  <span class="badge gold">★ Bestseller</span>
+  <span class="badge green">VERIFIED SELLER</span>
+  <span class="badge stock"><span class="dot"></span>In stock</span>
+  <span class="badge low"><span class="dot"></span>Only 3 left</span>
+  <span class="badge info">Prime delivery</span>
+  <span class="badge ghost">Free returns</span>
+</body></html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { padding: 24px; background: var(--bg-cream); display: flex; flex-direction: column; gap: 16px; }
+  .search { display: flex; align-items: center; background: white; border: 1px solid var(--border); border-radius: 999px; padding: 0 6px 0 18px; height: 48px; max-width: 560px; }
+  .search input { flex: 1; border: 0; outline: 0; background: transparent; font: 400 15px var(--font-sans); color: var(--ink-1); }
+  .search input::placeholder { color: var(--ink-3); }
+  .search button { background: var(--persimmon); color: white; border: 0; height: 36px; width: 80px; border-radius: 999px; font: 600 13px var(--font-sans); cursor: pointer; }
+  .row { display: flex; gap: 14px; align-items: center; }
+  .field { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .field label { font: 600 12px var(--font-sans); color: var(--ink-2); }
+  .field input { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font: 400 14px var(--font-sans); outline: 0; }
+  .field input:focus { border-color: var(--ink-1); }
+  .field.error input { border-color: var(--sale); }
+  .err { font: 500 12px var(--font-sans); color: var(--sale); }
+</style></head>
+<body>
+  <div class="search">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--ink-3); margin-right: 12px;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input placeholder="Search phones, laptops, anything…"/>
+    <button>Search</button>
+  </div>
+  <div class="row">
+    <div class="field"><label>Email</label><input value="kira@hey.com"/></div>
+    <div class="field error"><label>Promo code</label><input value="SUMMER2"/><span class="err">Code expired Apr 1</span></div>
+  </div>
+</body></html>
