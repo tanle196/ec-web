@@ -367,12 +367,13 @@ export default function CartPage() {
               <Price amount={total} size="lg" />
             </div>
 
-            <button
-              className="w-full h-12 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150 mt-2"
+            <Link
+              href="/checkout"
+              className="w-full h-12 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150 mt-2 flex items-center justify-center no-underline"
               style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Thanh toán an toàn
-            </button>
+            </Link>
 
             <div
               className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary"
