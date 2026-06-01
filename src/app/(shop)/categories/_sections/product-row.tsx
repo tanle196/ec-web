@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components/commons/product-card";
+import { ProductGrid } from "@/components/commons/product-grid";
 import { SectionHeader } from "@/components/commons/section-header";
 import type { Phone } from "../_data/phones";
 
@@ -23,11 +23,7 @@ export function ProductRow({
         action={action}
         href={href}
       />
-      <div className="grid grid-cols-4 gap-4">
-        {phones.map((p) => (
-          <ProductCard key={p.id} product={p} />
-        ))}
-      </div>
+      <ProductGrid products={phones} />
     </section>
   );
 }

@@ -6,7 +6,7 @@ import { Badge } from "@/components/commons/badge";
 import { Price } from "@/components/commons/price";
 import { Stars } from "@/components/commons/stars";
 import { SectionHeader } from "@/components/commons/section-header";
-import { ProductCard } from "@/components/commons/product-card";
+import { ProductGrid } from "@/components/commons/product-grid";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { FLAGSHIP, MID_RANGE } from "@/app/(shop)/categories/_data/phones";
@@ -536,11 +536,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
           action="Xem thêm"
           href="/phones"
         />
-        <div className="grid grid-cols-4 gap-4">
-          {related.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        <ProductGrid products={related} />
       </section>
     </>
   );

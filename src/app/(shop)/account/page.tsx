@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/commons/badge";
 import { Price } from "@/components/commons/price";
-import { ProductCard } from "@/components/commons/product-card";
+import { ProductGrid } from "@/components/commons/product-grid";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Select,
@@ -307,11 +307,7 @@ export default function AccountPage() {
 
             <TabsContent value="saved">
               <SectionTitle>Sản phẩm đã lưu</SectionTitle>
-              <div className="grid grid-cols-4 gap-4">
-                {FLAGSHIP.map((p) => (
-                  <ProductCard key={p.id} product={p} />
-                ))}
-              </div>
+              <ProductGrid products={FLAGSHIP} />
             </TabsContent>
 
             <TabsContent value="addresses">

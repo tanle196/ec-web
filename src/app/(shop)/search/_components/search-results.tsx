@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ChevronDown, X } from "lucide-react";
-import { ProductCard } from "@/components/commons/product-card";
+import { ProductGrid } from "@/components/commons/product-grid";
 import { FLAGSHIP, MID_RANGE, BRANDS } from "@/app/(shop)/categories/_data/phones";
 
 const ALL_PRODUCTS = [...FLAGSHIP, ...MID_RANGE];
@@ -507,11 +507,7 @@ export function SearchResults({ query }: { query: string }) {
 
           {/* Product grid */}
           {displayed.length > 0 ? (
-            <div className="grid grid-cols-4 gap-4">
-              {displayed.map((product, i) => (
-                <ProductCard key={`${product.id}-${i}`} product={product} />
-              ))}
-            </div>
+            <ProductGrid products={displayed} />
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <svg
