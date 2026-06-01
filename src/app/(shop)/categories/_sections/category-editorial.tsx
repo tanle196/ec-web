@@ -17,7 +17,6 @@ function Panel({ panel }: { panel: EditorialPanel }) {
       <span
         className="inline-flex items-center px-2.5 py-1.25 rounded-full font-semibold text-[12px] leading-none whitespace-nowrap w-fit"
         style={{
-          fontFamily: "var(--font-hanken), sans-serif",
           background: panel.badgeBg ?? "rgba(255,255,255,0.15)",
           color: panel.badgeColor ?? panel.textColor,
         }}
@@ -29,7 +28,6 @@ function Panel({ panel }: { panel: EditorialPanel }) {
         <h3
           className="font-semibold leading-none tracking-[-0.02em] mb-3"
           style={{
-            fontFamily: "var(--font-bricolage), sans-serif",
             fontSize: "clamp(28px, 3vw, 40px)",
             whiteSpace: "pre-line",
             color: panel.textColor,
@@ -40,7 +38,6 @@ function Panel({ panel }: { panel: EditorialPanel }) {
         <p
           className="text-[15px] leading-relaxed max-w-85 mb-5"
           style={{
-            fontFamily: "var(--font-hanken), sans-serif",
             color: panel.textColor === "white" ? "rgba(255,255,255,0.85)" : "#C9C2B5",
           }}
         >
@@ -50,7 +47,6 @@ function Panel({ panel }: { panel: EditorialPanel }) {
           href={panel.ctaHref}
           className="inline-flex items-center gap-2 px-5 py-3 rounded-[8px] font-semibold text-[14px] leading-none no-underline hover:opacity-90 transition-opacity duration-150"
           style={{
-            fontFamily: "var(--font-hanken), sans-serif",
             background: panel.ctaBg,
             color: panel.ctaTextColor,
           }}

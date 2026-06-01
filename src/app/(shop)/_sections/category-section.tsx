@@ -112,7 +112,6 @@ export function CategorySection() {
             <span className="text-[#141210]">{c.icon}</span>
             <span
               className="text-[13px] font-semibold text-[#141210] text-center"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               {c.name}
             </span>

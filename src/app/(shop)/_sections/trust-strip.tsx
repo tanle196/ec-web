@@ -65,13 +65,11 @@ export function TrustStrip() {
             <div>
               <div
                 className="text-[15px] font-semibold text-[#141210]"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {item.title}
               </div>
               <div
                 className="text-[13px] text-[#5C5853]"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {item.desc}
               </div>

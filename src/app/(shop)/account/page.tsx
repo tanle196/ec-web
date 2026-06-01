@@ -152,10 +152,7 @@ const STATUS_STYLES: Record<string, string> = {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2
-      className="text-[clamp(22px,2.5vw,28px)] font-semibold tracking-[-0.02em] text-[#141210] mb-5"
-      style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-    >
+    <h2 className="text-[clamp(22px,2.5vw,28px)] font-semibold tracking-[-0.02em] text-[#141210] mb-5">
       {children}
     </h2>
   );
@@ -170,38 +167,23 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
         style={{ gridTemplateColumns: "auto auto auto 1fr" }}
       >
         <div>
-          <div
-            className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Đơn hàng
           </div>
-          <div
-            className="text-[14px] font-medium text-[#141210]"
-            style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-          >
+          <div className="font-mono-marlo text-[14px] font-medium text-[#141210]">
             {order.id}
           </div>
         </div>
         <div>
-          <div
-            className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Ngày đặt
           </div>
-          <div
-            className="text-[14px] text-[#141210]"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[14px] text-[#141210]">
             {order.date}
           </div>
         </div>
         <div>
-          <div
-            className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Tổng tiền
           </div>
           <Price amount={order.total} size="sm" />
@@ -209,7 +191,6 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
         <div className="justify-self-end">
           <span
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-semibold ${STATUS_STYLES[order.statusKind]}`}
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-current flex-none" />
             {order.status}
@@ -234,10 +215,7 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
             </div>
           ))}
         </div>
-        <div
-          className="flex-1 text-[14px] text-text-secondary"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <div className="flex-1 text-[14px] text-text-secondary">
           {order.eta}
         </div>
         <div className="flex gap-2">
@@ -245,7 +223,6 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
             <button
               key={label}
               className="px-4 py-2 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-[#141210] cursor-pointer hover:bg-cream-2 transition-colors duration-150"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               {label}
             </button>
@@ -260,10 +237,7 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-cream">
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
-        <h1
-          className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8"
-          style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-        >
+        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8">
           Tài khoản của bạn
         </h1>
 
@@ -276,23 +250,14 @@ export default function AccountPage() {
           <aside className="w-64 flex-none flex flex-col">
             {/* Avatar */}
             <div className="flex items-center gap-3.5 pb-6 border-b border-marlo-border">
-              <div
-                className="w-12 h-12 rounded-full bg-persimmon flex items-center justify-center text-white text-[20px] font-semibold flex-none"
-                style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-              >
+              <div className="w-12 h-12 rounded-full bg-persimmon flex items-center justify-center text-white text-[20px] font-semibold flex-none">
                 K
               </div>
               <div>
-                <div
-                  className="text-[15px] font-semibold text-ink"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <div className="text-[15px] font-semibold text-ink">
                   Kira Lee
                 </div>
-                <div
-                  className="text-[13px] text-text-secondary"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <div className="text-[13px] text-text-secondary">
                   kira@hey.com
                 </div>
               </div>
@@ -309,7 +274,6 @@ export default function AccountPage() {
                   key={item.id}
                   value={item.id}
                   className="w-full justify-start gap-3 px-3 py-2.5 h-auto rounded-[8px] text-[14px] font-medium text-text-secondary data-[state=active]:bg-cream-2 data-[state=active]:text-ink data-[state=active]:font-semibold"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   {item.icon}
                   {item.label}
@@ -326,7 +290,6 @@ export default function AccountPage() {
                 <Select defaultValue="6m">
                   <SelectTrigger
                     className="bg-white border-marlo-border text-[14px] text-ink rounded-[8px] h-9.5"
-                    style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                   >
                     <SelectValue />
                   </SelectTrigger>
@@ -356,7 +319,6 @@ export default function AccountPage() {
                 <SectionTitle>Địa chỉ</SectionTitle>
                 <button
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] bg-persimmon text-white text-[13px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   <svg
                     width="14"
@@ -395,18 +357,12 @@ export default function AccountPage() {
                     className="bg-white border border-marlo-border rounded-[12px] p-5"
                   >
                     <div className="flex items-center gap-2.5 mb-3">
-                      <span
-                        className="text-[13px] font-semibold text-ink"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <span className="text-[13px] font-semibold text-ink">
                         {label}
                       </span>
                       {isDefault && <Badge kind="persimmon">Mặc định</Badge>}
                     </div>
-                    <div
-                      className="text-[14px] text-ink leading-relaxed"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                    >
+                    <div className="text-[14px] text-ink leading-relaxed">
                       {name}
                       <br />
                       {line1}
@@ -419,7 +375,6 @@ export default function AccountPage() {
                           key={action}
                           className="bg-transparent border-0 text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
                           style={{
-                            fontFamily: "var(--font-hanken), sans-serif",
                             color: action === "Sửa" ? "#141210" : "#5C5853",
                           }}
                         >
@@ -453,25 +408,14 @@ export default function AccountPage() {
                     key={last}
                     className="bg-white border border-marlo-border rounded-[12px] p-5 flex items-center gap-4"
                   >
-                    <div
-                      className="w-14 h-9 rounded-[6px] bg-ink flex items-center justify-center text-cream text-[11px] font-bold tracking-wider flex-none"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                    >
+                    <div className="w-14 h-9 rounded-[6px] bg-ink flex items-center justify-center text-cream text-[11px] font-bold tracking-wider flex-none">
                       {brand}
                     </div>
                     <div>
-                      <div
-                        className="text-[14px] text-ink"
-                        style={{
-                          fontFamily: "var(--font-jetbrains), monospace",
-                        }}
-                      >
+                      <div className="font-mono-marlo text-[14px] text-ink">
                         {last}
                       </div>
-                      <div
-                        className="text-[12px] text-text-secondary"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <div className="text-[12px] text-text-secondary">
                         Hết hạn {exp}
                       </div>
                     </div>
@@ -507,24 +451,17 @@ export default function AccountPage() {
                   { label: "Số điện thoại", value: "+84 90 123 4567" },
                 ].map(({ label, value }) => (
                   <div key={label}>
-                    <label
-                      className="block text-[12px] font-semibold tracking-[0.08em] uppercase text-text-secondary mb-1.5"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                    >
+                    <label className="block text-[12px] font-semibold tracking-[0.08em] uppercase text-text-secondary mb-1.5">
                       {label}
                     </label>
                     <input
                       defaultValue={value}
                       className="w-full bg-cream border border-marlo-border rounded-[8px] px-3 py-2.5 text-[14px] text-ink outline-none focus:border-ink transition-colors"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                     />
                   </div>
                 ))}
                 <div className="pt-2">
-                  <button
-                    className="px-6 py-3 rounded-[8px] bg-persimmon text-white text-[14px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150"
-                    style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                  >
+                  <button className="px-6 py-3 rounded-[8px] bg-persimmon text-white text-[14px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150">
                     Lưu thay đổi
                   </button>
                 </div>

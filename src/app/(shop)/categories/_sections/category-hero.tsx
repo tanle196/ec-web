@@ -27,7 +27,6 @@ export function CategoryHero({ hero }: { hero: HeroConfig }) {
             <Badge kind="persimmon">{hero.badge}</Badge>
             <h1
               className="text-[clamp(48px,4.5vw,72px)] font-bold leading-[0.96] tracking-[-0.035em] text-[#F6F1E8] mt-5 mb-4"
-              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
             >
               {hero.headlineLine1}
               <br />
@@ -35,7 +34,6 @@ export function CategoryHero({ hero }: { hero: HeroConfig }) {
             </h1>
             <p
               className="text-[18px] leading-relaxed text-[#C9C2B5] max-w-110 mb-7"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               {hero.subtitle}
             </p>
@@ -43,7 +41,6 @@ export function CategoryHero({ hero }: { hero: HeroConfig }) {
               <Link
                 href={hero.primaryCta.href}
                 className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] bg-persimmon text-white font-semibold text-[16px] leading-none no-underline hover:bg-persimmon-hover transition-colors duration-150"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {hero.primaryCta.label}
               </Link>
@@ -52,7 +49,6 @@ export function CategoryHero({ hero }: { hero: HeroConfig }) {
                   href={hero.secondaryCta.href}
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] font-semibold text-[16px] leading-none no-underline transition-colors duration-150"
                   style={{
-                    fontFamily: "var(--font-hanken), sans-serif",
                     background: "transparent",
                     color: "#F6F1E8",
                     border: "1px solid rgba(246,241,232,0.3)",
@@ -81,7 +77,6 @@ export function CategoryHero({ hero }: { hero: HeroConfig }) {
               className="flex items-center gap-6 mt-8 pt-8"
               style={{
                 borderTop: "1px solid rgba(246,241,232,0.1)",
-                fontFamily: "var(--font-hanken), sans-serif",
               }}
             >
               {hero.trustPills.map(({ label, color }) => (

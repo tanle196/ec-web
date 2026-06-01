@@ -31,7 +31,6 @@ export default async function ProductDetailPage({
         {/* Breadcrumb */}
         <nav
           className="text-[13px] text-text-secondary mb-5"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           <Link
             href="/"

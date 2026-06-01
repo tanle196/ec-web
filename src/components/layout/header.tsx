@@ -32,7 +32,6 @@ export function Header() {
         <Link
           href="/"
           className="text-[22px] font-bold tracking-[-0.04em] text-ink no-underline flex-none"
-          style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
         >
           marlo
         </Link>
@@ -62,12 +61,10 @@ export function Header() {
             name="q"
             placeholder="Tìm điện thoại, laptop, tai nghe…"
             className="flex-1 ml-3 border-0 outline-none bg-transparent text-[14px] text-ink placeholder:text-text-disabled"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           />
           <button
             type="submit"
             className="bg-persimmon text-white border-0 h-8 px-4 rounded-full font-semibold text-[13px] cursor-pointer hover:bg-persimmon-hover transition-colors duration-150"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Tìm
           </button>
@@ -78,7 +75,6 @@ export function Header() {
           <Link
             href="/account"
             className="flex items-center gap-2 text-[14px] font-medium text-ink no-underline px-2.5 py-2 rounded-[8px] hover:bg-cream-2 transition-colors duration-150"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             <svg
               width="18"
@@ -123,7 +119,6 @@ export function Header() {
       {/* Category nav */}
       <nav
         className="max-w-360 mx-auto px-16 h-11 flex items-center gap-1 text-[13px]"
-        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         aria-label="Danh mục"
       >
         {CATEGORIES.map((c) => (

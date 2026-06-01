@@ -74,13 +74,11 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="flex flex-col gap-1 px-1.5 pt-3">
         <span
           className="text-[11px] font-medium text-[#8A857E] tracking-[0.04em] uppercase"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           {product.seller}
         </span>
         <span
           className="text-[14px] font-semibold text-[#141210] leading-snug"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           {product.name}
         </span>

@@ -17,15 +17,14 @@ export function Price({
   return (
     <span className="inline-flex items-baseline gap-2">
       <span
-        className={`font-medium tabular-nums text-[#141210] ${textSizes[size]}`}
-        style={{ fontFamily: "var(--font-jetbrains), monospace", fontVariantNumeric: "tabular-nums" }}
+        className={`font-mono-marlo font-medium tabular-nums text-[#141210] ${textSizes[size]}`}
+        style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {fmt(amount)}
       </span>
       {was && (
         <span
-          className={`tabular-nums text-[#8A857E] line-through ${strikeSizes[size]}`}
-          style={{ fontFamily: "var(--font-jetbrains), monospace" }}
+          className={`font-mono-marlo tabular-nums text-[#8A857E] line-through ${strikeSizes[size]}`}
         >
           {fmt(was)}
         </span>

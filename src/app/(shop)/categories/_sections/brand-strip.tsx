@@ -20,14 +20,14 @@ export function BrandStrip({
           >
             <div
               className="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-[11px] font-bold"
-              style={{ color: "#141210", fontFamily: "var(--font-bricolage), sans-serif", letterSpacing: "-0.02em" }}
+              style={{ color: "#141210", letterSpacing: "-0.02em" }}
             >
               {b.name.slice(0, 2)}
             </div>
-            <span className="text-[13px] font-semibold text-[#141210]" style={{ fontFamily: "var(--font-hanken), sans-serif" }}>
+            <span className="text-[13px] font-semibold text-[#141210]">
               {b.name}
             </span>
-            <span className="text-[11px] text-text-tertiary" style={{ fontFamily: "var(--font-hanken), sans-serif" }}>
+            <span className="text-[11px] text-text-tertiary">
               {b.count} mẫu
             </span>
           </Link>

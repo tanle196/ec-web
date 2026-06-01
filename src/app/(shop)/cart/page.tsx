@@ -70,8 +70,7 @@ function QtyStepper({
         </svg>
       </button>
       <span
-        className="text-[14px] font-semibold px-3 min-w-7 text-center text-[#141210]"
-        style={{ fontFamily: "var(--font-jetbrains), monospace" }}
+        className="font-mono-marlo text-[14px] font-semibold px-3 min-w-7 text-center text-[#141210]"
       >
         {value}
       </span>
@@ -123,35 +122,24 @@ function CartLineItem({
 
       {/* Info */}
       <div className="flex flex-col gap-1 min-w-0">
-        <span
-          className="text-[12px] font-medium tracking-[0.04em] uppercase text-text-tertiary"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <span className="text-[12px] font-medium tracking-[0.04em] uppercase text-text-tertiary">
           {item.seller}
         </span>
-        <span
-          className="text-[16px] font-semibold text-[#141210] leading-snug"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <span className="text-[16px] font-semibold text-[#141210] leading-snug">
           {item.name}
         </span>
-        <span
-          className="text-[13px] text-text-secondary"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <span className="text-[13px] text-text-secondary">
           {item.variant}
         </span>
         <div className="flex items-center gap-4 mt-2">
           <button
             onClick={() => onRemove(item.lineId)}
             className="bg-transparent border-0 text-[#141210] text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Xóa
           </button>
           <button
             className="bg-transparent border-0 text-[#141210] text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Lưu để sau
           </button>
@@ -168,10 +156,7 @@ function CartLineItem({
       <div className="text-right min-w-30">
         <Price amount={item.price * item.qty} size="lg" />
         {item.was && (
-          <div
-            className="text-[12px] text-text-tertiary line-through mt-1"
-            style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-          >
+          <div className="font-mono-marlo text-[12px] text-text-tertiary line-through mt-1">
             {(item.was * item.qty).toLocaleString("vi-VN")}₫
           </div>
         )}
@@ -219,22 +204,15 @@ export default function CartPage() {
             <circle cx="19" cy="21" r="1" />
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
-          <h1
-            className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3"
-            style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-          >
+          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3">
             Giỏ hàng trống.
           </h1>
-          <p
-            className="text-[16px] text-text-secondary mb-6"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <p className="text-[16px] text-text-secondary mb-6">
             Xem qua deal — chắc chắn có thứ gì đó đáng mua.
           </p>
           <Link
             href="/"
             className="inline-flex items-center px-7 py-4 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] no-underline hover:bg-persimmon-hover transition-colors duration-150"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Bắt đầu mua sắm
           </Link>
@@ -246,10 +224,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-cream">
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
-        <h1
-          className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8"
-          style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-        >
+        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8">
           Giỏ hàng{" "}
           <span className="text-text-tertiary font-medium">
             · {items.length} sản phẩm
@@ -265,22 +240,13 @@ export default function CartPage() {
             <div className="bg-white border border-marlo-border rounded-[16px] px-6 pt-1 pb-6">
               {/* Seller header */}
               <div className="flex items-center gap-2.5 py-5 border-b border-marlo-border">
-                <span
-                  className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#E0F2EA] text-[#1F8A5B]"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#E0F2EA] text-[#1F8A5B]">
                   NGƯỜI BÁN UY TÍN
                 </span>
-                <span
-                  className="text-[14px] font-semibold text-[#141210]"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <span className="text-[14px] font-semibold text-[#141210]">
                   Bán bởi {items[0].seller}
                 </span>
-                <span
-                  className="text-[13px] text-text-secondary"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <span className="text-[13px] text-text-secondary">
                   · Giao <strong className="text-[#141210]">Thứ 3, 3/6</strong>
                 </span>
               </div>
@@ -307,10 +273,7 @@ export default function CartPage() {
 
           {/* Right: Order summary */}
           <aside className="sticky top-32.5 bg-white border border-marlo-border rounded-[16px] p-6">
-            <h3
-              className="text-[18px] font-semibold text-[#141210] mb-5"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-            >
+            <h3 className="text-[18px] font-semibold text-[#141210] mb-5">
               Tóm tắt đơn hàng
             </h3>
 
@@ -339,15 +302,11 @@ export default function CartPage() {
                     <div
                       key={label}
                       className="flex justify-between text-[14px]"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                     >
                       <span className="text-text-secondary">{label}</span>
                       <span
-                        className="font-medium"
-                        style={{
-                          fontFamily: "var(--font-jetbrains), monospace",
-                          color: color ?? "#141210",
-                        }}
+                        className="font-mono-marlo font-medium"
+                        style={{ color: color ?? "#141210" }}
                       >
                         {override ??
                           `${amt < 0 ? "−" : ""}${Math.abs(amt).toLocaleString("vi-VN")}₫`}
@@ -358,10 +317,7 @@ export default function CartPage() {
             </div>
 
             <div className="flex justify-between items-baseline py-4">
-              <span
-                className="text-[16px] font-semibold text-[#141210]"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[16px] font-semibold text-[#141210]">
                 Tổng cộng
               </span>
               <Price amount={total} size="lg" />
@@ -370,15 +326,11 @@ export default function CartPage() {
             <Link
               href="/checkout"
               className="w-full h-12 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150 mt-2 flex items-center justify-center no-underline"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Thanh toán an toàn
             </Link>
 
-            <div
-              className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-            >
+            <div className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary">
               <svg
                 width="14"
                 height="14"
@@ -396,10 +348,7 @@ export default function CartPage() {
 
             {/* Promo code */}
             <div className="mt-5 pt-5 border-t border-marlo-border">
-              <label
-                className="block text-[12px] font-semibold text-text-secondary mb-2"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <label className="block text-[12px] font-semibold text-text-secondary mb-2">
                 Mã khuyến mãi
               </label>
               <div className="flex gap-2">
@@ -409,11 +358,9 @@ export default function CartPage() {
                   onChange={(e) => setPromo(e.target.value)}
                   placeholder="Nhập mã"
                   className="flex-1 bg-cream border border-marlo-border rounded-[8px] px-3 py-2.5 text-[14px] text-[#141210] outline-none focus:border-[#141210] transition-colors"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 />
                 <button
                   className="px-4 h-10 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-[#141210] cursor-pointer hover:bg-cream-2 transition-colors duration-150 whitespace-nowrap"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   Áp dụng
                 </button>

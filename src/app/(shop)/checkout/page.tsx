@@ -55,16 +55,10 @@ function SectionCard({
   return (
     <div className="bg-white border border-marlo-border rounded-[16px] p-6">
       <div className="flex items-center gap-3 mb-6">
-        <span
-          className="w-7 h-7 rounded-full bg-persimmon text-white text-[13px] font-semibold flex items-center justify-center flex-none"
-          style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-        >
+        <span className="font-mono-marlo w-7 h-7 rounded-full bg-persimmon text-white text-[13px] font-semibold flex items-center justify-center flex-none">
           {step}
         </span>
-        <h2
-          className="text-[18px] font-semibold text-[#141210]"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <h2 className="text-[18px] font-semibold text-[#141210]">
           {title}
         </h2>
       </div>
@@ -84,10 +78,7 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        className="text-[13px] font-semibold text-text-secondary"
-        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-      >
+      <label className="text-[13px] font-semibold text-text-secondary">
         {label}
         {required && <span className="text-persimmon ml-0.5">*</span>}
       </label>
@@ -147,27 +138,15 @@ export default function CheckoutPage() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h1
-            className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3"
-            style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-          >
+          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3">
             Đặt hàng thành công!
           </h1>
-          <p
-            className="text-[16px] text-text-secondary mb-2"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <p className="text-[16px] text-text-secondary mb-2">
             Cảm ơn bạn đã mua sắm tại Marlo.
           </p>
-          <p
-            className="text-[14px] text-text-tertiary mb-8"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <p className="text-[14px] text-text-tertiary mb-8">
             Mã đơn hàng:{" "}
-            <span
-              className="font-semibold text-[#141210]"
-              style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-            >
+            <span className="font-mono-marlo font-semibold text-[#141210]">
               #MRL{Math.floor(100000 + Math.random() * 900000)}
             </span>
             . Chúng tôi sẽ gửi xác nhận qua email cho bạn.
@@ -176,14 +155,12 @@ export default function CheckoutPage() {
             <Link
               href="/account"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] no-underline hover:bg-persimmon-hover transition-colors duration-150"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Xem đơn hàng
             </Link>
             <Link
               href="/"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-white border border-marlo-border text-[#141210] font-semibold text-[15px] no-underline hover:bg-cream transition-colors duration-150"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Tiếp tục mua sắm
             </Link>
@@ -197,10 +174,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-cream">
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
         {/* Breadcrumb */}
-        <nav
-          className="text-[13px] text-text-secondary mb-6"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <nav className="text-[13px] text-text-secondary mb-6">
           <Link href="/cart" className="hover:text-[#141210] transition-colors no-underline">
             Giỏ hàng
           </Link>
@@ -208,10 +182,7 @@ export default function CheckoutPage() {
           <span className="text-[#141210] font-semibold">Thanh toán</span>
         </nav>
 
-        <h1
-          className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8"
-          style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-        >
+        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8">
           Thanh toán
         </h1>
 
@@ -228,7 +199,6 @@ export default function CheckoutPage() {
                   <FormField label="Họ và tên" required>
                     <input
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       placeholder="Nguyễn Văn A"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
@@ -239,7 +209,6 @@ export default function CheckoutPage() {
                   <FormField label="Số điện thoại" required>
                     <input
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       placeholder="0901 234 567"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
@@ -251,7 +220,6 @@ export default function CheckoutPage() {
                   <FormField label="Email">
                     <input
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       placeholder="email@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -263,7 +231,6 @@ export default function CheckoutPage() {
                   <FormField label="Tỉnh / Thành phố" required>
                     <select
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       value={province}
                       onChange={(e) => setProvince(e.target.value)}
                     >
@@ -280,7 +247,6 @@ export default function CheckoutPage() {
                   <FormField label="Quận / Huyện" required>
                     <select
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       value={district}
                       onChange={(e) => setDistrict(e.target.value)}
                     >
@@ -296,7 +262,6 @@ export default function CheckoutPage() {
                   <FormField label="Phường / Xã" required>
                     <select
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       value={ward}
                       onChange={(e) => setWard(e.target.value)}
                     >
@@ -311,7 +276,6 @@ export default function CheckoutPage() {
                   <FormField label="Địa chỉ cụ thể" required>
                     <input
                       className={inputCls}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       placeholder="Số nhà, tên đường..."
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
@@ -322,7 +286,6 @@ export default function CheckoutPage() {
                   <FormField label="Ghi chú cho đơn hàng">
                     <textarea
                       className={`${inputCls} resize-none`}
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."
                       rows={3}
                       value={note}
@@ -375,23 +338,16 @@ export default function CheckoutPage() {
                       className="accent-persimmon w-4 h-4 flex-none"
                     />
                     <div className="flex-1 min-w-0">
-                      <div
-                        className="text-[14px] font-semibold text-[#141210]"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <div className="text-[14px] font-semibold text-[#141210]">
                         {opt.label}
                       </div>
-                      <div
-                        className="text-[12px] text-text-secondary mt-0.5"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <div className="text-[12px] text-text-secondary mt-0.5">
                         {opt.desc}
                       </div>
                     </div>
                     <span
                       className="text-[12px] font-semibold px-2.5 py-1 rounded-full"
                       style={{
-                        fontFamily: "var(--font-hanken), sans-serif",
                         color: opt.badgeColor,
                         background: opt.badgeBg,
                       }}
@@ -473,16 +429,10 @@ export default function CheckoutPage() {
                     />
                     <span className="text-text-secondary flex-none">{opt.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <div
-                        className="text-[14px] font-semibold text-[#141210]"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <div className="text-[14px] font-semibold text-[#141210]">
                         {opt.label}
                       </div>
-                      <div
-                        className="text-[12px] text-text-secondary mt-0.5"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <div className="text-[12px] text-text-secondary mt-0.5">
                         {opt.desc}
                       </div>
                     </div>
@@ -496,10 +446,7 @@ export default function CheckoutPage() {
           <aside className="sticky top-32.5 flex flex-col gap-5">
             {/* Items */}
             <div className="bg-white border border-marlo-border rounded-[16px] p-6">
-              <h3
-                className="text-[16px] font-semibold text-[#141210] mb-4"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <h3 className="text-[16px] font-semibold text-[#141210] mb-4">
                 Đơn hàng · {ORDER_ITEMS.length} sản phẩm
               </h3>
               <div className="flex flex-col divide-y divide-marlo-border">
@@ -515,16 +462,10 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p
-                        className="text-[13px] font-semibold text-[#141210] leading-snug line-clamp-2"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <p className="text-[13px] font-semibold text-[#141210] leading-snug line-clamp-2">
                         {item.name}
                       </p>
-                      <p
-                        className="text-[11px] text-text-secondary mt-0.5"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                      >
+                      <p className="text-[11px] text-text-secondary mt-0.5">
                         {item.variant} · SL: {item.qty}
                       </p>
                     </div>
@@ -538,10 +479,7 @@ export default function CheckoutPage() {
 
             {/* Price breakdown */}
             <div className="bg-white border border-marlo-border rounded-[16px] p-6">
-              <h3
-                className="text-[16px] font-semibold text-[#141210] mb-4"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <h3 className="text-[16px] font-semibold text-[#141210] mb-4">
                 Tóm tắt thanh toán
               </h3>
 
@@ -565,15 +503,11 @@ export default function CheckoutPage() {
                       <div
                         key={label}
                         className="flex justify-between text-[14px]"
-                        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                       >
                         <span className="text-text-secondary">{label}</span>
                         <span
-                          className="font-medium"
-                          style={{
-                            fontFamily: "var(--font-jetbrains), monospace",
-                            color: color ?? "#141210",
-                          }}
+                          className="font-mono-marlo font-medium"
+                          style={{ color: color ?? "#141210" }}
                         >
                           {override ??
                             `${value < 0 ? "−" : ""}${Math.abs(value).toLocaleString("vi-VN")}₫`}
@@ -584,10 +518,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex justify-between items-baseline py-4">
-                <span
-                  className="text-[16px] font-semibold text-[#141210]"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <span className="text-[16px] font-semibold text-[#141210]">
                   Tổng cộng
                 </span>
                 <Price amount={total} size="lg" />
@@ -597,7 +528,6 @@ export default function CheckoutPage() {
                 onClick={handlePlace}
                 disabled={placing}
                 className="w-full h-12 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150 mt-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {placing ? (
                   <>
@@ -620,10 +550,7 @@ export default function CheckoutPage() {
                 )}
               </button>
 
-              <div
-                className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <div className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary">
                 <svg
                   width="14"
                   height="14"

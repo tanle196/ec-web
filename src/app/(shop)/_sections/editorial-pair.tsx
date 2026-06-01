@@ -21,7 +21,6 @@ export function EditorialPair() {
           <div>
             <h3
               className="text-[clamp(32px,3vw,40px)] font-semibold leading-none tracking-[-0.02em] text-cream mb-3"
-              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
             >
               Đồ gia dụng thủ công,
               <br />
@@ -29,7 +28,6 @@ export function EditorialPair() {
             </h3>
             <p
               className="text-[15px] leading-relaxed text-[#C9C2B5] max-w-85 mb-5"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Sản phẩm từ các nhà làm thủ công độc lập. Giao tận nhà, đúng hẹn,
               không nói suông.
@@ -40,7 +38,6 @@ export function EditorialPair() {
               style={{
                 background: "#F6F1E8",
                 color: "#141210",
-                fontFamily: "var(--font-hanken), sans-serif",
               }}
             >
               Khám phá nhà cửa
@@ -62,21 +59,18 @@ export function EditorialPair() {
           />
           <span
             className="inline-flex items-center px-2.5 py-1.25 rounded-full font-semibold text-[12px] leading-none whitespace-nowrap bg-white text-persimmon w-fit"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Hôm nay thôi
           </span>
           <div>
             <h3
               className="text-[clamp(32px,3vw,40px)] font-semibold leading-none tracking-[-0.02em] text-white mb-3"
-              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
             >
               Audio, giảm 20%.
             </h3>
             <p
               className="text-[15px] leading-relaxed max-w-85 mb-5"
               style={{
-                fontFamily: "var(--font-hanken), sans-serif",
                 color: "rgba(255,255,255,0.85)",
               }}
             >
@@ -89,7 +83,6 @@ export function EditorialPair() {
               style={{
                 background: "#141210",
                 color: "white",
-                fontFamily: "var(--font-hanken), sans-serif",
               }}
             >
               Mua ngay

@@ -29,13 +29,11 @@ export function Footer() {
           <div>
             <span
               className="text-[22px] font-bold tracking-[-0.04em] text-cream"
-              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
             >
               marlo
             </span>
             <p
               className="mt-4 text-[14px] leading-relaxed text-text-tertiary max-w-70"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Marketplace đa danh mục. Điện thoại, laptop, thời trang, thực phẩm — bán hết, giao nhanh.
             </p>
@@ -46,7 +44,6 @@ export function Footer() {
             <div key={title}>
               <h4
                 className="text-[13px] font-semibold text-cream tracking-[0.12em] uppercase mb-4"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {title}
               </h4>
@@ -56,7 +53,6 @@ export function Footer() {
                     <Link
                       href="#"
                       className="text-[14px] text-[#C9C2B5] no-underline hover:text-cream transition-colors duration-150"
-                      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                     >
                       {label}
                     </Link>
@@ -74,7 +70,6 @@ export function Footer() {
         >
           <span
             className="text-[12px] text-text-tertiary"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             © {new Date().getFullYear()} Marlo, Inc. All rights reserved.
           </span>
@@ -84,7 +79,6 @@ export function Footer() {
                 key={label}
                 href="#"
                 className="text-[12px] text-text-tertiary no-underline hover:text-[#C9C2B5] transition-colors duration-150"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 {label}
               </Link>

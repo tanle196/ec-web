@@ -2,7 +2,6 @@ export function Stars({ rating, count }: { rating: number; count: number }) {
   return (
     <span
       className="inline-flex items-center gap-1.5 text-[13px] text-[#5C5853]"
-      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
     >
       <svg
         width="14"

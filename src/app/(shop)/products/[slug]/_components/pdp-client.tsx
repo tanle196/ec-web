@@ -90,10 +90,7 @@ function QtyStepper({
           <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
       </button>
-      <span
-        className="font-semibold text-[15px] px-4 min-w-[32px] text-center text-[#141210]"
-        style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-      >
+      <span className="font-mono-marlo font-semibold text-[15px] px-4 min-w-[32px] text-center text-[#141210]">
         {value}
       </span>
       <button
@@ -185,16 +182,10 @@ export function PdpClient({ phone }: { phone: Phone }) {
 
         {/* Right: Info */}
         <div>
-          <div
-            className="text-[12px] font-semibold tracking-[0.14em] uppercase text-text-secondary mb-1.5"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-text-secondary mb-1.5">
             {phone.seller}
           </div>
-          <h1
-            className="text-[clamp(28px,2.5vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-[#141210] mb-3"
-            style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-          >
+          <h1 className="text-[clamp(28px,2.5vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-[#141210] mb-3">
             {phone.name}
           </h1>
           <div className="flex items-center gap-3.5 mb-6">
@@ -203,7 +194,6 @@ export function PdpClient({ phone }: { phone: Phone }) {
             <a
               href="#reviews"
               className="text-[13px] text-[#141210] underline underline-offset-3"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               312 câu hỏi
             </a>
@@ -222,10 +212,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
               </Badge>
             )}
           </div>
-          <div
-            className="text-[13px] text-text-secondary mb-7"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[13px] text-text-secondary mb-7">
             hoặc 4 kỳ{" "}
             <strong className="text-[#141210]">
               {(phone.price / 4).toLocaleString("vi-VN")}₫
@@ -236,16 +223,10 @@ export function PdpClient({ phone }: { phone: Phone }) {
           {/* Color */}
           <div className="mb-6">
             <div className="flex items-baseline gap-2 mb-2.5">
-              <span
-                className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary">
                 Màu
               </span>
-              <span
-                className="text-[14px] text-[#141210]"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[14px] text-[#141210]">
                 {color}
               </span>
             </div>
@@ -272,16 +253,10 @@ export function PdpClient({ phone }: { phone: Phone }) {
           {/* Storage */}
           <div className="mb-7">
             <div className="flex items-baseline gap-2 mb-2.5">
-              <span
-                className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary">
                 Bộ nhớ
               </span>
-              <span
-                className="text-[14px] text-[#141210]"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[14px] text-[#141210]">
                 {storage}
               </span>
             </div>
@@ -298,7 +273,6 @@ export function PdpClient({ phone }: { phone: Phone }) {
                   value={s}
                   disabled={s === "1 TB"}
                   className="h-auto px-4 py-2.5 rounded-[8px] border border-marlo-border bg-white text-[13px] font-semibold text-ink data-[state=on]:bg-ink data-[state=on]:text-white data-[state=on]:border-ink disabled:line-through disabled:text-text-disabled hover:bg-cream-2 data-[state=on]:hover:bg-ink"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   {s}
                 </ToggleGroupItem>
@@ -311,17 +285,15 @@ export function PdpClient({ phone }: { phone: Phone }) {
             <QtyStepper value={qty} onChange={setQty} />
             <button
               className="flex-1 h-12 rounded-[8px] bg-[#FF5B2E] text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-[#E84A1E] transition-colors duration-150"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               Thêm vào giỏ ·{" "}
-              <span style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
+              <span className="font-mono-marlo">
                 {(phone.price * qty).toLocaleString("vi-VN")}₫
               </span>
             </button>
           </div>
           <button
             className="w-full h-12 rounded-[8px] bg-white border border-marlo-border font-semibold text-[15px] text-[#141210] cursor-pointer hover:bg-[#EFE8DB] transition-colors duration-150 mb-5"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             Mua ngay
           </button>
@@ -362,7 +334,6 @@ export function PdpClient({ phone }: { phone: Phone }) {
               <div
                 key={icon}
                 className="flex items-center gap-3 text-[13px] text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 <svg
                   width="18"
@@ -410,7 +381,6 @@ export function PdpClient({ phone }: { phone: Phone }) {
               value={t.value}
               id={t.value === "reviews" ? "reviews" : undefined}
               className="flex-none h-auto rounded-none px-4 py-3.5 text-[14px] font-semibold"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
             >
               {t.label}
             </TabsTrigger>
@@ -418,10 +388,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
         </TabsList>
 
         <TabsContent value="details" className="pt-8">
-          <div
-            className="text-[15px] leading-[1.7] text-ink"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[15px] leading-[1.7] text-ink">
             <p className="mb-4">
               {phone.name} được xây dựng cho những ai dùng điện thoại cho mọi
               thứ. Màn hình OLED 6.1&quot;, chip H14 mới nhất, và hệ thống 3
@@ -441,10 +408,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
         </TabsContent>
 
         <TabsContent value="specs" className="pt-8">
-          <table
-            className="w-full border-collapse text-[14px]"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <table className="w-full border-collapse text-[14px]">
             <tbody>
               {SPECS.map(([k, v]) => (
                 <tr key={k} className="border-b border-marlo-border">
@@ -479,30 +443,18 @@ export function PdpClient({ phone }: { phone: Phone }) {
                       </svg>
                     ))}
                   </span>
-                  <span
-                    className="text-[14px] font-semibold text-ink"
-                    style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                  >
+                  <span className="text-[14px] font-semibold text-ink">
                     {r.name}
                   </span>
-                  <span
-                    className="text-[13px] text-text-secondary"
-                    style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                  >
+                  <span className="text-[13px] text-text-secondary">
                     · {r.when}
                   </span>
                   {r.verified && <Badge kind="new">Đã mua</Badge>}
                 </div>
-                <h4
-                  className="text-[15px] font-semibold text-ink mb-1.5 mt-0"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <h4 className="text-[15px] font-semibold text-ink mb-1.5 mt-0">
                   {r.title}
                 </h4>
-                <p
-                  className="text-[14px] leading-relaxed text-text-secondary m-0"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-                >
+                <p className="text-[14px] leading-relaxed text-text-secondary m-0">
                   {r.body}
                 </p>
               </div>
@@ -511,16 +463,10 @@ export function PdpClient({ phone }: { phone: Phone }) {
 
           <aside className="bg-white border border-marlo-border rounded-[12px] p-6 self-start">
             <div className="flex items-baseline gap-2 mb-2">
-              <span
-                className="text-[56px] font-semibold text-ink leading-none tracking-[-0.03em]"
-                style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-              >
+              <span className="text-[56px] font-semibold text-ink leading-none tracking-[-0.03em]">
                 {phone.rating}
               </span>
-              <span
-                className="text-[14px] text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[14px] text-text-secondary">
                 / 5
               </span>
             </div>
@@ -538,7 +484,6 @@ export function PdpClient({ phone }: { phone: Phone }) {
                 <div
                   key={star}
                   className="flex items-center gap-2.5 text-[12px] text-text-secondary"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   <span className="w-3 text-right">{star}</span>
                   <svg
@@ -557,29 +502,20 @@ export function PdpClient({ phone }: { phone: Phone }) {
                       style={{ width: `${pct}%` }}
                     />
                   </div>
-                  <span
-                    className="w-8 text-right"
-                    style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-                  >
+                  <span className="font-mono-marlo w-8 text-right">
                     {pct}%
                   </span>
                 </div>
               ))}
             </div>
-            <button
-              className="w-full mt-5 h-10 rounded-[8px] bg-white border border-marlo-border text-[14px] font-semibold text-ink cursor-pointer hover:bg-cream-2 transition-colors duration-150"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-            >
+            <button className="w-full mt-5 h-10 rounded-[8px] bg-white border border-marlo-border text-[14px] font-semibold text-ink cursor-pointer hover:bg-cream-2 transition-colors duration-150">
               Viết đánh giá
             </button>
           </aside>
         </TabsContent>
 
         <TabsContent value="shipping" className="pt-8">
-          <div
-            className="text-[15px] leading-relaxed text-ink space-y-3"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-          >
+          <div className="text-[15px] leading-relaxed text-ink space-y-3">
             <p>
               Giao hàng miễn phí đến <strong>Hà Nội</strong>. Dự kiến{" "}
               <strong>Thứ 3, 3/6</strong>.

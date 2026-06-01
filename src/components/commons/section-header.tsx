@@ -17,14 +17,12 @@ export function SectionHeader({
         {eyebrow && (
           <div
             className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#5C5853] mb-2"
-            style={{ fontFamily: "var(--font-hanken), sans-serif" }}
           >
             {eyebrow}
           </div>
         )}
         <h2
           className="text-[clamp(28px,3vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-[#141210] m-0"
-          style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
         >
           {title}
         </h2>
@@ -33,7 +31,6 @@ export function SectionHeader({
         <Link
           href={href}
           className="text-[14px] font-semibold text-[#141210] flex items-center gap-1.5 no-underline hover:underline underline-offset-3"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           {action}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

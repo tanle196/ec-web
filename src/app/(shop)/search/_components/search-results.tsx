@@ -25,7 +25,6 @@ function FilterGroup({
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between bg-transparent border-0 cursor-pointer p-0 text-[14px] font-semibold text-ink"
-        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
       >
         <span>{title}</span>
         <ChevronDown
@@ -53,10 +52,7 @@ function CheckItem({
   onChange: () => void;
 }) {
   return (
-    <label
-      className="flex items-center gap-2.5 cursor-pointer py-1.5 text-[14px] text-ink select-none"
-      style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-    >
+    <label className="flex items-center gap-2.5 cursor-pointer py-1.5 text-[14px] text-ink select-none">
       <span
         onClick={onChange}
         className="w-[18px] h-[18px] flex-none rounded-[4px] border border-marlo-border-strong flex items-center justify-center transition-colors duration-100"
@@ -76,10 +72,7 @@ function CheckItem({
       </span>
       <span className="flex-1">{label}</span>
       {count != null && (
-        <span
-          className="text-[13px] text-text-tertiary"
-          style={{ fontFamily: "var(--font-jetbrains), monospace" }}
-        >
+        <span className="font-mono-marlo text-[13px] text-text-tertiary">
           {count}
         </span>
       )}
@@ -135,16 +128,12 @@ function FilterSidebar({
   return (
     <aside className="w-60 flex-none">
       <div className="flex items-center justify-between mb-2">
-        <h3
-          className="text-[16px] font-semibold text-ink m-0"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-        >
+        <h3 className="text-[16px] font-semibold text-ink m-0">
           Bộ lọc
         </h3>
         <button
           onClick={onClear}
           className="bg-transparent border-0 text-[13px] text-text-secondary cursor-pointer underline underline-offset-2 p-0"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           Xóa tất cả
         </button>
@@ -164,7 +153,6 @@ function FilterSidebar({
         <button
           onClick={() => setShowAllBrands((s) => !s)}
           className="bg-transparent border-0 text-[13px] font-semibold text-ink cursor-pointer p-0 pt-2"
-          style={{ fontFamily: "var(--font-hanken), sans-serif" }}
         >
           {showAllBrands
             ? "Thu gọn"
@@ -179,16 +167,14 @@ function FilterSidebar({
             placeholder="0đ"
             value={filters.priceMin}
             onChange={(e) => onChange("priceMin", e.target.value)}
-            className="flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
-            style={{ fontFamily: "var(--font-jetbrains), monospace" }}
+            className="font-mono-marlo flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
           />
           <span className="text-text-tertiary flex-none">–</span>
           <input
             placeholder="∞"
             value={filters.priceMax}
             onChange={(e) => onChange("priceMax", e.target.value)}
-            className="flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
-            style={{ fontFamily: "var(--font-jetbrains), monospace" }}
+            className="font-mono-marlo flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
           />
         </div>
         <div className="flex gap-1.5 mt-3 flex-wrap">
@@ -209,7 +195,6 @@ function FilterSidebar({
                 }}
                 className="rounded-full px-2.5 py-1 text-[12px] cursor-pointer transition-colors border"
                 style={{
-                  fontFamily: "var(--font-hanken), sans-serif",
                   background: active ? "#141210" : "white",
                   color: active ? "white" : "#141210",
                   borderColor: active ? "#141210" : "#E6DFD4",
@@ -268,10 +253,7 @@ function FilterSidebar({
                 </svg>
               ))}
             </span>
-            <span
-              className="text-[14px] text-text-secondary"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-            >
+            <span className="text-[14px] text-text-secondary">
               trở lên
             </span>
           </label>
@@ -440,10 +422,7 @@ export function SearchResults({ query }: { query: string }) {
   return (
     <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
       {/* Breadcrumb */}
-      <nav
-        className="text-[13px] text-text-secondary mb-4"
-        style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-      >
+      <nav className="text-[13px] text-text-secondary mb-4">
         <Link
           href="/"
           className="text-text-secondary hover:text-ink transition-colors no-underline"
@@ -455,10 +434,7 @@ export function SearchResults({ query }: { query: string }) {
       </nav>
 
       {/* Title */}
-      <h1
-        className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8"
-        style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-      >
+      <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8">
         {query ? (
           <>
             Kết quả cho{" "}
@@ -479,10 +455,7 @@ export function SearchResults({ query }: { query: string }) {
         <div className="flex-1 min-w-0">
           {/* Sort bar */}
           <div className="flex items-center justify-between mb-6">
-            <span
-              className="text-[14px] text-text-secondary"
-              style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-            >
+            <span className="text-[14px] text-text-secondary">
               <span className="text-ink font-semibold">{filtered.length}</span>{" "}
               kết quả
               {query && (
@@ -496,10 +469,7 @@ export function SearchResults({ query }: { query: string }) {
               )}
             </span>
             <div className="flex items-center gap-3">
-              <span
-                className="text-[13px] text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <span className="text-[13px] text-text-secondary">
                 Sắp xếp
               </span>
               <select
@@ -509,7 +479,6 @@ export function SearchResults({ query }: { query: string }) {
                   setPage(1);
                 }}
                 className="bg-white border border-marlo-border rounded-[8px] px-3 py-2 text-[14px] text-ink cursor-pointer outline-none"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 <option value="featured">Nổi bật</option>
                 <option value="price-asc">Giá: thấp đến cao</option>
@@ -528,7 +497,6 @@ export function SearchResults({ query }: { query: string }) {
                   key={chip.id}
                   onClick={() => removeChip(chip.id)}
                   className="inline-flex items-center gap-1.5 bg-ink text-white rounded-full px-3 py-1.5 text-[13px] font-medium cursor-pointer border-0 hover:opacity-80 transition-opacity"
-                  style={{ fontFamily: "var(--font-hanken), sans-serif" }}
                 >
                   {chip.label}
                   <X size={12} strokeWidth={2} />
@@ -560,16 +528,10 @@ export function SearchResults({ query }: { query: string }) {
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
               </svg>
-              <p
-                className="text-[18px] font-semibold text-ink mb-2"
-                style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
-              >
+              <p className="text-[18px] font-semibold text-ink mb-2">
                 Không tìm thấy sản phẩm
               </p>
-              <p
-                className="text-[14px] text-text-secondary"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
-              >
+              <p className="text-[14px] text-text-secondary">
                 Thử từ khóa khác hoặc bỏ bớt bộ lọc.
               </p>
             </div>
@@ -581,7 +543,6 @@ export function SearchResults({ query }: { query: string }) {
               <button
                 onClick={() => setPage((p) => p + 1)}
                 className="border border-marlo-border rounded-full px-8 py-3 text-[14px] font-semibold text-ink bg-white hover:bg-cream-2 transition-colors cursor-pointer"
-                style={{ fontFamily: "var(--font-hanken), sans-serif" }}
               >
                 Xem thêm ({filtered.length - displayed.length} sản phẩm)
               </button>
