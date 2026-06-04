@@ -8,7 +8,7 @@ export function EditorialPair() {
         {/* Home goods — deep green */}
         <div
           className="relative rounded-[16px] overflow-hidden flex flex-col justify-between p-10"
-          style={{ background: "#1F4D3C", minHeight: 340 }}
+          style={{ background: "var(--color-success)", minHeight: 340 }}
         >
           <div
             className="absolute right-0 bottom-0 w-64 h-64 pointer-events-none"
@@ -27,7 +27,7 @@ export function EditorialPair() {
               giao nhanh 2 ngày.
             </h3>
             <p
-              className="text-[15px] leading-relaxed text-[#C9C2B5] max-w-85 mb-5"
+              className="text-[15px] leading-relaxed text-text-tertiary max-w-85 mb-5"
             >
               Sản phẩm từ các nhà làm thủ công độc lập. Giao tận nhà, đúng hẹn,
               không nói suông.
@@ -36,8 +36,8 @@ export function EditorialPair() {
               href="/categories/home"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-[8px] font-semibold text-[14px] leading-none no-underline hover:opacity-90 transition-opacity duration-150"
               style={{
-                background: "#F6F1E8",
-                color: "#141210",
+                background: "var(--muted)",
+                color: "var(--foreground)",
               }}
             >
               Khám phá nhà cửa
@@ -48,7 +48,7 @@ export function EditorialPair() {
         {/* Audio flash sale — persimmon */}
         <div
           className="relative rounded-[16px] overflow-hidden flex flex-col justify-between p-10"
-          style={{ background: "#FF5B2E", minHeight: 340 }}
+          style={{ background: "var(--color-cta)", minHeight: 340 }}
         >
           <div
             className="absolute right-0 bottom-0 w-72 h-72 pointer-events-none"
@@ -69,10 +69,7 @@ export function EditorialPair() {
               Audio, giảm 20%.
             </h3>
             <p
-              className="text-[15px] leading-relaxed max-w-85 mb-5"
-              style={{
-                color: "rgba(255,255,255,0.85)",
-              }}
+              className="text-[15px] leading-relaxed max-w-85 mb-5 text-white/85"
             >
               Over-ear, true wireless, loa di động — một ngày, một mức giá. Số
               lượng có hạn.
@@ -81,7 +78,7 @@ export function EditorialPair() {
               href="/categories/audio"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-[8px] font-semibold text-[14px] leading-none no-underline hover:opacity-90 transition-opacity duration-150"
               style={{
-                background: "#141210",
+                background: "var(--foreground)",
                 color: "white",
               }}
             >

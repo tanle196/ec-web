@@ -16,13 +16,13 @@ export function SectionHeader({
       <div>
         {eyebrow && (
           <div
-            className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#5C5853] mb-2"
+            className="text-[11px] font-semibold tracking-[0.14em] uppercase text-text-secondary mb-2"
           >
             {eyebrow}
           </div>
         )}
         <h2
-          className="text-[clamp(28px,3vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-[#141210] m-0"
+          className="text-[clamp(28px,3vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-foreground m-0"
         >
           {title}
         </h2>
@@ -30,7 +30,7 @@ export function SectionHeader({
       {action && (
         <Link
           href={href}
-          className="text-[14px] font-semibold text-[#141210] flex items-center gap-1.5 no-underline hover:underline underline-offset-3"
+          className="text-[14px] font-semibold text-foreground flex items-center gap-1.5 no-underline hover:underline underline-offset-3"
         >
           {action}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

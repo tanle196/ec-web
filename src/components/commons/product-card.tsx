@@ -30,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.id}`}
-      className="group relative bg-white border border-[#E6DFD4] rounded-[12px] p-[8px_8px_14px] flex flex-col text-inherit no-underline transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(20,18,16,0.06),0_8px_24px_rgba(20,18,16,0.08)]"
+      className="group relative bg-white border border-border-light rounded-[12px] p-[8px_8px_14px] flex flex-col text-inherit no-underline transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(15,23,42,0.06),0_8px_24px_rgba(15,23,42,0.08)]"
     >
       {/* Badges top-left */}
       <div className="absolute top-4 left-4 flex gap-1.5 z-10">
@@ -44,7 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Save button top-right */}
       <button
-        className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-[rgba(246,241,232,0.92)] border-0 flex items-center justify-center cursor-pointer hover:bg-[#EFE8DB] transition-colors duration-150"
+        className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-background/92 border-0 flex items-center justify-center cursor-pointer hover:bg-muted transition-colors duration-150"
         aria-label={saved ? "Đã lưu" : "Lưu"}
         onClick={(e) => {
           e.preventDefault();
@@ -55,8 +55,8 @@ export function ProductCard({ product }: { product: Product }) {
           width="16"
           height="16"
           viewBox="0 0 24 24"
-          fill={saved ? "#FF5B2E" : "none"}
-          stroke={saved ? "#FF5B2E" : "#141210"}
+          fill={saved ? "var(--color-cta)" : "none"}
+          stroke={saved ? "var(--color-cta)" : "var(--foreground)"}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -66,19 +66,19 @@ export function ProductCard({ product }: { product: Product }) {
       </button>
 
       {/* Image area */}
-      <div className="w-full aspect-square bg-[#F6F1E8] rounded-[8px] flex items-center justify-center overflow-hidden">
+      <div className="w-full aspect-square bg-muted rounded-[8px] flex items-center justify-center overflow-hidden">
         <Image src={product.img} alt={product.name} width={200} height={200} className="w-full h-full object-contain" />
       </div>
 
       {/* Info */}
       <div className="flex flex-col gap-1 px-1.5 pt-3">
         <span
-          className="text-[11px] font-medium text-[#8A857E] tracking-[0.04em] uppercase"
+          className="text-[11px] font-medium text-text-tertiary tracking-[0.04em] uppercase"
         >
           {product.seller}
         </span>
         <span
-          className="text-[14px] font-semibold text-[#141210] leading-snug"
+          className="text-[14px] font-semibold text-foreground leading-snug"
         >
           {product.name}
         </span>

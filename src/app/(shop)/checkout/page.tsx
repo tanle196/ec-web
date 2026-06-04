@@ -58,7 +58,7 @@ function SectionCard({
         <span className="font-mono-marlo w-7 h-7 rounded-full bg-persimmon text-white text-[13px] font-semibold flex items-center justify-center flex-none">
           {step}
         </span>
-        <h2 className="text-[18px] font-semibold text-[#141210]">
+        <h2 className="text-[18px] font-semibold text-foreground">
           {title}
         </h2>
       </div>
@@ -88,7 +88,7 @@ function FormField({
 }
 
 const inputCls =
-  "w-full bg-cream border border-marlo-border rounded-[8px] px-3.5 py-2.5 text-[14px] text-[#141210] outline-none focus:border-[#141210] transition-colors placeholder:text-text-disabled";
+  "w-full bg-cream border border-marlo-border rounded-[8px] px-3.5 py-2.5 text-[14px] text-foreground outline-none focus:border-foreground transition-colors placeholder:text-text-disabled";
 
 export default function CheckoutPage() {
   const [fullName, setFullName] = useState("");
@@ -103,6 +103,7 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [placing, setPlacing] = useState(false);
   const [placed, setPlaced] = useState(false);
+  const [orderId] = useState(() => Math.floor(100000 + Math.random() * 900000));
 
   const subtotal = ORDER_ITEMS.reduce((s, i) => s + i.price * i.qty, 0);
   const discount = ORDER_ITEMS.reduce(
@@ -124,13 +125,13 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-[#E0F2EA] flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
             <svg
               width="28"
               height="28"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#1F8A5B"
+              stroke="var(--color-success)"
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -138,7 +139,7 @@ export default function CheckoutPage() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3">
+          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-foreground mb-3">
             Đặt hàng thành công!
           </h1>
           <p className="text-[16px] text-text-secondary mb-2">
@@ -146,8 +147,8 @@ export default function CheckoutPage() {
           </p>
           <p className="text-[14px] text-text-tertiary mb-8">
             Mã đơn hàng:{" "}
-            <span className="font-mono-marlo font-semibold text-[#141210]">
-              #MRL{Math.floor(100000 + Math.random() * 900000)}
+            <span className="font-mono-marlo font-semibold text-foreground">
+              #MRL{orderId}
             </span>
             . Chúng tôi sẽ gửi xác nhận qua email cho bạn.
           </p>
@@ -160,7 +161,7 @@ export default function CheckoutPage() {
             </Link>
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-white border border-marlo-border text-[#141210] font-semibold text-[15px] no-underline hover:bg-cream transition-colors duration-150"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-white border border-marlo-border text-foreground font-semibold text-[15px] no-underline hover:bg-cream transition-colors duration-150"
             >
               Tiếp tục mua sắm
             </Link>
@@ -175,14 +176,14 @@ export default function CheckoutPage() {
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
         {/* Breadcrumb */}
         <nav className="text-[13px] text-text-secondary mb-6">
-          <Link href="/cart" className="hover:text-[#141210] transition-colors no-underline">
+          <Link href="/cart" className="hover:text-foreground transition-colors no-underline">
             Giỏ hàng
           </Link>
           {" · "}
-          <span className="text-[#141210] font-semibold">Thanh toán</span>
+          <span className="text-foreground font-semibold">Thanh toán</span>
         </nav>
 
-        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8">
+        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-foreground mb-8">
           Thanh toán
         </h1>
 
@@ -306,8 +307,8 @@ export default function CheckoutPage() {
                       label: "Giao hàng tiêu chuẩn",
                       desc: "Nhận hàng Thứ 3, 3/6",
                       badge: "Miễn phí",
-                      badgeColor: "#1F8A5B",
-                      badgeBg: "#E0F2EA",
+                      badgeColor: "var(--color-success)",
+                      badgeBg: "color-mix(in srgb, var(--color-success) 10%, transparent)",
                       fee: 0,
                     },
                     {
@@ -315,8 +316,8 @@ export default function CheckoutPage() {
                       label: "Giao hàng nhanh",
                       desc: "Nhận hàng ngày mai trước 12:00",
                       badge: "50.000₫",
-                      badgeColor: "#141210",
-                      badgeBg: "#F6F1E8",
+                      badgeColor: "var(--foreground)",
+                      badgeBg: "var(--muted)",
                       fee: 50000,
                     },
                   ] as const
@@ -325,7 +326,7 @@ export default function CheckoutPage() {
                     key={opt.id}
                     className={`flex items-center gap-4 p-4 rounded-[12px] border cursor-pointer transition-colors ${
                       shipping === opt.id
-                        ? "border-[#141210] bg-cream"
+                        ? "border-foreground bg-cream"
                         : "border-marlo-border bg-white hover:bg-cream"
                     }`}
                   >
@@ -338,7 +339,7 @@ export default function CheckoutPage() {
                       className="accent-persimmon w-4 h-4 flex-none"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[14px] font-semibold text-[#141210]">
+                      <div className="text-[14px] font-semibold text-foreground">
                         {opt.label}
                       </div>
                       <div className="text-[12px] text-text-secondary mt-0.5">
@@ -415,7 +416,7 @@ export default function CheckoutPage() {
                     key={opt.id}
                     className={`flex items-center gap-4 p-4 rounded-[12px] border cursor-pointer transition-colors ${
                       payment === opt.id
-                        ? "border-[#141210] bg-cream"
+                        ? "border-foreground bg-cream"
                         : "border-marlo-border bg-white hover:bg-cream"
                     }`}
                   >
@@ -429,7 +430,7 @@ export default function CheckoutPage() {
                     />
                     <span className="text-text-secondary flex-none">{opt.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-[14px] font-semibold text-[#141210]">
+                      <div className="text-[14px] font-semibold text-foreground">
                         {opt.label}
                       </div>
                       <div className="text-[12px] text-text-secondary mt-0.5">
@@ -446,7 +447,7 @@ export default function CheckoutPage() {
           <aside className="sticky top-32.5 flex flex-col gap-5">
             {/* Items */}
             <div className="bg-white border border-marlo-border rounded-[16px] p-6">
-              <h3 className="text-[16px] font-semibold text-[#141210] mb-4">
+              <h3 className="text-[16px] font-semibold text-foreground mb-4">
                 Đơn hàng · {ORDER_ITEMS.length} sản phẩm
               </h3>
               <div className="flex flex-col divide-y divide-marlo-border">
@@ -462,7 +463,7 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-semibold text-[#141210] leading-snug line-clamp-2">
+                      <p className="text-[13px] font-semibold text-foreground leading-snug line-clamp-2">
                         {item.name}
                       </p>
                       <p className="text-[11px] text-text-secondary mt-0.5">
@@ -479,7 +480,7 @@ export default function CheckoutPage() {
 
             {/* Price breakdown */}
             <div className="bg-white border border-marlo-border rounded-[16px] p-6">
-              <h3 className="text-[16px] font-semibold text-[#141210] mb-4">
+              <h3 className="text-[16px] font-semibold text-foreground mb-4">
                 Tóm tắt thanh toán
               </h3>
 
@@ -487,12 +488,12 @@ export default function CheckoutPage() {
                 {[
                   { label: "Tạm tính", value: subtotal, color: undefined, override: undefined },
                   discount > 0
-                    ? { label: "Giảm giá", value: -discount, color: "#C73A12", override: undefined }
+                    ? { label: "Giảm giá", value: -discount, color: "var(--color-cta)", override: undefined }
                     : null,
                   {
                     label: "Vận chuyển",
                     value: shippingFee,
-                    color: shippingFee === 0 ? "#1F8A5B" : undefined,
+                    color: shippingFee === 0 ? "var(--color-success)" : undefined,
                     override: shippingFee === 0 ? "Miễn phí" : undefined,
                   },
                 ]
@@ -507,7 +508,7 @@ export default function CheckoutPage() {
                         <span className="text-text-secondary">{label}</span>
                         <span
                           className="font-mono-marlo font-medium"
-                          style={{ color: color ?? "#141210" }}
+                          style={{ color: color ?? "var(--foreground)" }}
                         >
                           {override ??
                             `${value < 0 ? "−" : ""}${Math.abs(value).toLocaleString("vi-VN")}₫`}
@@ -518,7 +519,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex justify-between items-baseline py-4">
-                <span className="text-[16px] font-semibold text-[#141210]">
+                <span className="text-[16px] font-semibold text-foreground">
                   Tổng cộng
                 </span>
                 <Price amount={total} size="lg" />
@@ -556,7 +557,7 @@ export default function CheckoutPage() {
                   height="14"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#1F8A5B"
+                  stroke="var(--color-success)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

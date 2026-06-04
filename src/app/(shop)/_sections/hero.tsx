@@ -7,17 +7,17 @@ export function Hero() {
     <section className="max-w-360 mx-auto px-16 pt-8">
       <div
         className="rounded-[24px] border border-marlo-border grid grid-cols-2 gap-12 items-center px-14 py-16"
-        style={{ background: "#F6F1E8" }}
+        style={{ background: "var(--muted)" }}
       >
         {/* Text */}
         <div>
           <Badge kind="persimmon">Mới ra mắt · Tháng 5/2026</Badge>
           <h1
-            className="text-[clamp(52px,5.5vw,80px)] font-bold leading-[0.97] tracking-[-0.03em] text-[#141210] mt-5 mb-4"
+            className="text-[clamp(52px,5.5vw,80px)] font-bold leading-[0.97] tracking-[-0.03em] text-foreground mt-5 mb-4"
           >
             Ngày mua sắm.
             <br />
-            <span style={{ color: "#FF5B2E" }}>Tiết kiệm đến 8 triệu.</span>
+            <span style={{ color: "var(--color-cta)" }}>Tiết kiệm đến 8 triệu.</span>
           </h1>
           <p
             className="text-[18px] leading-relaxed text-text-secondary max-w-110 mb-7"
@@ -34,7 +34,7 @@ export function Hero() {
             </Link>
             <Link
               href="/trade-in"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] border border-marlo-border-strong font-semibold text-[16px] leading-none no-underline text-[#141210] hover:bg-cream-2 transition-colors duration-150"
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] border border-marlo-border-strong font-semibold text-[16px] leading-none no-underline text-foreground hover:bg-cream-2 transition-colors duration-150"
             >
               Ước tính thu đổi
               <svg

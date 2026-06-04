@@ -56,7 +56,7 @@ function CheckItem({
       <span
         onClick={onChange}
         className="w-[18px] h-[18px] flex-none rounded-[4px] border border-marlo-border-strong flex items-center justify-center transition-colors duration-100"
-        style={{ background: checked ? "#141210" : "white" }}
+        style={{ background: checked ? "var(--foreground)" : "white" }}
       >
         {checked && (
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -195,9 +195,9 @@ function FilterSidebar({
                 }}
                 className="rounded-full px-2.5 py-1 text-[12px] cursor-pointer transition-colors border"
                 style={{
-                  background: active ? "#141210" : "white",
-                  color: active ? "white" : "#141210",
-                  borderColor: active ? "#141210" : "#E6DFD4",
+                  background: active ? "var(--foreground)" : "white",
+                  color: active ? "white" : "var(--foreground)",
+                  borderColor: active ? "var(--foreground)" : "var(--border)",
                 }}
               >
                 {preset.label}
@@ -232,7 +232,7 @@ function FilterSidebar({
           >
             <span
               className="w-[18px] h-[18px] flex-none rounded-full border border-marlo-border-strong flex items-center justify-center transition-colors duration-100"
-              style={{ background: filters.rating === r ? "#141210" : "white" }}
+              style={{ background: filters.rating === r ? "var(--foreground)" : "white" }}
             >
               {filters.rating === r && (
                 <span className="w-2 h-2 rounded-full bg-white" />
@@ -245,8 +245,8 @@ function FilterSidebar({
                   width="12"
                   height="12"
                   viewBox="0 0 24 24"
-                  fill={i < r ? "#141210" : "#D4CCBE"}
-                  stroke={i < r ? "#141210" : "#D4CCBE"}
+                  fill={i < r ? "var(--foreground)" : "var(--color-border-strong)"}
+                  stroke={i < r ? "var(--foreground)" : "var(--color-border-strong)"}
                   strokeWidth="1"
                 >
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -515,7 +515,7 @@ export function SearchResults({ query }: { query: string }) {
                 height="48"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#D4CCBE"
+                stroke="var(--color-border-strong)"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"

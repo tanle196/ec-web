@@ -17,14 +17,7 @@ const CATEGORIES = [
 export function Header() {
   return (
     <header
-      className="sticky top-0 z-50 border-b border-marlo-border"
-      style={
-        {
-          background: "rgba(246,241,232,0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-        } as React.CSSProperties
-      }
+      className="sticky top-0 z-50 border-b border-marlo-border bg-background/92 backdrop-blur-md"
     >
       {/* Main row */}
       <div className="max-w-360 mx-auto px-16 h-16 flex items-center gap-8">
@@ -47,7 +40,7 @@ export function Header() {
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#8A857E"
+            stroke="var(--color-text-tertiary)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"

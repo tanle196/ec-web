@@ -17,7 +17,7 @@ function Panel({ panel }: { panel: EditorialPanel }) {
       <span
         className="inline-flex items-center px-2.5 py-1.25 rounded-full font-semibold text-[12px] leading-none whitespace-nowrap w-fit"
         style={{
-          background: panel.badgeBg ?? "rgba(255,255,255,0.15)",
+          background: panel.badgeBg ?? "rgb(255 255 255 / 0.15)",
           color: panel.badgeColor ?? panel.textColor,
         }}
       >
@@ -38,7 +38,7 @@ function Panel({ panel }: { panel: EditorialPanel }) {
         <p
           className="text-[15px] leading-relaxed max-w-85 mb-5"
           style={{
-            color: panel.textColor === "white" ? "rgba(255,255,255,0.85)" : "#C9C2B5",
+            color: panel.textColor === "white" ? "rgb(255 255 255 / 0.85)" : "var(--color-text-tertiary)",
           }}
         >
           {panel.subtitle}

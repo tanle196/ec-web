@@ -145,14 +145,14 @@ const ORDERS = [
 ];
 
 const STATUS_STYLES: Record<string, string> = {
-  info: "bg-[#E0EBFB] text-[#2A6FDB]",
-  success: "bg-[#E0F2EA] text-[#1F8A5B]",
-  default: "bg-[#EFE8DB] text-[#5C5853]",
+  info: "bg-secondary text-primary",
+  success: "bg-success/10 text-success",
+  default: "bg-muted text-text-secondary",
 };
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-[clamp(22px,2.5vw,28px)] font-semibold tracking-[-0.02em] text-[#141210] mb-5">
+    <h2 className="text-[clamp(22px,2.5vw,28px)] font-semibold tracking-[-0.02em] text-foreground mb-5">
       {children}
     </h2>
   );
@@ -163,14 +163,14 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
     <div className="bg-white border border-marlo-border rounded-[12px] mb-4 overflow-hidden">
       {/* Header */}
       <div
-        className="grid items-center gap-8 px-5 py-4 border-b border-marlo-border bg-[#FBF7F0]"
+        className="grid items-center gap-8 px-5 py-4 border-b border-marlo-border bg-muted"
         style={{ gridTemplateColumns: "auto auto auto 1fr" }}
       >
         <div>
           <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Đơn hàng
           </div>
-          <div className="font-mono-marlo text-[14px] font-medium text-[#141210]">
+          <div className="font-mono-marlo text-[14px] font-medium text-foreground">
             {order.id}
           </div>
         </div>
@@ -178,7 +178,7 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
           <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Ngày đặt
           </div>
-          <div className="text-[14px] text-[#141210]">
+          <div className="text-[14px] text-foreground">
             {order.date}
           </div>
         </div>
@@ -222,7 +222,7 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
           {(["Theo dõi", "Xem đơn"] as const).map((label) => (
             <button
               key={label}
-              className="px-4 py-2 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-[#141210] cursor-pointer hover:bg-cream-2 transition-colors duration-150"
+              className="px-4 py-2 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-foreground cursor-pointer hover:bg-cream-2 transition-colors duration-150"
             >
               {label}
             </button>
@@ -371,7 +371,7 @@ export default function AccountPage() {
                           key={action}
                           className="bg-transparent border-0 text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
                           style={{
-                            color: action === "Sửa" ? "#141210" : "#5C5853",
+                            color: action === "Sửa" ? "var(--foreground)" : "var(--color-text-secondary)",
                           }}
                         >
                           {action}

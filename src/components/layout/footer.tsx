@@ -21,19 +21,19 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-[#C9C2B5] pt-16 pb-8">
+    <footer className="bg-foreground text-muted-foreground pt-16 pb-8">
       <div className="max-w-360 mx-auto px-16">
         {/* Top grid */}
         <div className="grid gap-12 mb-12" style={{ gridTemplateColumns: "1.4fr repeat(4, 1fr)" }}>
           {/* Brand column */}
           <div>
             <span
-              className="text-[22px] font-bold tracking-[-0.04em] text-cream"
+              className="text-[22px] font-bold tracking-[-0.04em] text-white"
             >
               marlo
             </span>
             <p
-              className="mt-4 text-[14px] leading-relaxed text-text-tertiary max-w-70"
+              className="mt-4 text-[14px] leading-relaxed text-muted-foreground max-w-70"
             >
               Marketplace đa danh mục. Điện thoại, laptop, thời trang, thực phẩm — bán hết, giao nhanh.
             </p>
@@ -43,7 +43,7 @@ export function Footer() {
           {COLUMNS.map(({ title, links }) => (
             <div key={title}>
               <h4
-                className="text-[13px] font-semibold text-cream tracking-[0.12em] uppercase mb-4"
+                className="text-[13px] font-semibold text-white tracking-[0.12em] uppercase mb-4"
               >
                 {title}
               </h4>
@@ -52,7 +52,7 @@ export function Footer() {
                   <li key={label}>
                     <Link
                       href="#"
-                      className="text-[14px] text-[#C9C2B5] no-underline hover:text-cream transition-colors duration-150"
+                      className="text-[14px] text-muted-foreground no-underline hover:text-white transition-colors duration-150"
                     >
                       {label}
                     </Link>
@@ -66,10 +66,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div
           className="flex items-center justify-between pt-6"
-          style={{ borderTop: "1px solid #2C2823" }}
+          style={{ borderTop: "1px solid rgb(255 255 255 / 0.1)" }}
         >
           <span
-            className="text-[12px] text-text-tertiary"
+            className="text-[12px] text-muted-foreground"
           >
             © {new Date().getFullYear()} Marlo, Inc. All rights reserved.
           </span>
@@ -78,7 +78,7 @@ export function Footer() {
               <Link
                 key={label}
                 href="#"
-                className="text-[12px] text-text-tertiary no-underline hover:text-[#C9C2B5] transition-colors duration-150"
+                className="text-[12px] text-muted-foreground no-underline hover:text-white/80 transition-colors duration-150"
               >
                 {label}
               </Link>
