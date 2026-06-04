@@ -109,9 +109,9 @@ export function CategorySection() {
             href={c.href}
             className="bg-white border border-marlo-border rounded-[16px] p-4 flex flex-col items-center gap-2.5 no-underline text-inherit transition-all duration-150 hover:-translate-y-0.5 hover:shadow-card-sm"
           >
-            <span className="text-[#141210]">{c.icon}</span>
+            <span className="text-foreground">{c.icon}</span>
             <span
-              className="text-[13px] font-semibold text-[#141210] text-center"
+              className="text-[13px] font-semibold text-foreground text-center"
             >
               {c.name}
             </span>

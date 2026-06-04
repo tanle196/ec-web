@@ -76,7 +76,7 @@ function QtyStepper({
     <div className="inline-flex items-center bg-white border border-marlo-border rounded-full h-12 px-1">
       <button
         onClick={() => onChange(Math.max(1, value - 1))}
-        className="w-10 h-10 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-[#141210] hover:bg-[#EFE8DB] transition-colors duration-150"
+        className="w-10 h-10 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-foreground hover:bg-muted transition-colors duration-150"
       >
         <svg
           width="16"
@@ -90,12 +90,12 @@ function QtyStepper({
           <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
       </button>
-      <span className="font-mono-marlo font-semibold text-[15px] px-4 min-w-[32px] text-center text-[#141210]">
+      <span className="font-mono-marlo font-semibold text-[15px] px-4 min-w-[32px] text-center text-foreground">
         {value}
       </span>
       <button
         onClick={() => onChange(value + 1)}
-        className="w-10 h-10 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-[#141210] hover:bg-[#EFE8DB] transition-colors duration-150"
+        className="w-10 h-10 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-foreground hover:bg-muted transition-colors duration-150"
       >
         <svg
           width="16"
@@ -124,9 +124,9 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
           <button
             key={i}
             onClick={() => setActive(i)}
-            className="w-[72px] h-[72px] rounded-[8px] bg-[#F6F1E8] p-1.5 cursor-pointer transition-all duration-150"
+            className="w-[72px] h-[72px] rounded-[8px] bg-muted p-1.5 cursor-pointer transition-all duration-150"
             style={{
-              border: active === i ? "2px solid #141210" : "1px solid #E6DFD4",
+              border: active === i ? "2px solid var(--foreground)" : "1px solid var(--border)",
             }}
           >
             <Image
@@ -140,7 +140,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
         ))}
       </div>
       {/* Main image */}
-      <div className="relative flex-1 aspect-square bg-[#F6F1E8] rounded-[16px] p-8 flex items-center justify-center">
+      <div className="relative flex-1 aspect-square bg-muted rounded-lg p-8 flex items-center justify-center">
         <Image
           src={images[active]}
           alt={mainAlt}
@@ -185,15 +185,15 @@ export function PdpClient({ phone }: { phone: Phone }) {
           <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-text-secondary mb-1.5">
             {phone.seller}
           </div>
-          <h1 className="text-[clamp(28px,2.5vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-[#141210] mb-3">
+          <h1 className="text-[clamp(28px,2.5vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-foreground mb-3">
             {phone.name}
           </h1>
           <div className="flex items-center gap-3.5 mb-6">
             <Stars rating={phone.rating} count={phone.reviews} />
-            <span className="text-[#D4CCBE]">·</span>
+            <span className="text-text-tertiary">·</span>
             <a
               href="#reviews"
-              className="text-[13px] text-[#141210] underline underline-offset-3"
+              className="text-[13px] text-foreground underline underline-offset-3"
             >
               312 câu hỏi
             </a>
@@ -214,7 +214,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
           </div>
           <div className="text-[13px] text-text-secondary mb-7">
             hoặc 4 kỳ{" "}
-            <strong className="text-[#141210]">
+            <strong className="text-foreground">
               {(phone.price / 4).toLocaleString("vi-VN")}₫
             </strong>{" "}
             với Marlo Pay
@@ -226,7 +226,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
               <span className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary">
                 Màu
               </span>
-              <span className="text-[14px] text-[#141210]">
+              <span className="text-[14px] text-foreground">
                 {color}
               </span>
             </div>
@@ -236,13 +236,13 @@ export function PdpClient({ phone }: { phone: Phone }) {
                   key={c.label}
                   onClick={() => setColor(c.label)}
                   aria-label={c.label}
-                  className="w-8 h-8 rounded-full cursor-pointer p-0 border-[2px] border-[#F6F1E8] transition-all duration-150"
+                  className="w-8 h-8 rounded-full cursor-pointer p-0 border-2 border-muted transition-all duration-150"
                   style={{
                     background: c.hex,
                     outline:
                       color === c.label
-                        ? "2px solid #141210"
-                        : "1px solid #D4CCBE",
+                        ? "2px solid var(--foreground)"
+                        : "1px solid var(--color-border-strong)",
                     outlineOffset: color === c.label ? "2px" : "0",
                   }}
                 />
@@ -256,7 +256,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
               <span className="text-[13px] font-semibold tracking-[0.04em] uppercase text-text-secondary">
                 Bộ nhớ
               </span>
-              <span className="text-[14px] text-[#141210]">
+              <span className="text-[14px] text-foreground">
                 {storage}
               </span>
             </div>
@@ -284,7 +284,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
           <div className="flex items-center gap-3 mb-3">
             <QtyStepper value={qty} onChange={setQty} />
             <button
-              className="flex-1 h-12 rounded-[8px] bg-[#FF5B2E] text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-[#E84A1E] transition-colors duration-150"
+              className="flex-1 h-12 rounded-[8px] bg-cta text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-cta-hover transition-colors duration-150"
             >
               Thêm vào giỏ ·{" "}
               <span className="font-mono-marlo">
@@ -293,7 +293,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
             </button>
           </div>
           <button
-            className="w-full h-12 rounded-[8px] bg-white border border-marlo-border font-semibold text-[15px] text-[#141210] cursor-pointer hover:bg-[#EFE8DB] transition-colors duration-150 mb-5"
+            className="w-full h-12 rounded-[8px] bg-white border border-marlo-border font-semibold text-[15px] text-foreground cursor-pointer hover:bg-muted transition-colors duration-150 mb-5"
           >
             Mua ngay
           </button>
@@ -305,18 +305,18 @@ export function PdpClient({ phone }: { phone: Phone }) {
                 [
                   "truck",
                   <span key="ship">
-                    <strong className="text-[#141210]">
+                    <strong className="text-foreground">
                       Miễn phí vận chuyển
                     </strong>{" "}
                     · giao{" "}
-                    <strong className="text-[#141210]">Thứ 3, 3/6</strong> đến
+                    <strong className="text-foreground">Thứ 3, 3/6</strong> đến
                     Hà Nội
                   </span>,
                 ],
                 [
                   "refresh",
                   <span key="ret">
-                    <strong className="text-[#141210]">
+                    <strong className="text-foreground">
                       Đổi trả miễn phí 30 ngày
                     </strong>{" "}
                     · không tính phí hoàn trả
@@ -325,7 +325,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
                 [
                   "shield",
                   <span key="prot">
-                    <strong className="text-[#141210]">Bảo vệ người mua</strong>{" "}
+                    <strong className="text-foreground">Bảo vệ người mua</strong>{" "}
                     từ Marlo · bảo đảm 90 ngày
                   </span>,
                 ],
@@ -340,7 +340,7 @@ export function PdpClient({ phone }: { phone: Phone }) {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#141210"
+                  stroke="var(--foreground)"
                   strokeWidth="1.8"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -435,8 +435,8 @@ export function PdpClient({ phone }: { phone: Phone }) {
                         width="13"
                         height="13"
                         viewBox="0 0 24 24"
-                        fill={i < r.rating ? "#141210" : "#D4CCBE"}
-                        stroke={i < r.rating ? "#141210" : "#D4CCBE"}
+                        fill={i < r.rating ? "var(--foreground)" : "var(--color-border-strong)"}
+                        stroke={i < r.rating ? "var(--foreground)" : "var(--color-border-strong)"}
                         strokeWidth="1.5"
                       >
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -490,8 +490,8 @@ export function PdpClient({ phone }: { phone: Phone }) {
                     width="11"
                     height="11"
                     viewBox="0 0 24 24"
-                    fill="#141210"
-                    stroke="#141210"
+                    fill="var(--foreground)"
+                    stroke="var(--foreground)"
                     strokeWidth="1.5"
                   >
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />

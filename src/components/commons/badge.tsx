@@ -10,12 +10,12 @@ export type BadgeKind =
   | null;
 
 const kindStyles: Record<string, string> = {
-  new: "bg-[#141210] text-white tracking-[0.14em] uppercase text-[10px]",
-  sale: "bg-[#D7263D] text-white",
-  discount: "bg-[#FFE7DD] text-[#C73A12]",
-  gold: "bg-[#FFD83D] text-[#141210]",
-  persimmon: "bg-[#FFE7DD] text-[#C73A12]",
-  default: "bg-transparent text-[#141210] border border-[#D4CCBE]",
+  new: "bg-foreground text-white tracking-[0.14em] uppercase text-[10px]",
+  sale: "bg-destructive text-white",
+  discount: "bg-primary-soft text-cta",
+  gold: "bg-warning text-foreground",
+  persimmon: "bg-primary-soft text-cta",
+  default: "bg-transparent text-foreground border border-border-strong",
 };
 
 export function Badge({

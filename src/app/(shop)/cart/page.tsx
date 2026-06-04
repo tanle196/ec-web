@@ -55,7 +55,7 @@ function QtyStepper({
     <div className="inline-flex items-center bg-white border border-marlo-border rounded-full h-10 px-1">
       <button
         onClick={() => onChange(Math.max(1, value - 1))}
-        className="w-8 h-8 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-[#141210] hover:bg-cream-2 transition-colors duration-150"
+        className="w-8 h-8 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-foreground hover:bg-cream-2 transition-colors duration-150"
       >
         <svg
           width="14"
@@ -70,13 +70,13 @@ function QtyStepper({
         </svg>
       </button>
       <span
-        className="font-mono-marlo text-[14px] font-semibold px-3 min-w-7 text-center text-[#141210]"
+        className="font-mono-marlo text-[14px] font-semibold px-3 min-w-7 text-center text-foreground"
       >
         {value}
       </span>
       <button
         onClick={() => onChange(value + 1)}
-        className="w-8 h-8 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-[#141210] hover:bg-cream-2 transition-colors duration-150"
+        className="w-8 h-8 rounded-full border-0 bg-transparent cursor-pointer flex items-center justify-center text-foreground hover:bg-cream-2 transition-colors duration-150"
       >
         <svg
           width="14"
@@ -125,7 +125,7 @@ function CartLineItem({
         <span className="text-[12px] font-medium tracking-[0.04em] uppercase text-text-tertiary">
           {item.seller}
         </span>
-        <span className="text-[16px] font-semibold text-[#141210] leading-snug">
+        <span className="text-[16px] font-semibold text-foreground leading-snug">
           {item.name}
         </span>
         <span className="text-[13px] text-text-secondary">
@@ -134,12 +134,12 @@ function CartLineItem({
         <div className="flex items-center gap-4 mt-2">
           <button
             onClick={() => onRemove(item.lineId)}
-            className="bg-transparent border-0 text-[#141210] text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
+            className="bg-transparent border-0 text-foreground text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
           >
             Xóa
           </button>
           <button
-            className="bg-transparent border-0 text-[#141210] text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
+            className="bg-transparent border-0 text-foreground text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
           >
             Lưu để sau
           </button>
@@ -194,7 +194,7 @@ export default function CartPage() {
             height="48"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#B5AFA5"
+            stroke="var(--color-text-tertiary)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -204,7 +204,7 @@ export default function CartPage() {
             <circle cx="19" cy="21" r="1" />
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
-          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#141210] mb-3">
+          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-foreground mb-3">
             Giỏ hàng trống.
           </h1>
           <p className="text-[16px] text-text-secondary mb-6">
@@ -224,7 +224,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-cream">
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
-        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#141210] mb-8">
+        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-foreground mb-8">
           Giỏ hàng{" "}
           <span className="text-text-tertiary font-medium">
             · {items.length} sản phẩm
@@ -240,14 +240,14 @@ export default function CartPage() {
             <div className="bg-white border border-marlo-border rounded-[16px] px-6 pt-1 pb-6">
               {/* Seller header */}
               <div className="flex items-center gap-2.5 py-5 border-b border-marlo-border">
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#E0F2EA] text-[#1F8A5B]">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-success/10 text-success">
                   NGƯỜI BÁN UY TÍN
                 </span>
-                <span className="text-[14px] font-semibold text-[#141210]">
+                <span className="text-[14px] font-semibold text-foreground">
                   Bán bởi {items[0].seller}
                 </span>
                 <span className="text-[13px] text-text-secondary">
-                  · Giao <strong className="text-[#141210]">Thứ 3, 3/6</strong>
+                  · Giao <strong className="text-foreground">Thứ 3, 3/6</strong>
                 </span>
               </div>
               {items.map((item) => (
@@ -273,7 +273,7 @@ export default function CartPage() {
 
           {/* Right: Order summary */}
           <aside className="sticky top-32.5 bg-white border border-marlo-border rounded-[16px] p-6">
-            <h3 className="text-[18px] font-semibold text-[#141210] mb-5">
+            <h3 className="text-[18px] font-semibold text-foreground mb-5">
               Tóm tắt đơn hàng
             </h3>
 
@@ -281,12 +281,12 @@ export default function CartPage() {
               {[
                 ["Tạm tính", subtotal, undefined, undefined],
                 discount > 0
-                  ? ["Giảm giá", -discount, "#C73A12", undefined]
+                  ? ["Giảm giá", -discount, "var(--color-cta)", undefined]
                   : null,
                 [
                   "Vận chuyển",
                   shipping,
-                  shipping === 0 ? "#1F8A5B" : undefined,
+                  shipping === 0 ? "var(--color-success)" : undefined,
                   shipping === 0 ? "Miễn phí" : undefined,
                 ],
               ]
@@ -306,7 +306,7 @@ export default function CartPage() {
                       <span className="text-text-secondary">{label}</span>
                       <span
                         className="font-mono-marlo font-medium"
-                        style={{ color: color ?? "#141210" }}
+                        style={{ color: color ?? "var(--foreground)" }}
                       >
                         {override ??
                           `${amt < 0 ? "−" : ""}${Math.abs(amt).toLocaleString("vi-VN")}₫`}
@@ -317,7 +317,7 @@ export default function CartPage() {
             </div>
 
             <div className="flex justify-between items-baseline py-4">
-              <span className="text-[16px] font-semibold text-[#141210]">
+              <span className="text-[16px] font-semibold text-foreground">
                 Tổng cộng
               </span>
               <Price amount={total} size="lg" />
@@ -336,7 +336,7 @@ export default function CartPage() {
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#1F8A5B"
+                stroke="var(--color-success)"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -357,10 +357,10 @@ export default function CartPage() {
                   value={promo}
                   onChange={(e) => setPromo(e.target.value)}
                   placeholder="Nhập mã"
-                  className="flex-1 bg-cream border border-marlo-border rounded-[8px] px-3 py-2.5 text-[14px] text-[#141210] outline-none focus:border-[#141210] transition-colors"
+                  className="flex-1 bg-cream border border-marlo-border rounded-[8px] px-3 py-2.5 text-[14px] text-foreground outline-none focus:border-foreground transition-colors"
                 />
                 <button
-                  className="px-4 h-10 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-[#141210] cursor-pointer hover:bg-cream-2 transition-colors duration-150 whitespace-nowrap"
+                  className="px-4 h-10 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-foreground cursor-pointer hover:bg-cream-2 transition-colors duration-150 whitespace-nowrap"
                 >
                   Áp dụng
                 </button>

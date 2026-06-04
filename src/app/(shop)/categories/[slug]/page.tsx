@@ -33,7 +33,7 @@ export default async function CategoryPage({
       <div className="min-h-screen bg-cream">
         <div className="max-w-7xl mx-auto px-16 py-16">
           <h1
-            className="text-[clamp(32px,3.5vw,48px)] font-semibold tracking-[-0.02em] text-[#141210] mb-2 capitalize"
+            className="text-[clamp(32px,3.5vw,48px)] font-semibold tracking-[-0.02em] text-foreground mb-2 capitalize"
           >
             {slug.replace(/-/g, " ")}
           </h1>

@@ -34,19 +34,19 @@ export default async function ProductDetailPage({
         >
           <Link
             href="/"
-            className="hover:text-[#141210] transition-colors no-underline"
+            className="hover:text-foreground transition-colors no-underline"
           >
             Trang chủ
           </Link>
           {" · "}
           <Link
             href="/phones"
-            className="hover:text-[#141210] transition-colors no-underline"
+            className="hover:text-foreground transition-colors no-underline"
           >
             Điện thoại
           </Link>
           {" · "}
-          <span className="text-[#141210] font-semibold">{phone.name}</span>
+          <span className="text-foreground font-semibold">{phone.name}</span>
         </nav>
         <PdpClient phone={phone} />
       </div>

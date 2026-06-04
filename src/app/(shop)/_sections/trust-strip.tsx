@@ -54,22 +54,22 @@ export function TrustStrip() {
   return (
     <section
       className="max-w-360 mx-auto"
-      style={{ borderTop: "1px solid #E6DFD4", borderBottom: "1px solid #E6DFD4", padding: "40px 64px", margin: "72px auto 0" }}
+      style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 64px", margin: "72px auto 0" }}
     >
       <div className="grid grid-cols-4 gap-8">
         {items.map((item) => (
           <div key={item.title} className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-[#FFE7DD] flex items-center justify-center text-[#C73A12] flex-none">
+            <div className="w-10 h-10 rounded-full bg-primary-soft flex items-center justify-center text-cta flex-none">
               {item.icon}
             </div>
             <div>
               <div
-                className="text-[15px] font-semibold text-[#141210]"
+                className="text-[15px] font-semibold text-foreground"
               >
                 {item.title}
               </div>
               <div
-                className="text-[13px] text-[#5C5853]"
+                className="text-[13px] text-text-secondary"
               >
                 {item.desc}
               </div>
