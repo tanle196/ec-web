@@ -1,30 +1,66 @@
+"use client";
+
+import { useProducts } from "@/queries/products";
+import { mapProductListItem } from "@/lib/api/mappers";
 import { ProductGrid } from "@/components/commons/product-grid";
 import { SectionHeader } from "@/components/commons/section-header";
-import { FLAGSHIP, MID_RANGE } from "@/app/(shop)/categories/_data/phones";
+
+function ProductRowSkeleton() {
+  return (
+    <div className="grid grid-cols-5 gap-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div
+          key={i}
+          className="bg-white border border-border-light rounded-[12px] p-2 aspect-3/4 animate-pulse"
+        />
+      ))}
+    </div>
+  );
+}
 
 export function FeaturedProducts() {
+  const featured = useProducts({ isFeatured: true, status: "published", limit: 7 });
+  const latest = useProducts({ status: "published", limit: 5 });
+
+  const featuredProducts = featured.data?.data.map(mapProductListItem) ?? [];
+  const latestProducts = latest.data?.data.map(mapProductListItem) ?? [];
+
   return (
     <>
-      {/* Flagship deals */}
       <section className="max-w-360 mx-auto px-16 pt-16">
         <SectionHeader
           eyebrow="Ưu đãi hôm nay · kết thúc sau 4 giờ"
-          title="Tiết kiệm lớn với điện thoại"
-          action="Xem tất cả deals"
-          href="/phones"
+          title="Sản phẩm nổi bật"
+          action="Xem tất cả"
+          href="/search"
         />
-        <ProductGrid products={FLAGSHIP} />
+        {featured.isLoading ? (
+          <ProductRowSkeleton />
+        ) : featuredProducts.length > 0 ? (
+          <ProductGrid products={featuredProducts} />
+        ) : (
+          <p className="text-text-secondary text-[14px] py-8">
+            Chưa có sản phẩm nổi bật.
+          </p>
+        )}
       </section>
 
-      {/* Mid-range picks */}
       <section className="max-w-360 mx-auto px-16 pt-16">
         <SectionHeader
-          eyebrow="Tầm giá 5–15 triệu"
-          title="Hiệu năng cao, giá cực tốt"
+          eyebrow="Mới nhất"
+          title="Sản phẩm mới"
           action="Xem thêm"
-          href="/phones"
+          href="/search"
         />
-        <ProductGrid products={MID_RANGE} />
+        {latest.isLoading ? (
+          <ProductRowSkeleton />
+        ) : latestProducts.length > 0 ? (
+          <ProductGrid products={latestProducts} />
+        ) : (
+          <p className="text-text-secondary text-[14px] py-8">
+            Chưa có sản phẩm nào.
+          </p>
+        )}
       </section>
     </>
   );
