@@ -20,7 +20,7 @@ const TABS = [
   { value: "shipping", label: "Vận chuyển" },
 ];
 
-const PLACEHOLDER_IMG = "/phone-orange.svg";
+const PLACEHOLDER_IMG = "/no-image.svg";
 
 function QtyStepper({
   value,

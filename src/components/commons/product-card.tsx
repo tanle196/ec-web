@@ -24,13 +24,19 @@ function discountPct(price: number, was: number) {
   return Math.round((1 - price / was) * 100);
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  className,
+}: {
+  product: Product;
+  className?: string;
+}) {
   const [saved, setSaved] = useState(false);
 
   return (
     <Link
       href={`/products/${product.id}`}
-      className="group relative bg-white border border-border-light rounded-[12px] p-[8px_8px_14px] flex flex-col text-inherit no-underline transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(15,23,42,0.06),0_8px_24px_rgba(15,23,42,0.08)]"
+      className={`${"group relative bg-white border border-border-light rounded-[12px] p-[8px_8px_14px] flex flex-col h-full text-inherit no-underline transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(15,23,42,0.06),0_8px_24px_rgba(15,23,42,0.08)]"} ${className ?? ""}`}
     >
       {/* Badges top-left */}
       <div className="absolute top-4 left-4 flex gap-1.5 z-10">
@@ -67,26 +73,32 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Image area */}
       <div className="w-full aspect-square bg-muted rounded-[8px] flex items-center justify-center overflow-hidden">
-        <ProductImage src={product.img} alt={product.name} width={200} height={200} className="w-full h-full object-contain" />
+        <ProductImage
+          src={product.img}
+          alt={product.name}
+          width={200}
+          height={200}
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Info */}
-      <div className="flex flex-col gap-1 px-1.5 pt-3">
-        <span
-          className="text-[11px] font-medium text-text-tertiary tracking-[0.04em] uppercase"
-        >
+      <div className="flex flex-col gap-1 px-1.5 pt-3 flex-1">
+        <span className="text-[11px] font-medium text-text-tertiary tracking-[0.04em] uppercase">
           {product.seller}
         </span>
-        <span
-          className="text-[14px] font-semibold text-foreground leading-snug"
-        >
+        <span className="text-[14px] font-semibold text-foreground leading-snug">
           {product.name}
         </span>
         <div className="mt-1">
           <Price amount={product.price} was={product.was} size="md" />
         </div>
         <div className="flex items-center gap-2 mt-1.5">
-          {product.was && <Badge kind="persimmon">−{discountPct(product.price, product.was)}%</Badge>}
+          {product.was && (
+            <Badge kind="persimmon">
+              −{discountPct(product.price, product.was)}%
+            </Badge>
+          )}
           <Stars rating={product.rating} count={product.reviews} />
         </div>
       </div>

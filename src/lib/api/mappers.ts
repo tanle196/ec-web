@@ -5,7 +5,7 @@ import type {
 } from "@/api/main";
 import type { Product } from "@/components/commons/product-card";
 
-const PLACEHOLDER_IMG = "/phone-orange.svg";
+const PLACEHOLDER_IMG = "/no-image.svg";
 
 export function mapProductListItem(p: ProductListItemDto): Product {
   return {
