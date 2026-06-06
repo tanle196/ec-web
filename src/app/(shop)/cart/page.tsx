@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Price } from "@/components/commons/price";
+import { ProductImage } from "@/components/commons/product-image";
 import { SectionHeader } from "@/components/commons/section-header";
 import { ProductGrid } from "@/components/commons/product-grid";
 import { useCart, useUpdateCartItem, useRemoveCartItem } from "@/queries/cart";
@@ -58,7 +58,7 @@ function CartLineItem({
       style={{ gridTemplateColumns: "120px 1fr auto auto" }}
     >
       <div className="w-30 h-30 bg-cream rounded-[12px] p-2 flex items-center justify-center flex-none">
-        <Image src={item.img} alt={item.name} width={100} height={100} className="w-full h-full object-contain" />
+        <ProductImage src={item.img} alt={item.name} width={100} height={100} className="w-full h-full object-contain" />
       </div>
 
       <div className="flex flex-col gap-1 min-w-0">

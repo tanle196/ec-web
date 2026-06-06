@@ -34,7 +34,7 @@ export default async function ProductDetailPage({
 
   return (
     <div className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
+      <div className="max-w-7xl mx-auto px-20 py-10 pb-24">
         <nav className="text-[13px] text-text-secondary mb-5">
           <Link
             href="/"
