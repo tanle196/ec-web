@@ -59,13 +59,21 @@ function CheckItem({
       >
         {checked && (
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M2 5L4 7L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M2 5L4 7L8 3"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         )}
       </span>
       <span className="flex-1">{label}</span>
       {count != null && (
-        <span className="font-mono-marlo text-[13px] text-text-tertiary">{count}</span>
+        <span className="font-mono-marlo text-[13px] text-text-tertiary">
+          {count}
+        </span>
       )}
     </label>
   );
@@ -92,7 +100,10 @@ function FilterSidebar({
   onClear,
 }: {
   filters: FilterState;
-  onChange: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
+  onChange: <K extends keyof FilterState>(
+    key: K,
+    value: FilterState[K],
+  ) => void;
   onClear: () => void;
 }) {
   return (
@@ -136,7 +147,8 @@ function FilterSidebar({
         <div className="flex gap-1.5 mt-3 flex-wrap">
           {PRICE_PRESETS.map((preset) => {
             const active =
-              filters.priceMin === preset.min && filters.priceMax === preset.max;
+              filters.priceMin === preset.min &&
+              filters.priceMax === preset.max;
             return (
               <button
                 key={preset.label}
@@ -179,12 +191,15 @@ export function SearchResults({ query }: { query: string }) {
 
   const PAGE_SIZE = 12;
 
-  const apiParams = useMemo(() => ({
-    name: query || undefined,
-    status: "published" as const,
-    isFeatured: filters.isFeatured || undefined,
-    limit: page * PAGE_SIZE,
-  }), [query, filters.isFeatured, page]);
+  const apiParams = useMemo(
+    () => ({
+      name: query || undefined,
+      status: "published" as const,
+      isFeatured: filters.isFeatured || undefined,
+      limit: page * PAGE_SIZE,
+    }),
+    [query, filters.isFeatured, page],
+  );
 
   const { data, isLoading } = useProducts(apiParams);
 
@@ -202,15 +217,20 @@ export function SearchResults({ query }: { query: string }) {
       products = products.filter((p) => p.price >= minP && p.price <= maxP);
     }
 
-    if (sort === "price-asc") return [...products].sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") return [...products].sort((a, b) => b.price - a.price);
+    if (sort === "price-asc")
+      return [...products].sort((a, b) => a.price - b.price);
+    if (sort === "price-desc")
+      return [...products].sort((a, b) => b.price - a.price);
     return products;
   }, [allProducts, filters.priceMin, filters.priceMax, sort]);
 
   const total = data?.total ?? 0;
   const hasMore = allProducts.length < total;
 
-  function updateFilter<K extends keyof FilterState>(key: K, value: FilterState[K]) {
+  function updateFilter<K extends keyof FilterState>(
+    key: K,
+    value: FilterState[K],
+  ) {
     setFilters((prev) => ({ ...prev, [key]: value }));
     setPage(1);
   }
@@ -238,7 +258,8 @@ export function SearchResults({ query }: { query: string }) {
 
   function removeChip(chipId: string) {
     if (chipId === "featured") setFilters((f) => ({ ...f, isFeatured: false }));
-    else if (chipId === "price") setFilters((f) => ({ ...f, priceMin: "", priceMax: "" }));
+    else if (chipId === "price")
+      setFilters((f) => ({ ...f, priceMin: "", priceMax: "" }));
     setPage(1);
   }
 
@@ -246,7 +267,10 @@ export function SearchResults({ query }: { query: string }) {
     <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
       {/* Breadcrumb */}
       <nav className="text-[13px] text-text-secondary mb-4">
-        <Link href="/" className="text-text-secondary hover:text-ink transition-colors no-underline">
+        <Link
+          href="/"
+          className="text-text-secondary hover:text-ink transition-colors no-underline"
+        >
           Trang chủ
         </Link>
         {" · "}
@@ -266,22 +290,36 @@ export function SearchResults({ query }: { query: string }) {
       </h1>
 
       <div className="flex gap-8">
-        <FilterSidebar filters={filters} onChange={updateFilter} onClear={clearAll} />
+        <FilterSidebar
+          filters={filters}
+          onChange={updateFilter}
+          onClear={clearAll}
+        />
 
         <div className="flex-1 min-w-0">
           {/* Sort bar */}
           <div className="flex items-center justify-between mb-6">
             <span className="text-[14px] text-text-secondary">
-              <span className="text-ink font-semibold">{filtered.length}</span> kết quả
+              <span className="text-ink font-semibold">{filtered.length}</span>{" "}
+              kết quả
               {query && (
-                <> cho <span className="text-ink font-semibold">&ldquo;{query}&rdquo;</span></>
+                <>
+                  {" "}
+                  cho{" "}
+                  <span className="text-ink font-semibold">
+                    &ldquo;{query}&rdquo;
+                  </span>
+                </>
               )}
             </span>
             <div className="flex items-center gap-3">
               <span className="text-[13px] text-text-secondary">Sắp xếp</span>
               <select
                 value={sort}
-                onChange={(e) => { setSort(e.target.value); setPage(1); }}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                  setPage(1);
+                }}
                 className="bg-white border border-marlo-border rounded-[8px] px-3 py-2 text-[14px] text-ink cursor-pointer outline-none"
               >
                 <option value="featured">Nổi bật</option>
@@ -308,37 +346,56 @@ export function SearchResults({ query }: { query: string }) {
           )}
 
           {/* Product grid */}
-          {isLoading ? (
-            <div className="grid grid-cols-4 gap-4">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-white border border-border-light rounded-[12px] p-2 aspect-3/4 animate-pulse" />
-              ))}
-            </div>
-          ) : filtered.length > 0 ? (
-            <ProductGrid products={filtered} />
-          ) : (
+          {filtered.length > 0 ? (
+            <ProductGrid products={filtered} cols={4} carousel={false} />
+          ) : !isLoading ? (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <svg
-                width="48" height="48" viewBox="0 0 24 24" fill="none"
-                stroke="var(--color-border-strong)" strokeWidth="1.5"
-                strokeLinecap="round" strokeLinejoin="round" className="mb-4"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--color-border-strong)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mb-4"
               >
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
               </svg>
-              <p className="text-[18px] font-semibold text-ink mb-2">Không tìm thấy sản phẩm</p>
-              <p className="text-[14px] text-text-secondary">Thử từ khóa khác hoặc bỏ bớt bộ lọc.</p>
+              <p className="text-[18px] font-semibold text-ink mb-2">
+                Không tìm thấy sản phẩm
+              </p>
+              <p className="text-[14px] text-text-secondary">
+                Thử từ khóa khác hoặc bỏ bớt bộ lọc.
+              </p>
+            </div>
+          ) : null}
+
+          {/* Skeleton khi đang load lần đầu */}
+          {isLoading && allProducts.length === 0 && (
+            <div className="grid grid-cols-4 gap-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white border border-marlo-border rounded-[12px] p-2 aspect-3/4 animate-pulse"
+                />
+              ))}
             </div>
           )}
 
           {/* Load more */}
-          {hasMore && !isLoading && (
+          {hasMore && (
             <div className="flex justify-center mt-10">
               <button
                 onClick={() => setPage((p) => p + 1)}
-                className="border border-marlo-border rounded-full px-8 py-3 text-[14px] font-semibold text-ink bg-white hover:bg-cream-2 transition-colors cursor-pointer"
+                disabled={isLoading}
+                className="border border-marlo-border rounded-full px-8 py-3 text-[14px] font-semibold text-ink bg-white hover:bg-cream-2 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Xem thêm ({total - allProducts.length} sản phẩm)
+                {isLoading
+                  ? "Đang tải..."
+                  : `Xem thêm (${total - allProducts.length} sản phẩm)`}
               </button>
             </div>
           )}
