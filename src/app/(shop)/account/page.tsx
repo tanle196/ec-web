@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
 import { Badge } from "@/components/commons/badge";
 import { Price } from "@/components/commons/price";
 import { ProductGrid } from "@/components/commons/product-grid";
@@ -13,6 +15,60 @@ import {
 } from "@/components/ui/select";
 import { FLAGSHIP } from "@/app/(shop)/categories/_data/phones";
 import { ProductImage } from "@/components/commons/product-image";
+
+const ORDERS_PER_PAGE = 2;
+const SAVED_PER_PAGE = 8;
+
+function paginate<T>(items: T[], page: number, size: number) {
+  const start = (page - 1) * size;
+  return {
+    items: items.slice(start, start + size),
+    total: Math.ceil(items.length / size),
+  };
+}
+
+function Pager({
+  page,
+  total,
+  onChange,
+}: {
+  page: number;
+  total: number;
+  onChange: (p: number) => void;
+}) {
+  if (total <= 1) return null;
+  return (
+    <div className="flex items-center justify-center gap-1 mt-6">
+      <button
+        onClick={() => onChange(page - 1)}
+        disabled={page === 1}
+        className="inline-flex items-center gap-1 px-3 py-2 rounded-[8px] text-[13px] font-medium border border-marlo-border bg-white text-foreground cursor-pointer hover:bg-cream-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        ← Trước
+      </button>
+      {Array.from({ length: total }, (_, i) => i + 1).map((p) => (
+        <button
+          key={p}
+          onClick={() => onChange(p)}
+          className={`w-9 h-9 rounded-[8px] text-[13px] font-medium border cursor-pointer transition-colors ${
+            p === page
+              ? "bg-ink text-cream border-ink"
+              : "bg-white text-foreground border-marlo-border hover:bg-cream-2"
+          }`}
+        >
+          {p}
+        </button>
+      ))}
+      <button
+        onClick={() => onChange(page + 1)}
+        disabled={page === total}
+        className="inline-flex items-center gap-1 px-3 py-2 rounded-[8px] text-[13px] font-medium border border-marlo-border bg-white text-foreground cursor-pointer hover:bg-cream-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        Sau →
+      </button>
+    </div>
+  );
+}
 
 type Tab = "orders" | "saved" | "addresses" | "payment" | "settings";
 
@@ -178,15 +234,13 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
           <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Ngày đặt
           </div>
-          <div className="text-[14px] text-foreground">
-            {order.date}
-          </div>
+          <div className="text-[14px] text-foreground">{order.date}</div>
         </div>
         <div>
           <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
             Tổng tiền
           </div>
-          <Price amount={order.total} size="sm" />
+          <Price amount={order.total} />
         </div>
         <div className="justify-self-end">
           <span
@@ -234,6 +288,23 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
 }
 
 export default function AccountPage() {
+  const { user } = useAuth();
+  const displayName = user?.name || user?.email || "Tài khoản";
+  const initial = displayName[0].toUpperCase();
+
+  const [ordersPage, setOrdersPage] = useState(1);
+  const [savedPage, setSavedPage] = useState(1);
+  const { items: pagedOrders, total: orderTotal } = paginate(
+    ORDERS,
+    ordersPage,
+    ORDERS_PER_PAGE,
+  );
+  const { items: pagedSaved, total: savedTotal } = paginate(
+    FLAGSHIP,
+    savedPage,
+    SAVED_PER_PAGE,
+  );
+
   return (
     <div className="min-h-screen bg-cream">
       <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
@@ -251,14 +322,14 @@ export default function AccountPage() {
             {/* Avatar */}
             <div className="flex items-center gap-3.5 pb-6 border-b border-marlo-border">
               <div className="w-12 h-12 rounded-full bg-persimmon flex items-center justify-center text-white text-[20px] font-semibold flex-none">
-                K
+                {initial}
               </div>
               <div>
                 <div className="text-[15px] font-semibold text-ink">
-                  Kira Lee
+                  {displayName}
                 </div>
                 <div className="text-[13px] text-text-secondary">
-                  kira@hey.com
+                  {user?.email}
                 </div>
               </div>
             </div>
@@ -288,9 +359,7 @@ export default function AccountPage() {
               <div className="flex items-end justify-between mb-5">
                 <SectionTitle>Đơn hàng gần đây</SectionTitle>
                 <Select defaultValue="6m">
-                  <SelectTrigger
-                    className="bg-white border-marlo-border text-[14px] text-ink rounded-[8px] h-9.5"
-                  >
+                  <SelectTrigger className="bg-white border-marlo-border text-[14px] text-ink rounded-[8px] h-9.5">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -300,22 +369,30 @@ export default function AccountPage() {
                   </SelectContent>
                 </Select>
               </div>
-              {ORDERS.map((o) => (
+              {pagedOrders.map((o) => (
                 <OrderCard key={o.id} order={o} />
               ))}
+              <Pager
+                page={ordersPage}
+                total={orderTotal}
+                onChange={setOrdersPage}
+              />
             </TabsContent>
 
             <TabsContent value="saved">
               <SectionTitle>Sản phẩm đã lưu</SectionTitle>
-              <ProductGrid products={FLAGSHIP} />
+              <ProductGrid products={pagedSaved} cols={4} carousel={false} />
+              <Pager
+                page={savedPage}
+                total={savedTotal}
+                onChange={setSavedPage}
+              />
             </TabsContent>
 
             <TabsContent value="addresses">
               <div className="flex items-end justify-between mb-5">
                 <SectionTitle>Địa chỉ</SectionTitle>
-                <button
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] bg-persimmon text-white text-[13px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150"
-                >
+                <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] bg-persimmon text-white text-[13px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150">
                   <svg
                     width="14"
                     height="14"
@@ -371,7 +448,10 @@ export default function AccountPage() {
                           key={action}
                           className="bg-transparent border-0 text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
                           style={{
-                            color: action === "Sửa" ? "var(--foreground)" : "var(--color-text-secondary)",
+                            color:
+                              action === "Sửa"
+                                ? "var(--foreground)"
+                                : "var(--color-text-secondary)",
                           }}
                         >
                           {action}
@@ -442,9 +522,9 @@ export default function AccountPage() {
               <SectionTitle>Cài đặt tài khoản</SectionTitle>
               <div className="bg-white border border-marlo-border rounded-[12px] p-6 flex flex-col gap-5">
                 {[
-                  { label: "Họ và tên", value: "Kira Lee" },
-                  { label: "Email", value: "kira@hey.com" },
-                  { label: "Số điện thoại", value: "+84 90 123 4567" },
+                  { label: "Họ và tên", value: user?.name ?? "" },
+                  { label: "Email", value: user?.email ?? "" },
+                  { label: "Số điện thoại", value: "" },
                 ].map(({ label, value }) => (
                   <div key={label}>
                     <label className="block text-[12px] font-semibold tracking-[0.08em] uppercase text-text-secondary mb-1.5">

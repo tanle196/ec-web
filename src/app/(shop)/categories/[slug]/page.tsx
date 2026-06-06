@@ -32,9 +32,7 @@ export default async function CategoryPage({
     return (
       <div className="min-h-screen bg-cream">
         <div className="max-w-7xl mx-auto px-16 py-16">
-          <h1
-            className="text-[clamp(32px,3.5vw,48px)] font-semibold tracking-[-0.02em] text-foreground mb-2 capitalize"
-          >
+          <h1 className="text-[clamp(32px,3.5vw,48px)] font-semibold tracking-[-0.02em] text-foreground mb-2 capitalize">
             {slug.replace(/-/g, " ")}
           </h1>
           <p className="text-[16px] text-text-secondary mb-12">
@@ -65,7 +63,10 @@ export default async function CategoryPage({
       ))}
 
       {cat.editorial && (
-        <CategoryEditorial left={cat.editorial.left} right={cat.editorial.right} />
+        <CategoryEditorial
+          left={cat.editorial.left}
+          right={cat.editorial.right}
+        />
       )}
 
       <TrustStrip />

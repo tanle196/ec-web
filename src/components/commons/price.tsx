@@ -2,13 +2,23 @@ function fmt(n: number) {
   return n.toLocaleString("vi-VN") + "₫";
 }
 
-const textSizes = { sm: "text-[14px]", md: "text-[18px]", lg: "text-[24px]", xl: "text-[40px]" };
-const strikeSizes = { sm: "text-[11px]", md: "text-[12px]", lg: "text-[16px]", xl: "text-[28px]" };
+const textSizes = {
+  sm: "text-[14px]",
+  md: "text-[18px]",
+  lg: "text-[24px]",
+  xl: "text-[40px]",
+};
+const strikeSizes = {
+  sm: "text-[11px]",
+  md: "text-[12px]",
+  lg: "text-[16px]",
+  xl: "text-[28px]",
+};
 
 export function Price({
   amount,
   was,
-  size = "md",
+  size = "sm",
 }: {
   amount: number;
   was?: number | null;
