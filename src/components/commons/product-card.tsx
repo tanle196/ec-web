@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./badge";
 import { Price } from "./price";
 import { Stars } from "./stars";
+import { ProductImage } from "./product-image";
 
 export interface Product {
   id: string;
@@ -67,7 +67,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Image area */}
       <div className="w-full aspect-square bg-muted rounded-[8px] flex items-center justify-center overflow-hidden">
-        <Image src={product.img} alt={product.name} width={200} height={200} className="w-full h-full object-contain" />
+        <ProductImage src={product.img} alt={product.name} width={200} height={200} className="w-full h-full object-contain" />
       </div>
 
       {/* Info */}

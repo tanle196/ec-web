@@ -188,7 +188,10 @@ export function SearchResults({ query }: { query: string }) {
 
   const { data, isLoading } = useProducts(apiParams);
 
-  const allProducts = data?.data.map(mapProductListItem) ?? [];
+  const allProducts = useMemo(
+    () => data?.data.map(mapProductListItem) ?? [],
+    [data?.data],
+  );
 
   const filtered = useMemo(() => {
     let products = allProducts;

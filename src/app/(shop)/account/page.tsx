@@ -12,7 +12,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { FLAGSHIP } from "@/app/(shop)/categories/_data/phones";
-import Image from "next/image";
+import { ProductImage } from "@/components/commons/product-image";
 
 type Tab = "orders" | "saved" | "addresses" | "payment" | "settings";
 
@@ -205,7 +205,7 @@ function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
               key={i}
               className="w-16 h-16 bg-cream rounded-[8px] p-1.5 flex items-center justify-center"
             >
-              <Image
+              <ProductImage
                 src={src}
                 alt=""
                 width={52}

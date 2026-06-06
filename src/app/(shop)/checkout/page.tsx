@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Price } from "@/components/commons/price";
+import { ProductImage } from "@/components/commons/product-image";
 import { useCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/orders";
 import { mapCartItem } from "@/lib/api/mappers";
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.lineId} className="flex gap-3 py-3">
                     <div className="w-14 h-14 rounded-[8px] bg-cream flex items-center justify-center flex-none">
-                      <Image src={item.img} alt={item.name} width={44} height={44} className="object-contain" />
+                      <ProductImage src={item.img} alt={item.name} width={44} height={44} className="object-contain" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[13px] font-semibold text-foreground leading-snug line-clamp-2">{item.name}</p>
