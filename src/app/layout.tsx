@@ -1,3 +1,4 @@
+import { AuthInitializer } from "@/components/auth-initializer";
 import { ReactQueryProvider } from "@/lib/query/provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <AuthInitializer />
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { HeaderUserMenu } from "@/components/layout/header-user-menu";
 
 const CATEGORIES = [
   { label: "Tất cả", href: "/categories" },
@@ -65,26 +66,7 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2 ml-auto">
-          <Link
-            href="/account"
-            className="flex items-center gap-2 text-[14px] font-medium text-ink no-underline px-2.5 py-2 rounded-[8px] hover:bg-cream-2 transition-colors duration-150"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            Tài khoản
-          </Link>
+          <HeaderUserMenu />
           <Link
             href="/wishlist"
             className="relative w-10 h-10 rounded-full flex items-center justify-center text-ink hover:bg-cream-2 transition-colors duration-150"

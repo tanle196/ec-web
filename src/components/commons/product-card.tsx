@@ -91,7 +91,7 @@ export function ProductCard({
           {product.name}
         </span>
         <div className="mt-1">
-          <Price amount={product.price} was={product.was} size="md" />
+          <Price amount={product.price} was={product.was} />
         </div>
         <div className="flex items-center gap-2 mt-1.5">
           {product.was && (

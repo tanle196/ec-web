@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { queryClient } from "@/lib/query/client";
 
-interface User {
-  id: string;
-  email: string;
+export interface User {
   name: string;
+  email: string;
+  roles: string[];
+  permissions: string[];
 }
 
 interface AuthStore {
