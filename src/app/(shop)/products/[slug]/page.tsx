@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { productsControllerFindOne } from "@/api/main";
 import { mainService } from "@/lib/api/client";
 import { PdpClient } from "./_components/pdp-client";
-import Link from "next/link";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 async function fetchProduct(id: string) {
   try {
@@ -33,25 +33,15 @@ export default async function ProductDetailPage({
   if (!product) notFound();
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-20 py-10 pb-24">
-        <nav className="text-[13px] text-text-secondary mb-5">
-          <Link
-            href="/"
-            className="hover:text-foreground transition-colors no-underline"
-          >
-            Trang chủ
-          </Link>
-          {" · "}
-          <Link
-            href="/search"
-            className="hover:text-foreground transition-colors no-underline"
-          >
-            Sản phẩm
-          </Link>
-          {" · "}
-          <span className="text-foreground font-semibold">{product.name}</span>
-        </nav>
+    <div className="min-h-screen bg-muted">
+      <div className="max-w-7xl mx-auto px-6 py-6 pb-20">
+        <PageBreadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Products", href: "/search" },
+            { label: product.name },
+          ]}
+        />
         <PdpClient product={product} />
       </div>
     </div>
