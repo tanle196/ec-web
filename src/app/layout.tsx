@@ -1,13 +1,13 @@
 import { AuthInitializer } from "@/components/auth-initializer";
 import { ReactQueryProvider } from "@/lib/query/provider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Public_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const publicSans = Public_Sans({
+  variable: "--font-public-sans",
   subsets: ["latin"],
-  fallback: ["Inter Fallback", "Arial", "sans-serif"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${publicSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <ReactQueryProvider>
           <AuthInitializer />

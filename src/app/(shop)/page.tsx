@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
-import { Hero } from "./_sections/hero";
-import { CategorySection } from "./_sections/category-section";
-import { FeaturedProducts } from "./_sections/featured-products";
-import { EditorialPair } from "./_sections/editorial-pair";
-import { TrustStrip } from "./_sections/trust-strip";
+import { HeroWidgets } from "./_sections/hero-widgets";
+import { FeaturesBar } from "./_sections/features-bar";
+import { BestDeals } from "./_sections/best-deals";
+import { ShopCategories } from "./_sections/shop-categories";
+import { FeaturedGrid } from "./_sections/featured-grid";
+import { PromoBanners } from "./_sections/promo-banners";
+import { MiniLists } from "./_sections/mini-lists";
+import { LatestNews } from "./_sections/latest-news";
+import { NewsletterSection } from "./_sections/newsletter-section";
 
 export const metadata: Metadata = {
-  title: "Marlo — Mua sắm thông minh, giá tốt mỗi ngày",
+  title: "Clicon — Electronics eCommerce Marketplace",
   description:
-    "Marketplace đa danh mục: điện thoại, laptop, audio, thời trang và hơn 4.000 người bán. Giao nhanh, đổi trả miễn phí.",
+    "Shop the best electronics deals — phones, laptops, audio and more. Fast delivery, free returns.",
 };
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-cream pb-20">
-      <Hero />
-      <CategorySection />
-      <FeaturedProducts />
-      <EditorialPair />
-      <TrustStrip />
+    <div className="bg-white">
+      <HeroWidgets />
+      <FeaturesBar />
+      <BestDeals />
+      <ShopCategories />
+      <FeaturedGrid />
+      <PromoBanners />
+      <MiniLists />
+      <LatestNews />
+      <NewsletterSection />
     </div>
   );
 }
