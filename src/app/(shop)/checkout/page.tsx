@@ -126,7 +126,6 @@ export default function CheckoutPage() {
   const [cvc, setCvc] = useState("");
   const [note, setNote] = useState("");
   const [placed, setPlaced] = useState(false);
-  const [orderId] = useState(() => Math.floor(100000 + Math.random() * 900000));
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
@@ -165,23 +164,74 @@ export default function CheckoutPage() {
 
   if (placed) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+      <div className="min-h-screen bg-white">
+        {/* Breadcrumb */}
+        <div className="bg-[#f2f4f5] h-18 flex items-center">
+          <div className="max-w-7xl mx-auto px-16 w-full">
+            <nav className="flex items-center gap-2 text-[14px] leading-5">
+              <Link href="/" className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline flex items-center gap-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Home
+              </Link>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5f6c72" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              <Link href="/cart" className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline">
+                Shopping Cart
+              </Link>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5f6c72" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              <span className="font-medium text-[#2da5f3]">Checkout</span>
+            </nav>
           </div>
-          <h1 className="text-[32px] font-semibold text-[#191c1f] mb-3">Order Placed!</h1>
-          <p className="text-[16px] text-[#5f6c72] mb-2">Thank you for shopping with Clicon.</p>
-          <p className="text-[14px] text-[#77878f] mb-8">
-            Order ID:{" "}
-            <span className="font-semibold text-[#191c1f]">#{orderId}</span>.{" "}
-            We&apos;ll send a confirmation to your email.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/" className="inline-flex items-center justify-center px-7 py-3.5 rounded-[3px] bg-[#fa8232] text-white font-bold text-[14px] uppercase tracking-wide no-underline hover:opacity-90 transition-opacity">
-              Continue Shopping
+        </div>
+
+        {/* Success content */}
+        <div className="flex flex-col gap-8 items-center justify-center py-[124px]">
+          <div className="flex flex-col gap-6 items-center justify-center">
+            {/* Duotone check circle */}
+            <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+              <circle cx="44" cy="44" r="44" fill="#2DB224" fillOpacity="0.12" />
+              <circle cx="44" cy="44" r="33" stroke="#2DB224" strokeWidth="2" fill="none" />
+              <polyline points="29,44 40,55 59,33" stroke="#2DB224" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+
+            <div className="flex flex-col gap-3 items-center text-center">
+              <p className="text-[24px] font-semibold leading-8 text-[#191c1f]">
+                Your order is successfully placed
+              </p>
+              <p className="text-[14px] leading-5 text-[#5f6c72] max-w-[424px]">
+                Pellentesque sed lectus nec tortor tristique accumsan quis dictum risus. Donec volutpat mollis nulla non facilisis.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 items-center">
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-6 h-12 border-2 border-[#ffe7d6] rounded-[2px] text-[#fa8232] font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:bg-[#fff8f4] transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="9" height="9" rx="1" />
+                <rect x="13" y="3" width="9" height="9" rx="1" />
+                <rect x="2" y="14" width="9" height="7" rx="1" />
+                <rect x="13" y="14" width="9" height="7" rx="1" />
+              </svg>
+              Go to Dashboard
+            </Link>
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-6 h-12 bg-[#fa8232] rounded-[2px] text-white font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:opacity-90 transition-opacity"
+            >
+              View Order
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
           </div>
         </div>
