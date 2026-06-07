@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  authControllerActive,
   authControllerLogin,
   authControllerRegister,
   usersControllerGetProfile,
 } from "@/api/main";
-import type { LoginDto, RegisterDto } from "@/api/main";
+import type { ActiveDto, LoginDto, RegisterDto } from "@/api/main";
 import { mainService } from "@/lib/api/client";
 import { setCookie, getCookie } from "@/lib/cookies";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/cookies";
@@ -43,5 +44,12 @@ export function useRegister() {
   return useMutation({
     mutationFn: (body: RegisterDto) =>
       mainService.request(authControllerRegister)({ body }),
+  });
+}
+
+export function useVerifyEmail() {
+  return useMutation({
+    mutationFn: (body: ActiveDto) =>
+      mainService.request(authControllerActive)({ body }),
   });
 }
