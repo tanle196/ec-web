@@ -12,6 +12,7 @@ import {
   Phone,
 } from "lucide-react";
 import { PromoBanner } from "./promo-banner";
+import { CategoryMenu } from "./category-menu";
 
 /* ── Brand social icons ──────────────────────────────────────────── */
 
@@ -173,13 +174,7 @@ export function Header() {
           <div className="flex items-center justify-between">
 
             <div className="flex items-center gap-6">
-              <button
-                className="bg-gray-50 flex items-center gap-2 px-6 py-3.5 rounded-sm text-body-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 transition-colors"
-                aria-haspopup="true"
-              >
-                All Category
-                <ChevronDown size={16} aria-hidden />
-              </button>
+              <CategoryMenu />
 
               <nav className="hidden lg:flex items-center gap-6" aria-label="Quick links">
                 <Link href="/track-order" className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline hover:text-gray-900 transition-colors">
