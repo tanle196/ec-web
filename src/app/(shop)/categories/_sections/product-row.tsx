@@ -1,15 +1,15 @@
 import { ProductGrid } from "@/components/commons/product-grid";
 import { SectionHeader } from "@/components/commons/section-header";
-import type { Phone } from "../_data/phones";
+import type { Product } from "@/components/commons/product-card";
 
 export function ProductRow({
-  phones,
+  products,
   eyebrow,
   title,
   action,
   href = "#",
 }: {
-  phones: Phone[];
+  products: Product[];
   eyebrow?: string;
   title: string;
   action?: string;
@@ -23,7 +23,7 @@ export function ProductRow({
         action={action}
         href={href}
       />
-      <ProductGrid products={phones} />
+      <ProductGrid products={products} />
     </section>
   );
 }

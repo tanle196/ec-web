@@ -30,7 +30,7 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
         {cat.children!.map((child) => (
           <li key={child.id}>
             <Link
-              href={`/category/${child.slug}`}
+              href={`/categories/${child.slug}`}
               className="h-9 flex items-center px-4 text-body-sm text-gray-600 rounded-sm hover:bg-gray-50 hover:text-gray-900 transition-colors"
             >
               {child.name}
@@ -110,7 +110,9 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-body-sm text-gray-700">Starting price:</span>
+              <span className="text-body-sm text-gray-700">
+                Starting price:
+              </span>
               <span className="bg-white px-3 py-1.5 rounded-sm text-body-md font-semibold text-gray-900">
                 $99 USD
               </span>
@@ -177,7 +179,7 @@ export function CategoryMenu() {
                     return (
                       <li key={cat.id} role="none">
                         <Link
-                          href={`/category/${cat.slug}`}
+                          href={`/categories/${cat.slug}`}
                           role="menuitem"
                           onMouseEnter={() =>
                             setActiveCat(hasChildren ? cat : null)
