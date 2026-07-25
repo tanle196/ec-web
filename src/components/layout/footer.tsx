@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Container } from "@/components/commons/container";
 
 /* ── Social icons ────────────────────────────────────────────────── */
 
@@ -147,7 +148,7 @@ export function Footer() {
     <footer>
       {/* Main body */}
       <div className="bg-gray-900">
-        <div className="max-w-330 mx-auto px-4 lg:px-8 py-14">
+        <Container className="py-14">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
 
             {/* Brand column */}
@@ -203,11 +204,11 @@ export function Footer() {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
 
         {/* Bottom bar */}
         <div className="border-t border-white/10">
-          <div className="max-w-330 mx-auto px-4 lg:px-8 py-5">
+          <Container className="py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-body-sm text-gray-500 text-center sm:text-left">
                 © {new Date().getFullYear()} Clicon. All rights reserved.
@@ -219,7 +220,7 @@ export function Footer() {
                 <AmexIcon />
               </div>
             </div>
-          </div>
+          </Container>
         </div>
       </div>
     </footer>

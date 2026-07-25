@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Temporary placeholder images (Figma assets, 7-day URLs) ────── */
 const IMG_XBOX =
@@ -189,17 +190,16 @@ function LightWidget() {
 
 export function HeroWidgets() {
   return (
-    <section
-      className="max-w-330 mx-auto px-4 lg:px-8 py-6"
-      aria-label="Featured products"
-    >
-      <div className="flex flex-col lg:flex-row gap-6">
-        <HeroSlide />
-        <div className="flex flex-col gap-6 lg:w-[424px] shrink-0">
-          <DarkWidget />
-          <LightWidget />
+    <section aria-label="Featured products">
+      <Container className="py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <HeroSlide />
+          <div className="flex flex-col gap-6 lg:w-[424px] shrink-0">
+            <DarkWidget />
+            <LightWidget />
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

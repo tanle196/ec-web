@@ -3,24 +3,47 @@
 import { useState } from "react";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+import { Container } from "@/components/commons/container";
 
 function EyeIcon({ open }: { open: boolean }) {
   return open ? (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-      <path d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="currentColor" strokeWidth="1.4" />
+      <path
+        d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
       <circle cx="9" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.4" />
     </svg>
   ) : (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-      <path d="M1 1l16 16M7.5 7.6A2.5 2.5 0 0 0 11.4 11.5M5.3 5.4C3.3 6.6 2 9 2 9s3 6 7 6a7 7 0 0 0 3.7-1.1M9 3C14 3 16 9 16 9s-.7 1.4-2 2.7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path
+        d="M1 1l16 16M7.5 7.6A2.5 2.5 0 0 0 11.4 11.5M5.3 5.4C3.3 6.6 2 9 2 9s3 6 7 6a7 7 0 0 0 3.7-1.1M9 3C14 3 16 9 16 9s-.7 1.4-2 2.7"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function ChevronDown() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="pointer-events-none">
-      <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden
+      className="pointer-events-none"
+    >
+      <path
+        d="M4 6l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -166,7 +189,9 @@ function AddressForm() {
       <div>
         <Label>Region/State</Label>
         <Select defaultValue="">
-          <option value="" disabled>Select...</option>
+          <option value="" disabled>
+            Select...
+          </option>
           <option value="dhaka">Dhaka</option>
           <option value="chittagong">Chittagong</option>
         </Select>
@@ -207,12 +232,11 @@ function AddressForm() {
 export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-330 mx-auto px-6 py-6 pb-20">
+      <Container className="py-6 pb-20">
         <PageBreadcrumb
           items={[
             { label: "Home", href: "/" },
             { label: "User Account", href: "/account" },
-            { label: "Dashboard", href: "/account" },
             { label: "Setting" },
           ]}
         />
@@ -222,7 +246,6 @@ export default function SettingsPage() {
 
           {/* Main content */}
           <div className="flex-1 min-w-0 flex flex-col gap-6">
-
             {/* Account Setting */}
             <div className="bg-white border border-gray-100 rounded-[4px] p-6">
               <SectionHeading>Account Setting</SectionHeading>
@@ -258,7 +281,10 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <Label>Email</Label>
-                    <Input defaultValue="Kevin.gilbert@gmail.com" type="email" />
+                    <Input
+                      defaultValue="Kevin.gilbert@gmail.com"
+                      type="email"
+                    />
                   </div>
                   <div>
                     <Label>Secondary Email</Label>
@@ -314,17 +340,19 @@ export default function SettingsPage() {
               <SectionHeading>Change Password</SectionHeading>
               <div className="max-w-lg flex flex-col gap-6">
                 <PasswordInput label="Current Password" />
-                <PasswordInput label="New Password" placeholder="6+ characters" />
+                <PasswordInput
+                  label="New Password"
+                  placeholder="6+ characters"
+                />
                 <PasswordInput label="Confirm Password" />
                 <div>
                   <SaveButton label="Change Password" />
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

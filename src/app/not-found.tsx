@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import Image from "next/image";
 
 const robotIllustration =
   "https://www.figma.com/api/mcp/asset/4bb0a71f-0905-4b92-91aa-3a86afbefb13";
@@ -18,22 +19,22 @@ export default function NotFound() {
       <main className="flex-1 flex flex-col items-center justify-center py-20 bg-white">
         {/* Robot illustration */}
         <div className="relative w-[320px] h-[320px] mb-10">
-          <img
+          <Image
             src={robotBackground}
             alt=""
             className="absolute inset-0 w-full h-full object-contain"
           />
-          <img
+          <Image
             src={robotShadow}
             alt=""
             className="absolute bottom-0 left-0 right-0 w-full object-contain"
           />
-          <img
+          <Image
             src={robotIllustration}
             alt="Broken robot"
             className="absolute inset-0 w-full h-full object-contain"
           />
-          <img
+          <Image
             src={robotParts}
             alt=""
             className="absolute bottom-0 left-0 right-0 w-full object-contain"

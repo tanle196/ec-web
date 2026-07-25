@@ -153,6 +153,57 @@ export const ResetPasswordDtoSchema = {
     ]
 } as const;
 
+export const UserProfileDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            example: 'e4b5f7a0-1c2d-4e3f-8a9b-0c1d2e3f4a5b',
+            description: 'ID người dùng'
+        },
+        name: {
+            type: 'string',
+            example: 'Name',
+            description: 'Tên người dùng'
+        },
+        email: {
+            type: 'string',
+            example: 'user@example.com',
+            description: 'Email người dùng'
+        },
+        roles: {
+            example: [
+                'ADMIN',
+                'USER'
+            ],
+            description: 'Danh sách role của người dùng',
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        permissions: {
+            example: [
+                'user.read',
+                'user.create',
+                'post.update'
+            ],
+            description: 'Danh sách permission của người dùng',
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'email',
+        'roles',
+        'permissions'
+    ]
+} as const;
+
 export const UserListQueryDtoSchema = {
     type: 'object',
     properties: {
@@ -172,6 +223,10 @@ export const UserListQueryDtoSchema = {
         },
         role: {
             type: 'string'
+        },
+        userCode: {
+            type: 'string',
+            example: 'USR-20260627-AB12CD'
         }
     }
 } as const;
@@ -197,6 +252,7 @@ export const PermissionResponseDtoSchema = {
                 'delete',
                 'cancel',
                 'publish',
+                'upload',
                 'assign.role'
             ]
         },
@@ -284,6 +340,10 @@ export const UserResponseDtoSchema = {
             example: 'c1a2b3',
             description: 'User ID'
         },
+        userCode: {
+            type: 'string',
+            example: 'USR-20260627-AB12CD'
+        },
         email: {
             type: 'string',
             example: 'user@gmail.com'
@@ -318,6 +378,7 @@ export const UserResponseDtoSchema = {
     },
     required: [
         'id',
+        'userCode',
         'email',
         'fullName',
         'roles',
@@ -356,57 +417,16 @@ export const UserPaginatedResponseDtoSchema = {
     ]
 } as const;
 
-export const UserProfileDtoSchema = {
-    type: 'object',
-    properties: {
-        name: {
-            type: 'string',
-            example: 'Name',
-            description: 'Tên người dùng'
-        },
-        email: {
-            type: 'string',
-            example: 'user@example.com',
-            description: 'Email người dùng'
-        },
-        roles: {
-            example: [
-                'ADMIN',
-                'USER'
-            ],
-            description: 'Danh sách role của người dùng',
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        permissions: {
-            example: [
-                'user.read',
-                'user.create',
-                'post.update'
-            ],
-            description: 'Danh sách permission của người dùng',
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    },
-    required: [
-        'name',
-        'email',
-        'roles',
-        'permissions'
-    ]
-} as const;
-
 export const UserDetailDtoSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string',
             example: 'uuid-v4'
+        },
+        userCode: {
+            type: 'string',
+            example: 'USR-20260627-AB12CD'
         },
         email: {
             type: 'string',
@@ -448,6 +468,7 @@ export const UserDetailDtoSchema = {
     },
     required: [
         'id',
+        'userCode',
         'email',
         'fullName',
         'avatar',
@@ -609,6 +630,7 @@ export const CreatePermissionDtoSchema = {
                 'delete',
                 'cancel',
                 'publish',
+                'upload',
                 'assign.role'
             ],
             example: 'read'
@@ -634,8 +656,20 @@ export const PermissionSchema = {
     properties: {
         id: {
             type: 'string',
-            example: 'uuid-v4',
-            description: 'ID permission'
+            example: 'e4b5f7a0-1c2d-4e3f-8a9b-0c1d2e3f4a5b',
+            description: 'ID'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-01-01T10:00:00Z',
+            description: 'Thời gian tạo'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-01-01T10:05:00Z',
+            description: 'Thời gian cập nhật'
         },
         module: {
             type: 'string',
@@ -652,6 +686,7 @@ export const PermissionSchema = {
                 'delete',
                 'cancel',
                 'publish',
+                'upload',
                 'assign.role'
             ],
             description: 'Hành động CRUD'
@@ -664,25 +699,15 @@ export const PermissionSchema = {
             type: 'boolean',
             example: false,
             description: 'Permission hệ thống (readonly)'
-        },
-        createdAt: {
-            format: 'date-time',
-            type: 'string',
-            example: '2026-01-01T10:00:00Z'
-        },
-        updatedAt: {
-            format: 'date-time',
-            type: 'string',
-            example: '2026-01-01T10:05:00Z'
         }
     },
     required: [
         'id',
+        'createdAt',
+        'updatedAt',
         'module',
         'action',
-        'isSystem',
-        'createdAt',
-        'updatedAt'
+        'isSystem'
     ]
 } as const;
 
@@ -771,48 +796,6 @@ export const UpdatePermissionDtoSchema = {
             example: 'Xem & tìm kiếm người dùng'
         }
     }
-} as const;
-
-export const CreateCategoryDtoSchema = {
-    type: 'object',
-    properties: {
-        name: {
-            type: 'string',
-            example: 'Smartphones',
-            description: 'Category name'
-        },
-        slug: {
-            type: 'string',
-            example: 'smartphones',
-            description: 'SEO slug (auto-generated from name if omitted)'
-        },
-        parent_id: {
-            type: 'string',
-            example: '123e4567-e89b-12d3-a456-426614174000',
-            description: 'Parent category ID'
-        },
-        description: {
-            type: 'string',
-            example: 'All smartphones and mobile phones'
-        },
-        image: {
-            type: 'string',
-            example: 'https://cdn.example.com/cat.jpg'
-        },
-        sortOrder: {
-            type: 'number',
-            example: 0,
-            default: 0
-        },
-        isActive: {
-            type: 'boolean',
-            example: true,
-            default: true
-        }
-    },
-    required: [
-        'name'
-    ]
 } as const;
 
 export const CategoryResponseDtoSchema = {
@@ -971,6 +954,108 @@ export const CategoryTreeNodeDtoSchema = {
     ]
 } as const;
 
+export const AdminCategoryResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            example: '123e4567-e89b-12d3-a456-426614174000'
+        },
+        parent_id: {
+            type: 'object',
+            example: null,
+            nullable: true
+        },
+        name: {
+            type: 'string',
+            example: 'Smartphones'
+        },
+        slug: {
+            type: 'string',
+            example: 'smartphones'
+        },
+        description: {
+            type: 'object',
+            example: 'All smartphones and mobile phones',
+            nullable: true
+        },
+        image: {
+            type: 'object',
+            example: 'https://cdn.example.com/cat.jpg',
+            nullable: true
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0
+        },
+        isActive: {
+            type: 'boolean',
+            example: true
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-01-01T00:00:00.000Z'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-01-01T00:00:00.000Z'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'slug',
+        'sortOrder',
+        'isActive',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const CreateCategoryDtoSchema = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            example: 'Smartphones',
+            description: 'Category name'
+        },
+        slug: {
+            type: 'string',
+            example: 'smartphones',
+            description: 'SEO slug (auto-generated from name if omitted)'
+        },
+        parent_id: {
+            type: 'string',
+            example: '123e4567-e89b-12d3-a456-426614174000',
+            description: 'Parent category ID'
+        },
+        description: {
+            type: 'string',
+            example: 'All smartphones and mobile phones'
+        },
+        image: {
+            type: 'string',
+            example: 'https://cdn.example.com/cat.jpg'
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0,
+            default: 0
+        },
+        isActive: {
+            type: 'boolean',
+            example: true,
+            default: true
+        }
+    },
+    required: [
+        'name'
+    ]
+} as const;
+
 export const UpdateCategoryDtoSchema = {
     type: 'object',
     properties: {
@@ -1010,99 +1095,80 @@ export const UpdateCategoryDtoSchema = {
     }
 } as const;
 
-export const CreateProductImageDtoSchema = {
+export const UploadResultDtoSchema = {
     type: 'object',
     properties: {
         url: {
             type: 'string',
-            example: 'https://cdn.example.com/img.jpg'
+            example: 'https://res.cloudinary.com/demo/image/upload/sample.jpg'
         },
-        alt: {
+        publicId: {
             type: 'string',
-            example: 'Product front view'
+            example: 'ec-api/a1b2c3d4'
         },
-        isPrimary: {
-            type: 'boolean',
-            example: false,
-            default: false
-        },
-        sortOrder: {
+        width: {
             type: 'number',
-            example: 0,
-            default: 0
+            example: 1920
+        },
+        height: {
+            type: 'number',
+            example: 1080
+        },
+        format: {
+            type: 'string',
+            example: 'jpg'
+        },
+        bytes: {
+            type: 'number',
+            example: 204800
+        },
+        originalName: {
+            type: 'string',
+            example: 'photo.jpg'
         }
     },
     required: [
-        'url'
+        'url',
+        'publicId',
+        'originalName'
     ]
 } as const;
 
-export const CreateProductVariantDtoSchema = {
+export const MultiUploadResultDtoSchema = {
     type: 'object',
     properties: {
-        name: {
-            type: 'string',
-            example: 'Đỏ - L'
-        },
-        sku: {
-            type: 'string',
-            example: 'PROD-001-RED-L'
-        },
-        price: {
-            type: 'number',
-            example: 299000
-        },
-        stock: {
-            type: 'number',
-            example: 100,
-            default: 0
-        },
-        attributes: {
-            type: 'object',
-            example: {
-                color: 'red',
-                size: 'L'
+        files: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/UploadResultDto'
             }
-        },
-        isActive: {
-            type: 'boolean',
-            example: true,
-            default: true
         }
     },
     required: [
-        'name',
-        'sku',
-        'price'
+        'files'
     ]
 } as const;
 
-export const CreateProductDtoSchema = {
+export const ProductListItemDtoSchema = {
     type: 'object',
     properties: {
+        id: {
+            type: 'string'
+        },
         category_id: {
-            type: 'string',
-            example: 'uuid-v4'
+            type: 'string'
         },
         name: {
-            type: 'string',
-            example: 'iPhone 15 Pro'
+            type: 'string'
         },
         slug: {
-            type: 'string',
-            example: 'iphone-15-pro',
-            description: 'Auto-generated from name if omitted'
-        },
-        description: {
             type: 'string'
         },
         basePrice: {
-            type: 'number',
-            example: 29990000
+            type: 'number'
         },
         sku: {
-            type: 'string',
-            example: 'IPH-15-PRO'
+            type: 'string'
         },
         status: {
             type: 'string',
@@ -1110,42 +1176,61 @@ export const CreateProductDtoSchema = {
                 'draft',
                 'published',
                 'archived'
-            ],
-            default: 'draft'
+            ]
         },
         isFeatured: {
-            type: 'boolean',
-            example: false,
-            default: false
+            type: 'boolean'
         },
-        images: {
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'category_id',
+        'name',
+        'slug',
+        'basePrice',
+        'sku',
+        'status',
+        'isFeatured',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const ProductPaginatedResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 100
+        },
+        page: {
+            type: 'number',
+            example: 1
+        },
+        limit: {
+            type: 'number',
+            example: 10
+        },
+        data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/CreateProductImageDto'
-            }
-        },
-        variants: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CreateProductVariantDto'
-            }
-        },
-        tagIds: {
-            example: [
-                'uuid-tag-1',
-                'uuid-tag-2'
-            ],
-            type: 'array',
-            items: {
-                type: 'string'
+                $ref: '#/components/schemas/ProductListItemDto'
             }
         }
     },
     required: [
-        'category_id',
-        'name',
-        'basePrice',
-        'sku'
+        'total',
+        'page',
+        'limit',
+        'data'
     ]
 } as const;
 
@@ -1154,6 +1239,10 @@ export const ProductImageResponseDtoSchema = {
     properties: {
         id: {
             type: 'string'
+        },
+        variant_id: {
+            type: 'object',
+            nullable: true
         },
         url: {
             type: 'string'
@@ -1323,7 +1412,7 @@ export const ProductResponseDtoSchema = {
     ]
 } as const;
 
-export const ProductListItemDtoSchema = {
+export const AdminProductResponseDtoSchema = {
     type: 'object',
     properties: {
         id: {
@@ -1337,6 +1426,10 @@ export const ProductListItemDtoSchema = {
         },
         slug: {
             type: 'string'
+        },
+        description: {
+            type: 'object',
+            nullable: true
         },
         basePrice: {
             type: 'number'
@@ -1354,6 +1447,24 @@ export const ProductListItemDtoSchema = {
         },
         isFeatured: {
             type: 'boolean'
+        },
+        images: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ProductImageResponseDto'
+            }
+        },
+        variants: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ProductVariantResponseDto'
+            }
+        },
+        tags: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TagResponseDto'
+            }
         },
         createdAt: {
             format: 'date-time',
@@ -1373,38 +1484,154 @@ export const ProductListItemDtoSchema = {
         'sku',
         'status',
         'isFeatured',
+        'images',
+        'variants',
+        'tags',
         'createdAt',
         'updatedAt'
     ]
 } as const;
 
-export const ProductPaginatedResponseDtoSchema = {
+export const CreateProductImageDtoSchema = {
     type: 'object',
     properties: {
-        total: {
-            type: 'number',
-            example: 100
+        url: {
+            type: 'string',
+            example: 'https://cdn.example.com/img.jpg'
         },
-        page: {
-            type: 'number',
-            example: 1
+        variant_id: {
+            type: 'string',
+            example: 'uuid-v4'
         },
-        limit: {
-            type: 'number',
-            example: 10
+        alt: {
+            type: 'string',
+            example: 'Product front view'
         },
-        data: {
+        isPrimary: {
+            type: 'boolean',
+            example: false,
+            default: false
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0,
+            default: 0
+        }
+    },
+    required: [
+        'url'
+    ]
+} as const;
+
+export const CreateProductVariantDtoSchema = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            example: 'Đỏ - L'
+        },
+        sku: {
+            type: 'string',
+            example: 'PROD-001-RED-L'
+        },
+        price: {
+            type: 'number',
+            example: 299000
+        },
+        stock: {
+            type: 'number',
+            example: 100,
+            default: 0
+        },
+        attributes: {
+            type: 'object',
+            example: {
+                color: 'red',
+                size: 'L'
+            }
+        },
+        isActive: {
+            type: 'boolean',
+            example: true,
+            default: true
+        }
+    },
+    required: [
+        'name',
+        'sku',
+        'price'
+    ]
+} as const;
+
+export const CreateProductDtoSchema = {
+    type: 'object',
+    properties: {
+        category_id: {
+            type: 'string',
+            example: 'uuid-v4'
+        },
+        name: {
+            type: 'string',
+            example: 'iPhone 15 Pro'
+        },
+        slug: {
+            type: 'string',
+            example: 'iphone-15-pro',
+            description: 'Auto-generated from name if omitted'
+        },
+        description: {
+            type: 'string'
+        },
+        basePrice: {
+            type: 'number',
+            example: 29990000
+        },
+        sku: {
+            type: 'string',
+            example: 'IPH-15-PRO'
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'draft',
+                'published',
+                'archived'
+            ],
+            default: 'draft'
+        },
+        isFeatured: {
+            type: 'boolean',
+            example: false,
+            default: false
+        },
+        images: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ProductListItemDto'
+                $ref: '#/components/schemas/CreateProductImageDto'
+            }
+        },
+        variants: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CreateProductVariantDto'
+            }
+        },
+        tagIds: {
+            example: [
+                'uuid-tag-1',
+                'uuid-tag-2'
+            ],
+            type: 'array',
+            items: {
+                type: 'string'
             }
         }
     },
     required: [
-        'total',
-        'page',
-        'limit',
-        'data'
+        'category_id',
+        'name',
+        'basePrice',
+        'sku'
     ]
 } as const;
 
@@ -1524,6 +1751,26 @@ export const CreateTagDtoSchema = {
     },
     required: [
         'name'
+    ]
+} as const;
+
+export const AdminTagResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'slug'
     ]
 } as const;
 
@@ -1817,6 +2064,7 @@ export const OrderResponseDtoSchema = {
                 'shipped',
                 'delivered',
                 'cancelled',
+                'partially_refunded',
                 'refunded'
             ]
         },
@@ -1872,6 +2120,29 @@ export const OrderResponseDtoSchema = {
     ]
 } as const;
 
+export const CheckoutDtoSchema = {
+    type: 'object',
+    properties: {
+        address_id: {
+            type: 'string',
+            example: 'uuid-v4',
+            description: 'Delivery address ID'
+        },
+        discountCode: {
+            type: 'string',
+            example: 'SALE20',
+            description: 'Discount coupon code'
+        },
+        notes: {
+            type: 'string',
+            example: 'Giao giờ hành chính'
+        }
+    },
+    required: [
+        'address_id'
+    ]
+} as const;
+
 export const OrderListItemDtoSchema = {
     type: 'object',
     properties: {
@@ -1893,6 +2164,7 @@ export const OrderListItemDtoSchema = {
                 'shipped',
                 'delivered',
                 'cancelled',
+                'partially_refunded',
                 'refunded'
             ]
         },
@@ -1944,6 +2216,244 @@ export const OrderPaginatedResponseDtoSchema = {
     ]
 } as const;
 
+export const UpdateOrderDtoSchema = {
+    type: 'object',
+    properties: {
+        address_id: {
+            type: 'string',
+            example: 'uuid-v4',
+            description: 'Delivery address ID'
+        },
+        items: {
+            description: 'Replaces the entire item list',
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CreateOrderItemDto'
+            }
+        },
+        notes: {
+            type: 'string',
+            example: 'Giao giờ hành chính'
+        }
+    }
+} as const;
+
+export const OrderStatusHistoryResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        order_id: {
+            type: 'string'
+        },
+        fromStatus: {
+            type: 'string',
+            enum: [
+                'pending',
+                'confirmed',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        toStatus: {
+            type: 'string',
+            enum: [
+                'pending',
+                'confirmed',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        changedByType: {
+            type: 'string',
+            enum: [
+                'customer',
+                'admin',
+                'system'
+            ]
+        },
+        changedById: {
+            type: 'object'
+        },
+        note: {
+            type: 'object'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'order_id',
+        'toStatus',
+        'changedByType',
+        'createdAt'
+    ]
+} as const;
+
+export const AdminOrderListItemDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        user_id: {
+            type: 'string'
+        },
+        orderNumber: {
+            type: 'string'
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'confirmed',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        total: {
+            type: 'number'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'user_id',
+        'orderNumber',
+        'status',
+        'total',
+        'createdAt'
+    ]
+} as const;
+
+export const AdminOrderPaginatedResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 100
+        },
+        page: {
+            type: 'number',
+            example: 1
+        },
+        limit: {
+            type: 'number',
+            example: 10
+        },
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/AdminOrderListItemDto'
+            }
+        }
+    },
+    required: [
+        'total',
+        'page',
+        'limit',
+        'data'
+    ]
+} as const;
+
+export const AdminOrderResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        user_id: {
+            type: 'string'
+        },
+        address_id: {
+            type: 'object'
+        },
+        orderNumber: {
+            type: 'string'
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'confirmed',
+                'processing',
+                'shipped',
+                'delivered',
+                'cancelled',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        subtotal: {
+            type: 'number'
+        },
+        shippingFee: {
+            type: 'number'
+        },
+        discount: {
+            type: 'number'
+        },
+        total: {
+            type: 'number'
+        },
+        notes: {
+            type: 'object'
+        },
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OrderItemResponseDto'
+            }
+        },
+        discounts: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/AppliedDiscountDto'
+            }
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'user_id',
+        'orderNumber',
+        'status',
+        'subtotal',
+        'shippingFee',
+        'discount',
+        'total',
+        'items',
+        'discounts',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
 export const UpdateOrderStatusDtoSchema = {
     type: 'object',
     properties: {
@@ -1956,8 +2466,14 @@ export const UpdateOrderStatusDtoSchema = {
                 'shipped',
                 'delivered',
                 'cancelled',
+                'partially_refunded',
                 'refunded'
             ]
+        },
+        note: {
+            type: 'string',
+            example: 'Customer requested cancellation via hotline',
+            description: 'Reason recorded in the order status history'
         }
     },
     required: [
@@ -2069,7 +2585,7 @@ export const CreateDiscountDtoSchema = {
     ]
 } as const;
 
-export const DiscountResponseDtoSchema = {
+export const AdminDiscountResponseDtoSchema = {
     type: 'object',
     properties: {
         id: {
@@ -2127,7 +2643,7 @@ export const DiscountResponseDtoSchema = {
     ]
 } as const;
 
-export const DiscountPaginatedResponseDtoSchema = {
+export const AdminDiscountPaginatedResponseDtoSchema = {
     type: 'object',
     properties: {
         total: {
@@ -2145,7 +2661,7 @@ export const DiscountPaginatedResponseDtoSchema = {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/DiscountResponseDto'
+                $ref: '#/components/schemas/AdminDiscountResponseDto'
             }
         }
     },
@@ -2202,150 +2718,6 @@ export const UpdateDiscountDtoSchema = {
             example: '2026-12-31T23:59:59Z'
         }
     }
-} as const;
-
-export const CreatePaymentDtoSchema = {
-    type: 'object',
-    properties: {
-        order_id: {
-            type: 'string',
-            example: 'uuid-v4',
-            description: 'Order ID to pay for'
-        },
-        method: {
-            type: 'string',
-            enum: [
-                'cod',
-                'vnpay',
-                'momo',
-                'zalopay',
-                'stripe',
-                'bank_transfer'
-            ],
-            example: 'cod'
-        }
-    },
-    required: [
-        'order_id',
-        'method'
-    ]
-} as const;
-
-export const PaymentResponseDtoSchema = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        order_id: {
-            type: 'string'
-        },
-        method: {
-            type: 'string',
-            enum: [
-                'cod',
-                'vnpay',
-                'momo',
-                'zalopay',
-                'stripe',
-                'bank_transfer'
-            ]
-        },
-        status: {
-            type: 'string',
-            enum: [
-                'pending',
-                'completed',
-                'failed',
-                'refunded'
-            ]
-        },
-        amount: {
-            type: 'number'
-        },
-        transactionId: {
-            type: 'object'
-        },
-        metadata: {
-            type: 'object'
-        },
-        paidAt: {
-            type: 'object'
-        },
-        createdAt: {
-            format: 'date-time',
-            type: 'string'
-        },
-        updatedAt: {
-            format: 'date-time',
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'order_id',
-        'method',
-        'status',
-        'amount',
-        'createdAt',
-        'updatedAt'
-    ]
-} as const;
-
-export const PaymentPaginatedResponseDtoSchema = {
-    type: 'object',
-    properties: {
-        total: {
-            type: 'number',
-            example: 100
-        },
-        page: {
-            type: 'number',
-            example: 1
-        },
-        limit: {
-            type: 'number',
-            example: 10
-        },
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/PaymentResponseDto'
-            }
-        }
-    },
-    required: [
-        'total',
-        'page',
-        'limit',
-        'data'
-    ]
-} as const;
-
-export const UpdatePaymentStatusDtoSchema = {
-    type: 'object',
-    properties: {
-        status: {
-            type: 'string',
-            enum: [
-                'pending',
-                'completed',
-                'failed',
-                'refunded'
-            ]
-        },
-        transactionId: {
-            type: 'string',
-            example: 'TXN-ABC123'
-        },
-        metadata: {
-            type: 'object',
-            description: 'Raw response from payment gateway'
-        }
-    },
-    required: [
-        'status'
-    ]
 } as const;
 
 export const CartItemVariantDtoSchema = {
@@ -2479,6 +2851,363 @@ export const UpdateCartItemDtoSchema = {
     },
     required: [
         'quantity'
+    ]
+} as const;
+
+export const CreatePaymentDtoSchema = {
+    type: 'object',
+    properties: {
+        order_id: {
+            type: 'string',
+            example: 'uuid-v4',
+            description: 'Order ID to pay for'
+        },
+        method: {
+            type: 'string',
+            enum: [
+                'cod',
+                'vnpay',
+                'momo',
+                'zalopay',
+                'stripe',
+                'bank_transfer'
+            ],
+            example: 'cod'
+        }
+    },
+    required: [
+        'order_id',
+        'method'
+    ]
+} as const;
+
+export const PaymentResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        order_id: {
+            type: 'string'
+        },
+        method: {
+            type: 'string',
+            enum: [
+                'cod',
+                'vnpay',
+                'momo',
+                'zalopay',
+                'stripe',
+                'bank_transfer'
+            ]
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'completed',
+                'failed',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        amount: {
+            type: 'number'
+        },
+        transactionId: {
+            type: 'object'
+        },
+        metadata: {
+            type: 'object'
+        },
+        paidAt: {
+            type: 'object'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'order_id',
+        'method',
+        'status',
+        'amount',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const PaymentPaginatedResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 100
+        },
+        page: {
+            type: 'number',
+            example: 1
+        },
+        limit: {
+            type: 'number',
+            example: 10
+        },
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PaymentResponseDto'
+            }
+        }
+    },
+    required: [
+        'total',
+        'page',
+        'limit',
+        'data'
+    ]
+} as const;
+
+export const AdminPaymentResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        order_id: {
+            type: 'string'
+        },
+        method: {
+            type: 'string',
+            enum: [
+                'cod',
+                'vnpay',
+                'momo',
+                'zalopay',
+                'stripe',
+                'bank_transfer'
+            ]
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'completed',
+                'failed',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        amount: {
+            type: 'number'
+        },
+        transactionId: {
+            type: 'object'
+        },
+        metadata: {
+            type: 'object'
+        },
+        paidAt: {
+            type: 'object'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'order_id',
+        'method',
+        'status',
+        'amount',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const AdminPaymentPaginatedResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 100
+        },
+        page: {
+            type: 'number',
+            example: 1
+        },
+        limit: {
+            type: 'number',
+            example: 10
+        },
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/AdminPaymentResponseDto'
+            }
+        }
+    },
+    required: [
+        'total',
+        'page',
+        'limit',
+        'data'
+    ]
+} as const;
+
+export const UpdatePaymentStatusDtoSchema = {
+    type: 'object',
+    properties: {
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'completed',
+                'failed',
+                'partially_refunded',
+                'refunded'
+            ]
+        },
+        transactionId: {
+            type: 'string',
+            example: 'TXN-ABC123'
+        },
+        metadata: {
+            type: 'object',
+            description: 'Raw response from payment gateway'
+        }
+    },
+    required: [
+        'status'
+    ]
+} as const;
+
+export const RefundItemInputDtoSchema = {
+    type: 'object',
+    properties: {
+        order_item_id: {
+            type: 'string',
+            example: 'uuid-v4',
+            description: 'Order item ID to refund'
+        },
+        quantity: {
+            type: 'number',
+            example: 1,
+            description: 'Quantity to refund'
+        }
+    },
+    required: [
+        'order_item_id',
+        'quantity'
+    ]
+} as const;
+
+export const CreateRefundDtoSchema = {
+    type: 'object',
+    properties: {
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/RefundItemInputDto'
+            }
+        },
+        reason: {
+            type: 'string',
+            example: 'Sản phẩm bị lỗi khi giao hàng'
+        }
+    },
+    required: [
+        'items',
+        'reason'
+    ]
+} as const;
+
+export const RefundItemResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        order_item_id: {
+            type: 'string'
+        },
+        quantity: {
+            type: 'number'
+        },
+        amount: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'order_item_id',
+        'quantity',
+        'amount'
+    ]
+} as const;
+
+export const RefundResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        payment_id: {
+            type: 'string'
+        },
+        order_id: {
+            type: 'string'
+        },
+        amount: {
+            type: 'number'
+        },
+        reason: {
+            type: 'string'
+        },
+        status: {
+            type: 'string',
+            enum: [
+                'pending',
+                'succeeded',
+                'failed'
+            ]
+        },
+        transactionId: {
+            type: 'object'
+        },
+        actorId: {
+            type: 'object'
+        },
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/RefundItemResponseDto'
+            }
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'payment_id',
+        'order_id',
+        'amount',
+        'reason',
+        'status',
+        'items',
+        'createdAt'
     ]
 } as const;
 
@@ -2630,6 +3359,90 @@ export const UpdateReviewDtoSchema = {
     }
 } as const;
 
+export const AdminReviewResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        user_id: {
+            type: 'string'
+        },
+        user: {
+            $ref: '#/components/schemas/ReviewAuthorDto'
+        },
+        product_id: {
+            type: 'string'
+        },
+        rating: {
+            type: 'number'
+        },
+        title: {
+            type: 'object',
+            nullable: true
+        },
+        content: {
+            type: 'object',
+            nullable: true
+        },
+        isVerified: {
+            type: 'boolean'
+        },
+        isApproved: {
+            type: 'boolean'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'user_id',
+        'user',
+        'product_id',
+        'rating',
+        'isVerified',
+        'isApproved',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const AdminReviewPaginatedResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 100
+        },
+        page: {
+            type: 'number',
+            example: 1
+        },
+        limit: {
+            type: 'number',
+            example: 10
+        },
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/AdminReviewResponseDto'
+            }
+        }
+    },
+    required: [
+        'total',
+        'page',
+        'limit',
+        'data'
+    ]
+} as const;
+
 export const WishlistProductDtoSchema = {
     type: 'object',
     properties: {
@@ -2731,4 +3544,341 @@ export const AddToWishlistDtoSchema = {
     required: [
         'product_id'
     ]
+} as const;
+
+export const BannerResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        subtitle: {
+            type: 'object'
+        },
+        position: {
+            type: 'string',
+            enum: [
+                'hero',
+                'promo_strip',
+                'mid_page',
+                'popup'
+            ]
+        },
+        imageUrl: {
+            type: 'string'
+        },
+        imageMobileUrl: {
+            type: 'object'
+        },
+        linkType: {
+            type: 'string',
+            enum: [
+                'url',
+                'product',
+                'category',
+                'discount'
+            ]
+        },
+        linkValue: {
+            type: 'object'
+        },
+        sortOrder: {
+            type: 'number'
+        },
+        isActive: {
+            type: 'boolean'
+        },
+        startsAt: {
+            type: 'object'
+        },
+        endsAt: {
+            type: 'object'
+        },
+        clickCount: {
+            type: 'number'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'title',
+        'position',
+        'imageUrl',
+        'linkType',
+        'sortOrder',
+        'isActive',
+        'clickCount',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const AdminBannerResponseDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        subtitle: {
+            type: 'object'
+        },
+        position: {
+            type: 'string',
+            enum: [
+                'hero',
+                'promo_strip',
+                'mid_page',
+                'popup'
+            ]
+        },
+        imageUrl: {
+            type: 'string'
+        },
+        imageMobileUrl: {
+            type: 'object'
+        },
+        linkType: {
+            type: 'string',
+            enum: [
+                'url',
+                'product',
+                'category',
+                'discount'
+            ]
+        },
+        linkValue: {
+            type: 'object'
+        },
+        sortOrder: {
+            type: 'number'
+        },
+        isActive: {
+            type: 'boolean'
+        },
+        startsAt: {
+            type: 'object'
+        },
+        endsAt: {
+            type: 'object'
+        },
+        clickCount: {
+            type: 'number'
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        },
+        updatedAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'title',
+        'position',
+        'imageUrl',
+        'linkType',
+        'sortOrder',
+        'isActive',
+        'clickCount',
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const CreateBannerDtoSchema = {
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string',
+            example: 'Flash Sale 6.6'
+        },
+        subtitle: {
+            type: 'string',
+            example: 'Giảm đến 50% toàn bộ sản phẩm'
+        },
+        position: {
+            type: 'string',
+            enum: [
+                'hero',
+                'promo_strip',
+                'mid_page',
+                'popup'
+            ],
+            example: 'hero'
+        },
+        imageUrl: {
+            type: 'string',
+            example: 'https://cdn.example.com/banner.jpg'
+        },
+        imageMobileUrl: {
+            type: 'string',
+            example: 'https://cdn.example.com/banner-mobile.jpg'
+        },
+        imagePublicId: {
+            type: 'string',
+            example: 'banners/flash-sale-6-6'
+        },
+        imageMobilePublicId: {
+            type: 'string',
+            example: 'banners/flash-sale-6-6-mobile'
+        },
+        linkType: {
+            type: 'string',
+            enum: [
+                'url',
+                'product',
+                'category',
+                'discount'
+            ],
+            example: 'url'
+        },
+        linkValue: {
+            type: 'string',
+            example: '/products?tag=sale'
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0
+        },
+        isActive: {
+            type: 'boolean',
+            example: true
+        },
+        startsAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-06-06T00:00:00Z'
+        },
+        endsAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-06-07T23:59:59Z'
+        }
+    },
+    required: [
+        'title',
+        'position',
+        'imageUrl',
+        'linkType'
+    ]
+} as const;
+
+export const BannerOrderItemDtoSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            example: 'uuid-v4'
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'id',
+        'sortOrder'
+    ]
+} as const;
+
+export const ReorderBannersDtoSchema = {
+    type: 'object',
+    properties: {
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/BannerOrderItemDto'
+            }
+        }
+    },
+    required: [
+        'items'
+    ]
+} as const;
+
+export const UpdateBannerDtoSchema = {
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string',
+            example: 'Flash Sale 6.6'
+        },
+        subtitle: {
+            type: 'string',
+            example: 'Giảm đến 50% toàn bộ sản phẩm'
+        },
+        position: {
+            type: 'string',
+            enum: [
+                'hero',
+                'promo_strip',
+                'mid_page',
+                'popup'
+            ],
+            example: 'hero'
+        },
+        imageUrl: {
+            type: 'string',
+            example: 'https://cdn.example.com/banner.jpg'
+        },
+        imageMobileUrl: {
+            type: 'string',
+            example: 'https://cdn.example.com/banner-mobile.jpg'
+        },
+        imagePublicId: {
+            type: 'string',
+            example: 'banners/flash-sale-6-6'
+        },
+        imageMobilePublicId: {
+            type: 'string',
+            example: 'banners/flash-sale-6-6-mobile'
+        },
+        linkType: {
+            type: 'string',
+            enum: [
+                'url',
+                'product',
+                'category',
+                'discount'
+            ],
+            example: 'url'
+        },
+        linkValue: {
+            type: 'string',
+            example: '/products?tag=sale'
+        },
+        sortOrder: {
+            type: 'number',
+            example: 0
+        },
+        isActive: {
+            type: 'boolean',
+            example: true
+        },
+        startsAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-06-06T00:00:00Z'
+        },
+        endsAt: {
+            format: 'date-time',
+            type: 'string',
+            example: '2026-06-07T23:59:59Z'
+        }
+    }
 } as const;

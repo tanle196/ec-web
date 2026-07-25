@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 const faqs = [
   {
@@ -58,61 +59,13 @@ export default function FaqsPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link
-              href="/"
-              className="text-[#5f6c72] hover:text-foreground transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-[#5f6c72]">Pages</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">FAQs</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb items={[{ label: "Home", href: "/" }, { label: "FAQs" }]} />
+        </Container>
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-16 py-18">
+      <Container className="py-18">
         <div className="flex gap-17 items-start">
           {/* FAQ accordion */}
           <div className="flex flex-col gap-10 flex-1 min-w-0">
@@ -131,13 +84,9 @@ export default function FaqsPage() {
                     className={`border border-[#e4e7e9] rounded-[4px] overflow-hidden mb-0 ${isOpen ? "shadow-[0px_8px_20px_rgba(0,0,0,0.12)]" : ""}`}
                   >
                     <button
-                      onClick={() =>
-                        setOpenId(isOpen ? null : faq.id)
-                      }
+                      onClick={() => setOpenId(isOpen ? null : faq.id)}
                       className={`w-full flex items-center justify-between gap-9 px-6 py-5 text-left cursor-pointer border-0 outline-none transition-colors ${
-                        isOpen
-                          ? "bg-[#fa8232]"
-                          : "bg-white hover:bg-[#fafafa]"
+                        isOpen ? "bg-[#fa8232]" : "bg-white hover:bg-[#fafafa]"
                       }`}
                     >
                       <span
@@ -209,15 +158,12 @@ export default function FaqsPage() {
               </p>
               <p className="text-[14px] font-normal leading-5 text-[#475156] w-[360px]">
                 Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                Sed molestie accumsan dui, non iaculis primis in faucibu
-                raesent eget sem purus.
+                Sed molestie accumsan dui, non iaculis primis in faucibu raesent
+                eget sem purus.
               </p>
             </div>
 
-            <form
-              onSubmit={handleSendMessage}
-              className="flex flex-col gap-3"
-            >
+            <form onSubmit={handleSendMessage} className="flex flex-col gap-3">
               <input
                 type="email"
                 placeholder="Email address"
@@ -262,7 +208,7 @@ export default function FaqsPage() {
             </form>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

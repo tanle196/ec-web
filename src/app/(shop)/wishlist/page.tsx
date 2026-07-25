@@ -9,6 +9,8 @@ import { useAddToCart } from "@/queries/cart";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { ProductImage } from "@/components/commons/product-image";
 import type { ProductResponseDto } from "@/api/main";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 function getStockInfo(product: ProductResponseDto) {
   return product.variants.reduce((s, v) => s + v.stock, 0) > 0;
@@ -157,53 +159,23 @@ export default function WishlistPage() {
   });
 
   const isLoading = results.some((r) => r.isLoading);
-  const products = results.map((r) => r.data ?? null).filter(Boolean) as ProductResponseDto[];
+  const products = results
+    .map((r) => r.data ?? null)
+    .filter(Boolean) as ProductResponseDto[];
 
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link
-              href="/"
-              className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Wishlist</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
+          />
+        </Container>
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-16 py-10 pb-24">
+      <Container className="py-10 pb-24">
         {isLoading ? (
           <div className="flex items-center justify-center h-80">
             <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
@@ -257,7 +229,10 @@ export default function WishlistPage() {
               <p className="w-44 flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide">
                 Stock Status
               </p>
-              <p className="flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide" style={{ width: "calc(148px + 24px + 24px)" }}>
+              <p
+                className="flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide"
+                style={{ width: "calc(148px + 24px + 24px)" }}
+              >
                 Actions
               </p>
             </div>
@@ -274,7 +249,7 @@ export default function WishlistPage() {
             </div>
           </div>
         )}
-      </div>
+      </Container>
     </div>
   );
 }

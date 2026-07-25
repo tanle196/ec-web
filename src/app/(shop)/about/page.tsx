@@ -1,19 +1,30 @@
-import Link from "next/link";
 import { NewsletterSection } from "@/app/(shop)/_sections/newsletter-section";
 import { MiniLists } from "@/app/(shop)/_sections/mini-lists";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 /* Figma assets (expire 7 days) */
-const IMG_HERO    = "https://www.figma.com/api/mcp/asset/c84f5e52-0d4f-4c72-8fa2-25fe68b7f589";
-const IMG_BANNER  = "https://www.figma.com/api/mcp/asset/2f1306e5-647d-4001-8ddb-d92ded3a9042";
+const IMG_HERO =
+  "https://www.figma.com/api/mcp/asset/c84f5e52-0d4f-4c72-8fa2-25fe68b7f589";
+const IMG_BANNER =
+  "https://www.figma.com/api/mcp/asset/2f1306e5-647d-4001-8ddb-d92ded3a9042";
 
-const IMG_TEAM_1  = "https://www.figma.com/api/mcp/asset/3728d998-6fb6-46c4-8432-055f9d484183";
-const IMG_TEAM_2  = "https://www.figma.com/api/mcp/asset/07716931-d596-4f8c-8cd4-5a00e77b804e";
-const IMG_TEAM_3  = "https://www.figma.com/api/mcp/asset/f555939c-a07b-4e46-aea6-fb0ec71cfb55";
-const IMG_TEAM_4  = "https://www.figma.com/api/mcp/asset/b89a10dd-ec79-4335-8233-1d6e2fc68a17";
-const IMG_TEAM_5  = "https://www.figma.com/api/mcp/asset/709057e1-873b-451c-935b-9aac55923217";
-const IMG_TEAM_6  = "https://www.figma.com/api/mcp/asset/ea9f67a3-ce66-4ea5-a03f-dbe6d92181c9";
-const IMG_TEAM_7  = "https://www.figma.com/api/mcp/asset/9957311b-08d7-43a6-938b-52b23dbf7559";
-const IMG_TEAM_8  = "https://www.figma.com/api/mcp/asset/cc68e107-50e7-46ff-8d75-26f24006f4a8";
+const IMG_TEAM_1 =
+  "https://www.figma.com/api/mcp/asset/3728d998-6fb6-46c4-8432-055f9d484183";
+const IMG_TEAM_2 =
+  "https://www.figma.com/api/mcp/asset/07716931-d596-4f8c-8cd4-5a00e77b804e";
+const IMG_TEAM_3 =
+  "https://www.figma.com/api/mcp/asset/f555939c-a07b-4e46-aea6-fb0ec71cfb55";
+const IMG_TEAM_4 =
+  "https://www.figma.com/api/mcp/asset/b89a10dd-ec79-4335-8233-1d6e2fc68a17";
+const IMG_TEAM_5 =
+  "https://www.figma.com/api/mcp/asset/709057e1-873b-451c-935b-9aac55923217";
+const IMG_TEAM_6 =
+  "https://www.figma.com/api/mcp/asset/ea9f67a3-ce66-4ea5-a03f-dbe6d92181c9";
+const IMG_TEAM_7 =
+  "https://www.figma.com/api/mcp/asset/9957311b-08d7-43a6-938b-52b23dbf7559";
+const IMG_TEAM_8 =
+  "https://www.figma.com/api/mcp/asset/cc68e107-50e7-46ff-8d75-26f24006f4a8";
 
 const FEATURES = [
   "Great 24/7 customer services.",
@@ -36,8 +47,21 @@ const TEAM_MEMBERS = [
 function CheckIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M4 13l4 4L16 8" stroke="#2DA5F3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9 13l4 4L20 8" stroke="#2DA5F3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+      <path
+        d="M4 13l4 4L16 8"
+        stroke="#2DA5F3"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 13l4 4L20 8"
+        stroke="#2DA5F3"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.5"
+      />
     </svg>
   );
 }
@@ -45,36 +69,18 @@ function CheckIcon() {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
-
       {/* Breadcrumb strip */}
       <div className="bg-gray-50 h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-body-sm">
-            <Link
-              href="/"
-              className="text-gray-600 hover:text-gray-900 transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-gray-600">Pages</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-secondary-500">About Us</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "About Us" }]}
+          />
+        </Container>
       </div>
 
       {/* About section */}
       <section className="py-18">
-        <div className="max-w-7xl mx-auto px-16">
+        <Container>
           <div className="flex items-center gap-[136px]">
             {/* Content */}
             <div className="flex flex-col gap-8 flex-1 min-w-0">
@@ -88,10 +94,11 @@ export default function AboutPage() {
                   </h1>
                 </div>
                 <p className="text-body-md text-gray-700 leading-6">
-                  Pellentesque ultrices, dui vel hendrerit iaculis, ipsum velit vestibulum risus,
-                  ac tincidunt diam lectus id magna. Praesent maximus lobortis neque sit amet
-                  rhoncus. Nullam tempus lectus a dui aliquet, non ultricies nibh elementum.
-                  Nulla ac nulla dolor.
+                  Pellentesque ultrices, dui vel hendrerit iaculis, ipsum velit
+                  vestibulum risus, ac tincidunt diam lectus id magna. Praesent
+                  maximus lobortis neque sit amet rhoncus. Nullam tempus lectus
+                  a dui aliquet, non ultricies nibh elementum. Nulla ac nulla
+                  dolor.
                 </p>
               </div>
 
@@ -99,7 +106,9 @@ export default function AboutPage() {
                 {FEATURES.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <CheckIcon />
-                    <span className="text-body-md text-gray-900 leading-6">{feature}</span>
+                    <span className="text-body-md text-gray-900 leading-6">
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -115,12 +124,12 @@ export default function AboutPage() {
               />
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Team member section */}
       <section className="py-18 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-16 flex flex-col gap-10">
+        <Container className="flex flex-col gap-10">
           <h2 className="text-heading-1 font-semibold text-gray-900 text-center">
             Our core team member
           </h2>
@@ -140,8 +149,12 @@ export default function AboutPage() {
                     className="w-16 h-16 rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col gap-1.5 min-w-0">
-                    <p className="text-body-md font-semibold text-gray-900 truncate">{member.name}</p>
-                    <p className="text-body-sm text-gray-700 truncate">{member.role}</p>
+                    <p className="text-body-md font-semibold text-gray-900 truncate">
+                      {member.name}
+                    </p>
+                    <p className="text-body-sm text-gray-700 truncate">
+                      {member.role}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -160,14 +173,18 @@ export default function AboutPage() {
                     className="w-16 h-16 rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col gap-1.5 min-w-0">
-                    <p className="text-body-md font-semibold text-gray-900 truncate">{member.name}</p>
-                    <p className="text-body-sm text-gray-700 truncate">{member.role}</p>
+                    <p className="text-body-md font-semibold text-gray-900 truncate">
+                      {member.name}
+                    </p>
+                    <p className="text-body-sm text-gray-700 truncate">
+                      {member.role}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Banner section */}
@@ -183,14 +200,14 @@ export default function AboutPage() {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/30 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-16 py-22 flex items-center gap-8">
+        <Container className="relative py-22 flex items-center gap-8">
           <div className="flex flex-col gap-4 max-w-[500px]">
             <h2 className="text-heading-1 font-semibold text-gray-900 leading-10">
               Your trusted and reliable retail shop
             </h2>
             <p className="text-body-lg text-gray-900 leading-6 max-w-[423px]">
-              Praesent sed semper metus. Nunc aliquet dolor mauris, et fringilla elit gravida eget.
-              Nunc consequat auctor urna a placerat.
+              Praesent sed semper metus. Nunc aliquet dolor mauris, et fringilla
+              elit gravida eget. Nunc consequat auctor urna a placerat.
             </p>
           </div>
 
@@ -200,11 +217,17 @@ export default function AboutPage() {
             aria-label="Watch video"
             className="w-18 h-18 rounded-full bg-primary-500 hover:bg-primary-600 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="white"
+              aria-hidden
+            >
               <path d="M8 5.14v14l11-7-11-7z" />
             </svg>
           </button>
-        </div>
+        </Container>
       </section>
 
       {/* Products mini lists */}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Figma assets (expire 7 days) ─────────────────────────────────── */
 const IMG_BANNER   = "https://www.figma.com/api/mcp/asset/d533b723-a754-46dd-a876-a0eef015971b";
@@ -110,7 +111,7 @@ function SidebarBanner() {
 export function FeaturedGrid() {
   return (
     <section className="bg-white py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         <div className="flex gap-6">
           <SidebarBanner />
 
@@ -148,7 +149,7 @@ export function FeaturedGrid() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

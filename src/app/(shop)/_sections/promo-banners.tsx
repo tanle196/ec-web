@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Figma assets (expire 7 days) ─────────────────────────────────── */
 const IMG_HOMEPOD = "https://www.figma.com/api/mcp/asset/50006c90-0394-4e06-bbad-c8560645b0c3";
@@ -8,7 +9,7 @@ const IMG_XIAOMI  = "https://www.figma.com/api/mcp/asset/1dc47794-87cb-49de-98cf
 export function PromoBanners() {
   return (
     <section className="bg-white py-4">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         <div className="flex gap-6">
 
           {/* Left — light banner (Apple Homepod Mini) */}
@@ -72,7 +73,7 @@ export function PromoBanners() {
           </div>
 
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+import { Container } from "@/components/commons/container";
 
 type Product = {
   id: string;
@@ -32,8 +33,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 75,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Tablet",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Tablet",
       },
       {
         id: "p2",
@@ -41,8 +41,7 @@ const HISTORY: HistoryGroup[] = [
         price: "$90.00",
         rating: 3,
         reviews: 63,
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Phone",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Phone",
       },
       {
         id: "p3",
@@ -52,8 +51,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 5,
         reviews: 130,
         badge: "hot",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=AC",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=AC",
       },
       {
         id: "p4",
@@ -63,8 +61,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 52,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Headphones",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Headphones",
       },
     ],
   },
@@ -77,8 +74,7 @@ const HISTORY: HistoryGroup[] = [
         price: "$99.00",
         rating: 4,
         reviews: 44,
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Headphones",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Headphones",
       },
       {
         id: "p6",
@@ -88,8 +84,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 3,
         reviews: 20,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Gaming+HP",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Gaming+HP",
       },
       {
         id: "p7",
@@ -98,8 +93,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 86,
         badge: "new",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Keyboard",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Keyboard",
       },
     ],
   },
@@ -114,8 +108,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 91,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=JBL",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=JBL",
       },
       {
         id: "p9",
@@ -123,8 +116,7 @@ const HISTORY: HistoryGroup[] = [
         price: "$149.00",
         rating: 5,
         reviews: 38,
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Sony+HP",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Sony+HP",
       },
       {
         id: "p10",
@@ -134,8 +126,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 63,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Gaming+KB",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Gaming+KB",
       },
       {
         id: "p11",
@@ -143,8 +134,7 @@ const HISTORY: HistoryGroup[] = [
         price: "$69.00",
         rating: 3,
         reviews: 27,
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Printer",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Printer",
       },
     ],
   },
@@ -159,8 +149,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 5,
         reviews: 112,
         badge: "hot",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Drone",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Drone",
       },
       {
         id: "p13",
@@ -169,8 +158,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 58,
         badge: "new",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Epson",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Epson",
       },
       {
         id: "p14",
@@ -180,8 +168,7 @@ const HISTORY: HistoryGroup[] = [
         rating: 4,
         reviews: 74,
         badge: "sale",
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=TV",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=TV",
       },
       {
         id: "p15",
@@ -189,8 +176,7 @@ const HISTORY: HistoryGroup[] = [
         price: "$350.00",
         rating: 5,
         reviews: 43,
-        image:
-          "https://via.placeholder.com/180x160/f5f5f5/999?text=Washer",
+        image: "https://via.placeholder.com/180x160/f5f5f5/999?text=Washer",
       },
     ],
   },
@@ -198,8 +184,8 @@ const HISTORY: HistoryGroup[] = [
 
 const BADGE_STYLE: Record<string, string> = {
   sale: "bg-danger-500",
-  hot:  "bg-primary-500",
-  new:  "bg-success-500",
+  hot: "bg-primary-500",
+  new: "bg-success-500",
 };
 
 function StarRating({ rating, reviews }: { rating: number; reviews: number }) {
@@ -308,12 +294,11 @@ export default function BrowsingHistoryPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-330 mx-auto px-6 py-6 pb-20">
+      <Container className="py-6 pb-20">
         <PageBreadcrumb
           items={[
             { label: "Home", href: "/" },
             { label: "User Account", href: "/account" },
-            { label: "Dashboard", href: "/account" },
             { label: "Browsing History" },
           ]}
         />
@@ -359,7 +344,7 @@ export default function BrowsingHistoryPage() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

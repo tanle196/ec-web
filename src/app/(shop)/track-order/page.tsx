@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState("");
@@ -16,29 +17,15 @@ export default function TrackOrderPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link href="/" className="text-text-secondary hover:text-foreground transition-colors no-underline flex items-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1.5">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-secondary">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-text-secondary">Pages</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-secondary">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Track Order</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Track Order" }]}
+          />
+        </Container>
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-16 pt-12 pb-31">
+      <Container className="pt-12 pb-31">
         <div className="flex flex-col gap-8">
           {/* Header */}
           <div className="flex flex-col gap-4">
@@ -58,7 +45,10 @@ export default function TrackOrderPage() {
               {/* Order ID */}
               <div className="flex flex-col gap-4 w-106">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="order-id" className="text-[14px] leading-5 text-[#191c1f]">
+                  <label
+                    htmlFor="order-id"
+                    className="text-[14px] leading-5 text-[#191c1f]"
+                  >
                     Order ID
                   </label>
                   <input
@@ -92,7 +82,10 @@ export default function TrackOrderPage() {
 
               {/* Billing Email */}
               <div className="flex flex-col gap-2 w-106">
-                <label htmlFor="billing-email" className="text-[14px] leading-5 text-[#191c1f]">
+                <label
+                  htmlFor="billing-email"
+                  className="text-[14px] leading-5 text-[#191c1f]"
+                >
                   Billing Email
                 </label>
                 <input
@@ -127,7 +120,7 @@ export default function TrackOrderPage() {
             </button>
           </form>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

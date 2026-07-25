@@ -13,7 +13,13 @@ function formatPrice(n: number) {
   return "$" + n.toLocaleString("en-US");
 }
 
-function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
+function SubMenu({
+  cat,
+  onNavigate,
+}: {
+  cat: CategoryTreeNodeDto;
+  onNavigate: () => void;
+}) {
   const { data, isLoading } = useProducts({
     category_id: cat.id,
     isFeatured: true,
@@ -30,7 +36,8 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
         {cat.children!.map((child) => (
           <li key={child.id}>
             <Link
-              href={`/category/${child.slug}`}
+              href={`/categories/${child.slug}`}
+              onClick={onNavigate}
               className="h-9 flex items-center px-4 text-body-sm text-gray-600 rounded-sm hover:bg-gray-50 hover:text-gray-900 transition-colors"
             >
               {child.name}
@@ -62,6 +69,7 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
                 <Link
                   key={product.id}
                   href={`/products/${product.slug}`}
+                  onClick={onNavigate}
                   className="border border-gray-100 rounded-sm p-3 flex gap-3 items-center hover:border-gray-200 transition-colors"
                 >
                   <div className="relative w-20 h-20 shrink-0 bg-gray-50 rounded-sm overflow-hidden">
@@ -110,7 +118,9 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-body-sm text-gray-700">Starting price:</span>
+              <span className="text-body-sm text-gray-700">
+                Starting price:
+              </span>
               <span className="bg-white px-3 py-1.5 rounded-sm text-body-md font-semibold text-gray-900">
                 $99 USD
               </span>
@@ -119,6 +129,7 @@ function SubMenu({ cat }: { cat: CategoryTreeNodeDto }) {
         </div>
         <Link
           href={`/category/${cat.slug}`}
+          onClick={onNavigate}
           className="bg-primary-500 hover:bg-primary-600 transition-colors w-62 flex items-center justify-center gap-2 py-3 rounded-sm text-white text-body-sm font-bold uppercase tracking-wide"
         >
           Shop now
@@ -135,6 +146,11 @@ export function CategoryMenu() {
   const { data: tree, isLoading } = useCategoryTree();
 
   const categories = tree ?? [];
+
+  const closeMenu = () => {
+    setIsOpen(false);
+    setActiveCat(null);
+  };
 
   return (
     <div
@@ -177,8 +193,9 @@ export function CategoryMenu() {
                     return (
                       <li key={cat.id} role="none">
                         <Link
-                          href={`/category/${cat.slug}`}
+                          href={`/categories/${cat.slug}`}
                           role="menuitem"
+                          onClick={closeMenu}
                           onMouseEnter={() =>
                             setActiveCat(hasChildren ? cat : null)
                           }
@@ -201,7 +218,7 @@ export function CategoryMenu() {
 
             {/* Right panel: sub-menu */}
             {activeCat && (activeCat.children?.length ?? 0) > 0 && (
-              <SubMenu cat={activeCat} />
+              <SubMenu cat={activeCat} onNavigate={closeMenu} />
             )}
           </div>
         </div>

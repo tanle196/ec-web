@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+import { Container } from "@/components/commons/container";
 
 type Card = {
   id: string;
@@ -60,9 +61,15 @@ const SHIPPING: Address = {
 
 function DotsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden
+    >
       <circle cx="10" cy="10" r="1.5" />
-      <circle cx="4"  cy="10" r="1.5" />
+      <circle cx="4" cy="10" r="1.5" />
       <circle cx="16" cy="10" r="1.5" />
     </svg>
   );
@@ -166,13 +173,7 @@ function CreditCard({ card }: { card: Card }) {
   );
 }
 
-function AddressBlock({
-  title,
-  address,
-}: {
-  title: string;
-  address: Address;
-}) {
+function AddressBlock({ title, address }: { title: string; address: Address }) {
   return (
     <div className="flex-1 bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-5">
       {/* Heading */}
@@ -207,11 +208,10 @@ function AddressBlock({
 export default function CardsAddressPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-330 mx-auto px-6 py-6 pb-20">
+      <Container className="py-6 pb-20">
         <PageBreadcrumb
           items={[
             { label: "Home", href: "/" },
-            { label: "User Account", href: "/account" },
             { label: "Dashboard", href: "/account" },
             { label: "Cards & Address" },
           ]}
@@ -222,7 +222,6 @@ export default function CardsAddressPage() {
 
           {/* Main content */}
           <div className="flex-1 min-w-0 flex flex-col gap-6">
-
             {/* Payment Option */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
               {/* Section header */}
@@ -232,7 +231,13 @@ export default function CardsAddressPage() {
                 </span>
                 <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
                   Add Card
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden
+                  >
                     <path
                       d="M4 10h12M12 5l5 5-5 5"
                       stroke="currentColor"
@@ -259,7 +264,7 @@ export default function CardsAddressPage() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

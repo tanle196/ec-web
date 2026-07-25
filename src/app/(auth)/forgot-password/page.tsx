@@ -2,10 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 function ArrowRightIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <line x1="5" y1="12" x2="19" y2="12" />
       <polyline points="12 5 19 12 12 19" />
     </svg>
@@ -25,31 +36,11 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link href="/" className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline flex items-center gap-1.5">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#5f6c72]">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-[#5f6c72]">User Account</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#5f6c72]">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <Link href="/login" className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline">
-              Sign In
-            </Link>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#5f6c72]">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Forget Password</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Forget Password" }]}
+          />
+        </Container>
       </div>
 
       {/* Form card */}
@@ -61,14 +52,16 @@ export default function ForgotPasswordPage() {
               Forget Password
             </h1>
             <p className="text-[14px] leading-5 text-[#5f6c72] m-0">
-              Enter the email address or mobile phone number associated with your Clicon account.
+              Enter the email address or mobile phone number associated with
+              your Clicon account.
             </p>
           </div>
 
           {submitted ? (
             <div className="flex flex-col gap-4">
               <p className="text-[14px] leading-5 text-[#191c1f]">
-                If an account exists for <strong>{email}</strong>, we&apos;ve sent a reset code to that address.
+                If an account exists for <strong>{email}</strong>, we&apos;ve
+                sent a reset code to that address.
               </p>
               <button
                 type="button"
@@ -82,7 +75,10 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               {/* Email field */}
               <div className="flex flex-col gap-2">
-                <label htmlFor="email" className="text-[14px] leading-5 text-[#191c1f]">
+                <label
+                  htmlFor="email"
+                  className="text-[14px] leading-5 text-[#191c1f]"
+                >
                   Email Address
                 </label>
                 <input
@@ -111,13 +107,19 @@ export default function ForgotPasswordPage() {
           <div className="flex flex-col gap-2 text-[14px] leading-5">
             <p className="m-0">
               <span className="text-[#5f6c72]">Already have account? </span>
-              <Link href="/login" className="font-medium text-[#2da5f3] no-underline hover:underline">
+              <Link
+                href="/login"
+                className="font-medium text-[#2da5f3] no-underline hover:underline"
+              >
                 Sign In
               </Link>
             </p>
             <p className="m-0">
               <span className="text-[#5f6c72]">Don&apos;t have account? </span>
-              <Link href="/register" className="font-medium text-[#2da5f3] no-underline hover:underline">
+              <Link
+                href="/register"
+                className="font-medium text-[#2da5f3] no-underline hover:underline"
+              >
                 Sign Up
               </Link>
             </p>
@@ -129,7 +131,10 @@ export default function ForgotPasswordPage() {
           {/* Customer service note */}
           <p className="text-[14px] leading-5 text-[#475156] m-0">
             You may contact{" "}
-            <Link href="/contact" className="font-medium text-[#fa8232] no-underline hover:underline">
+            <Link
+              href="/contact"
+              className="font-medium text-[#fa8232] no-underline hover:underline"
+            >
               Customer Service
             </Link>{" "}
             for help restoring access to your account.

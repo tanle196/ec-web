@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, User, Calendar, MessageCircle } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Figma assets (expire 7 days) ─────────────────────────────────── */
 const IMG_WATCH  = "https://www.figma.com/api/mcp/asset/dd219d4e-dba2-4ec8-b238-2a12e0d94f08";
@@ -76,7 +77,7 @@ function BlogCard({ post }: { post: BlogPost }) {
 export function LatestNews() {
   return (
     <section className="bg-gray-50 py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         <h2 className="text-heading-1 font-semibold text-gray-900 text-center mb-10">
           Latest News
         </h2>
@@ -85,7 +86,7 @@ export function LatestNews() {
             <BlogCard key={post.title} post={post} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
