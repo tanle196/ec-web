@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Figma assets (expire 7 days) ─────────────────────────────────── */
 const IMG_COMPUTER   = "https://www.figma.com/api/mcp/asset/25be074f-e0ee-4718-a5fc-a39c7c61ef11";
@@ -20,7 +21,7 @@ const CATEGORIES = [
 export function ShopCategories() {
   return (
     <section className="bg-white py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         <h2 className="text-heading-1 font-semibold text-gray-900 text-center mb-10">
           Shop with Categorys
         </h2>
@@ -61,7 +62,7 @@ export function ShopCategories() {
             <ChevronRight size={24} className="text-white" aria-hidden />
           </button>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

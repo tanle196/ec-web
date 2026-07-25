@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 /* Figma assets */
 const IMG_HERO =
@@ -355,80 +357,19 @@ export default function BlogDetailPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link
-              href="/"
-              className="text-[#5f6c72] hover:text-foreground transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="text-[#5f6c72]">Pages</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <Link
-              href="/blog"
-              className="text-[#5f6c72] hover:text-foreground transition-colors no-underline"
-            >
-              Blog
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Blog Detail</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: "Blog Detail" },
+            ]}
+          />
+        </Container>
       </div>
 
       {/* Main */}
-      <div className="max-w-7xl mx-auto px-16 w-full py-18">
+      <Container className="py-18">
         <div className="flex flex-col gap-12">
           {/* Hero image */}
           <div className="relative w-full aspect-[1320/740] rounded-[3px] overflow-hidden">
@@ -605,17 +546,17 @@ export default function BlogDetailPage() {
                     </svg>
                   </div>
                   <p className="text-[18px] font-medium leading-7 text-[#191c1f] italic">
-                    "Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                    amet, consectetur, adipisci velit, sed quia non numquam eius
-                    modi tempora incidunt ut labore et dolore magnam aliquam
-                    quaerat voluptatem."
+                    &quot;Neque porro quisquam est, qui dolorem ipsum quia dolor
+                    sit amet, consectetur, adipisci velit, sed quia non numquam
+                    eius modi tempora incidunt ut labore et dolore magnam
+                    aliquam quaerat voluptatem.&quot;
                   </p>
                 </blockquote>
 
                 <p>
                   Quisque sit amet est et sapien ullamcorper pharetra.
-                  Vestibulum erat wisi, condimentum sed, commodo vitae,
-                  ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt
+                  Vestibulum erat wisi, condimentum sed, commodo vitae, ornare
+                  sit amet, wisi. Aenean fermentum, elit eget tincidunt
                   condimentum, eros ipsum rutrum orci, sagittis tempus lacus
                   enim ac dui. Donec non enim in turpis pulvinar facilisis.
                 </p>
@@ -799,7 +740,10 @@ export default function BlogDetailPage() {
                         placeholder="Your name"
                         value={commentForm.name}
                         onChange={(e) =>
-                          setCommentForm((f) => ({ ...f, name: e.target.value }))
+                          setCommentForm((f) => ({
+                            ...f,
+                            name: e.target.value,
+                          }))
                         }
                         className="h-11 px-4 border border-[#e4e7e9] rounded-[2px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors"
                       />
@@ -969,7 +913,7 @@ export default function BlogDetailPage() {
                           </div>
                         ))}
                       </div>
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -1002,7 +946,7 @@ export default function BlogDetailPage() {
             </aside>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

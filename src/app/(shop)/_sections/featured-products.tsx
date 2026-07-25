@@ -4,6 +4,7 @@ import { useProducts } from "@/queries/products";
 import { mapProductListItem } from "@/lib/api/mappers";
 import { ProductGrid } from "@/components/commons/product-grid";
 import { SectionHeader } from "@/components/commons/section-header";
+import { Container } from "@/components/commons/container";
 
 function ProductRowSkeleton() {
   return (
@@ -19,7 +20,11 @@ function ProductRowSkeleton() {
 }
 
 export function FeaturedProducts() {
-  const featured = useProducts({ isFeatured: true, status: "published", limit: 7 });
+  const featured = useProducts({
+    isFeatured: true,
+    status: "published",
+    limit: 7,
+  });
   const latest = useProducts({ status: "published", limit: 5 });
 
   const featuredProducts = featured.data?.data.map(mapProductListItem) ?? [];
@@ -27,7 +32,7 @@ export function FeaturedProducts() {
 
   return (
     <>
-      <section className="max-w-360 mx-auto px-16 pt-16">
+      <Container size="wide" className="pt-16">
         <SectionHeader
           eyebrow="Ưu đãi hôm nay · kết thúc sau 4 giờ"
           title="Sản phẩm nổi bật"
@@ -43,9 +48,9 @@ export function FeaturedProducts() {
             Chưa có sản phẩm nổi bật.
           </p>
         )}
-      </section>
+      </Container>
 
-      <section className="max-w-360 mx-auto px-16 pt-16">
+      <Container size="wide" className="pt-16">
         <SectionHeader
           eyebrow="Mới nhất"
           title="Sản phẩm mới"
@@ -61,7 +66,7 @@ export function FeaturedProducts() {
             Chưa có sản phẩm nào.
           </p>
         )}
-      </section>
+      </Container>
     </>
   );
 }

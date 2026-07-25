@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Heart, ShoppingCart, Eye } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* ── Figma assets (expire 7 days) ─────────────────────────────────── */
 const IMG_XBOX     = "https://www.figma.com/api/mcp/asset/8ad7dc3a-15b0-4e90-a0c4-1c70c97afb2f";
@@ -132,7 +133,7 @@ function LargeCard() {
 export function BestDeals() {
   return (
     <section className="bg-white py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         {/* Heading */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-6">
@@ -158,7 +159,7 @@ export function BestDeals() {
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

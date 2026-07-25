@@ -1,5 +1,6 @@
 import { ProductGrid } from "@/components/commons/product-grid";
 import { SectionHeader } from "@/components/commons/section-header";
+import { Container } from "@/components/commons/container";
 import type { Product } from "@/components/commons/product-card";
 
 export function ProductRow({
@@ -16,7 +17,7 @@ export function ProductRow({
   href?: string;
 }) {
   return (
-    <section className="max-w-360 mx-auto px-16 pt-16">
+    <Container size="wide" className="pt-16">
       <SectionHeader
         eyebrow={eyebrow}
         title={title}
@@ -24,6 +25,6 @@ export function ProductRow({
         href={href}
       />
       <ProductGrid products={products} />
-    </section>
+    </Container>
   );
 }

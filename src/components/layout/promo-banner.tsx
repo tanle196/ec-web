@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 export function PromoBanner() {
   const [dismissed, setDismissed] = useState(false);
@@ -10,8 +11,7 @@ export function PromoBanner() {
 
   return (
     <div className="bg-gray-900 h-20 flex items-center">
-      <div className="max-w-[1320px] mx-auto px-4 lg:px-8 w-full flex items-center justify-between gap-4">
-
+      <Container className="flex items-center justify-between gap-4">
         {/* "Black Friday" */}
         <div className="flex items-center gap-3 flex-none">
           <span className="bg-warning-300 text-gray-900 font-semibold text-body-xl px-2 py-0.5 -rotate-3 inline-block leading-snug">
@@ -48,8 +48,7 @@ export function PromoBanner() {
             <X size={16} className="text-white" />
           </button>
         </div>
-
-      </div>
+      </Container>
     </div>
   );
 }

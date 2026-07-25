@@ -12,6 +12,8 @@ const IMG_TOZO     = "https://www.figma.com/api/mcp/asset/f1c75db8-3360-459d-8c2
 const IMG_JBL      = "https://www.figma.com/api/mcp/asset/0904fe43-d34a-409b-a7ce-bbea628578a8";
 const IMG_WYZE     = "https://www.figma.com/api/mcp/asset/70394220-2944-400b-805a-27d1c59086fc";
 
+import { Container } from "@/components/commons/container";
+
 interface MiniProduct { img: string; name: string; price: string; }
 
 const COLUMNS: { title: string; products: MiniProduct[] }[] = [
@@ -67,7 +69,7 @@ function MiniProductCard({ product }: { product: MiniProduct }) {
 export function MiniLists() {
   return (
     <section className="bg-white py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8">
+      <Container>
         <div className="grid grid-cols-4 gap-6">
           {COLUMNS.map(({ title, products }) => (
             <div key={title} className="flex flex-col gap-4">
@@ -78,7 +80,7 @@ export function MiniLists() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

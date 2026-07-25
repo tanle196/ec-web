@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Badge } from "@/components/commons/badge";
+import { Container } from "@/components/commons/container";
 
 export function EditorialPair() {
   return (
-    <section className="max-w-360 mx-auto px-16 pt-18">
+    <Container size="wide" className="pt-18">
       <div className="grid grid-cols-2 gap-4">
         {/* Home goods — deep green */}
         <div
@@ -87,6 +88,6 @@ export function EditorialPair() {
           </div>
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

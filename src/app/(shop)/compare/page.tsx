@@ -9,6 +9,8 @@ import { useAddToCart } from "@/queries/cart";
 import { useCompareStore } from "@/stores/compare-store";
 import { ProductImage } from "@/components/commons/product-image";
 import type { ProductResponseDto } from "@/api/main";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 const SLOTS = [0, 1, 2] as const;
 
@@ -187,9 +189,12 @@ export default function ComparePage() {
     queries: SLOTS.map((i) => {
       const id = productIds[i];
       return {
-        queryKey: id ? productKeys.detail(id) : (["compare", "empty", i] as const),
+        queryKey: id
+          ? productKeys.detail(id)
+          : (["compare", "empty", i] as const),
         queryFn: id
-          ? () => mainService.request(productsControllerFindOne)({ path: { id } })
+          ? () =>
+              mainService.request(productsControllerFindOne)({ path: { id } })
           : () => null,
         enabled: !!id,
       };
@@ -203,47 +208,15 @@ export default function ComparePage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link
-              href="/"
-              className="text-[#5f6c72] hover:text-[#191c1f] transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Compare</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Compare" }]}
+          />
+        </Container>
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-16 py-10 pb-24">
+      <Container className="py-10 pb-24">
         {isLoading ? (
           <div className="flex items-center justify-center h-80">
             <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
@@ -282,7 +255,10 @@ export default function ComparePage() {
         ) : (
           <div className="border border-[#e4e7e9] rounded-sm overflow-hidden">
             {/* Product header grid */}
-            <div className="grid divide-x divide-[#e4e7e9]" style={{ gridTemplateColumns: "200px 1fr 1fr 1fr" }}>
+            <div
+              className="grid divide-x divide-[#e4e7e9]"
+              style={{ gridTemplateColumns: "200px 1fr 1fr 1fr" }}
+            >
               {/* Empty label cell */}
               <div className="bg-[#f2f4f5] p-6" />
 
@@ -290,7 +266,10 @@ export default function ComparePage() {
               {SLOTS.map((i) => {
                 const product = products[i];
                 return (
-                  <div key={i} className="p-6 flex flex-col items-center gap-4 border-b border-[#e4e7e9]">
+                  <div
+                    key={i}
+                    className="p-6 flex flex-col items-center gap-4 border-b border-[#e4e7e9]"
+                  >
                     {product ? (
                       <>
                         {/* Remove button */}
@@ -319,7 +298,8 @@ export default function ComparePage() {
                         <div className="w-48 h-48 flex items-center justify-center">
                           <ProductImage
                             src={
-                              product.images.find((img) => img.isPrimary)?.url ??
+                              product.images.find((img) => img.isPrimary)
+                                ?.url ??
                               product.images[0]?.url ??
                               "/no-image.svg"
                             }
@@ -393,7 +373,7 @@ export default function ComparePage() {
             ))}
           </div>
         )}
-      </div>
+      </Container>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Container } from "@/components/commons/container";
 
 interface Category {
   id: string;
@@ -101,7 +102,7 @@ const CATEGORIES: Category[] = [
 
 export function CategorySection() {
   return (
-    <section className="max-w-360 mx-auto px-16 pt-12">
+    <Container size="wide" className="pt-12">
       <div className="grid grid-cols-8 gap-3.5">
         {CATEGORIES.map((c) => (
           <Link
@@ -118,6 +119,6 @@ export function CategorySection() {
           </Link>
         ))}
       </div>
-    </section>
+    </Container>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 /* Partner logos (Figma assets, expire 7 days) */
 const IMG_GOOGLE  = "https://www.figma.com/api/mcp/asset/32ec5a48-ca7d-48be-b93f-b0748ccfc5d9";
@@ -20,7 +21,7 @@ const LOGOS = [
 export function NewsletterSection() {
   return (
     <section className="bg-secondary-700 py-18">
-      <div className="max-w-330 mx-auto px-4 lg:px-8 flex flex-col items-center gap-8">
+      <Container className="flex flex-col items-center gap-8">
 
         {/* Heading */}
         <div className="flex flex-col items-center gap-3 text-center text-white">
@@ -60,7 +61,7 @@ export function NewsletterSection() {
           </div>
         </div>
 
-      </div>
+      </Container>
     </section>
   );
 }

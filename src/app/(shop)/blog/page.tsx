@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
 /* Figma assets (expire 7 days) */
 const IMG_BLOG_CARD =
@@ -70,8 +72,7 @@ const BLOG_POSTS = Array.from({ length: 8 }, (_, i) => ({
   author: "Cameron",
   date: "1 Feb, 2020",
   comments: 738,
-  title:
-    "Curabitur pulvinar aliquam lectus, non blandit erat mattis vitae.",
+  title: "Curabitur pulvinar aliquam lectus, non blandit erat mattis vitae.",
   excerpt:
     "Mauris scelerisque odio id rutrum volutpat. Pellentesque urna odio, vulputate at tortor vitae, hendrerit blandit lorem.",
 }));
@@ -225,47 +226,13 @@ export default function BlogListPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="bg-[#f2f4f5] h-18 flex items-center">
-        <div className="max-w-7xl mx-auto px-16 w-full">
-          <nav className="flex items-center gap-2 text-[14px] leading-5">
-            <Link
-              href="/"
-              className="text-[#5f6c72] hover:text-foreground transition-colors no-underline flex items-center gap-1.5"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              Home
-            </Link>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#5f6c72]"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-            <span className="font-medium text-[#2da5f3]">Blog</span>
-          </nav>
-        </div>
+        <Container>
+          <PageBreadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
+        </Container>
       </div>
 
       {/* Main layout */}
-      <div className="max-w-7xl mx-auto px-16 w-full py-18">
+      <Container className="py-18">
         <div className="flex gap-12 items-start">
           {/* ── Sidebar ── */}
           <aside className="w-[400px] shrink-0 flex flex-col gap-6">
@@ -349,17 +316,25 @@ export default function BlogListPage() {
               <div className="flex flex-col gap-3">
                 {[GALLERY_IMAGES.slice(0, 4), GALLERY_IMAGES.slice(4)].map(
                   (row, rowIdx) => (
-                    <div key={rowIdx} className="flex items-center justify-between">
+                    <div
+                      key={rowIdx}
+                      className="flex items-center justify-between"
+                    >
                       {row.map((src, i) => (
                         <div
                           key={i}
                           className="relative w-20 h-20 rounded-[2px] overflow-hidden"
                         >
-                          <Image src={src} alt="" fill className="object-cover" />
+                          <Image
+                            src={src}
+                            alt=""
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                       ))}
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -515,7 +490,7 @@ export default function BlogListPage() {
                         {String(page).padStart(2, "0")}
                       </button>
                     );
-                  }
+                  },
                 )}
               </div>
               <button
@@ -532,7 +507,7 @@ export default function BlogListPage() {
             </div>
           </main>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

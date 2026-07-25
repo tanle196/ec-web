@@ -1,4 +1,5 @@
 import { Package, RotateCcw, CreditCard, Headphones } from "lucide-react";
+import { Container } from "@/components/commons/container";
 
 const FEATURES = [
   {
@@ -25,7 +26,7 @@ const FEATURES = [
 
 export function FeaturesBar() {
   return (
-    <div className="max-w-330 mx-auto px-4 lg:px-8 pb-6">
+    <Container className="pb-6">
       <div className="bg-white border border-gray-100 rounded-md flex items-center justify-between px-4">
         {FEATURES.map(({ icon: Icon, title, subtitle }, i) => (
           <div key={title} className="flex items-center">
@@ -48,6 +49,6 @@ export function FeaturesBar() {
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 }

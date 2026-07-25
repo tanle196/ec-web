@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/commons/badge";
 import { ProductImage } from "@/components/commons/product-image";
 import type { CategoryResponseDto } from "@/api/main";
+import { Container } from "@/components/commons/container";
 
 export function CategoryHero({ category }: { category: CategoryResponseDto }) {
   const description = category.description
@@ -10,7 +11,7 @@ export function CategoryHero({ category }: { category: CategoryResponseDto }) {
   const image = category.image ? String(category.image) : "/no-image.svg";
 
   return (
-    <section className="max-w-360 mx-auto px-16 pt-8">
+    <Container>
       <div
         className="relative rounded-[24px] overflow-hidden bg-foreground"
         style={{ minHeight: 420 }}
@@ -60,6 +61,6 @@ export function CategoryHero({ category }: { category: CategoryResponseDto }) {
           </div>
         </div>
       </div>
-    </section>
+    </Container>
   );
 }
