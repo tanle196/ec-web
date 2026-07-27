@@ -25,7 +25,6 @@ export const appControllerHealth = <ThrowOnError extends boolean = false>(option
  * User login
  */
 export const authControllerLogin = <ThrowOnError extends boolean = false>(options: Options<AuthControllerLoginData, ThrowOnError>) => (options.client ?? client).post<AuthControllerLoginResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/login',
     ...options,
     headers: {
@@ -38,7 +37,6 @@ export const authControllerLogin = <ThrowOnError extends boolean = false>(option
  * User registration
  */
 export const authControllerRegister = <ThrowOnError extends boolean = false>(options: Options<AuthControllerRegisterData, ThrowOnError>) => (options.client ?? client).post<AuthControllerRegisterResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/register',
     ...options,
     headers: {
@@ -51,7 +49,6 @@ export const authControllerRegister = <ThrowOnError extends boolean = false>(opt
  * Activate user account
  */
 export const authControllerActive = <ThrowOnError extends boolean = false>(options: Options<AuthControllerActiveData, ThrowOnError>) => (options.client ?? client).post<AuthControllerActiveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/active',
     ...options,
     headers: {
@@ -63,17 +60,12 @@ export const authControllerActive = <ThrowOnError extends boolean = false>(optio
 /**
  * Refresh access token
  */
-export const authControllerRefresh = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerRefreshData, ThrowOnError>) => (options?.client ?? client).post<AuthControllerRefreshResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/auth/refresh',
-    ...options
-});
+export const authControllerRefresh = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerRefreshData, ThrowOnError>) => (options?.client ?? client).post<AuthControllerRefreshResponses, unknown, ThrowOnError>({ url: '/auth/refresh', ...options });
 
 /**
  * Request password reset
  */
 export const authControllerForgotPassword = <ThrowOnError extends boolean = false>(options: Options<AuthControllerForgotPasswordData, ThrowOnError>) => (options.client ?? client).post<AuthControllerForgotPasswordResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/forgot-password',
     ...options,
     headers: {
@@ -86,7 +78,6 @@ export const authControllerForgotPassword = <ThrowOnError extends boolean = fals
  * Reset password with token
  */
 export const authControllerResetPassword = <ThrowOnError extends boolean = false>(options: Options<AuthControllerResetPasswordData, ThrowOnError>) => (options.client ?? client).post<AuthControllerResetPasswordResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/reset-password',
     ...options,
     headers: {
@@ -103,27 +94,18 @@ export const authControllerGoogleLogin = <ThrowOnError extends boolean = false>(
 /**
  * Google OAuth callback
  */
-export const authControllerGoogleCallback = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerGoogleCallbackData, ThrowOnError>) => (options?.client ?? client).get<AuthControllerGoogleCallbackResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/auth/google/callback',
-    ...options
-});
+export const authControllerGoogleCallback = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerGoogleCallbackData, ThrowOnError>) => (options?.client ?? client).get<AuthControllerGoogleCallbackResponses, unknown, ThrowOnError>({ url: '/auth/google/callback', ...options });
 
 /**
  * Get current user profile
  */
-export const usersControllerGetProfile = <ThrowOnError extends boolean = false>(options?: Options<UsersControllerGetProfileData, ThrowOnError>) => (options?.client ?? client).get<UsersControllerGetProfileResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/users/profile',
-    ...options
-});
+export const usersControllerGetProfile = <ThrowOnError extends boolean = false>(options?: Options<UsersControllerGetProfileData, ThrowOnError>) => (options?.client ?? client).get<UsersControllerGetProfileResponses, unknown, ThrowOnError>({ url: '/users/profile', ...options });
 
 /**
  * List categories (paginated)
  */
 export const categoriesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<CategoriesControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<CategoriesControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/categories',
     ...options
 });
@@ -133,7 +115,6 @@ export const categoriesControllerFindAll = <ThrowOnError extends boolean = false
  */
 export const categoriesControllerFindTree = <ThrowOnError extends boolean = false>(options?: Options<CategoriesControllerFindTreeData, ThrowOnError>) => (options?.client ?? client).get<CategoriesControllerFindTreeResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindTreeResponseTransformer,
-    responseType: 'json',
     url: '/categories/tree',
     ...options
 });
@@ -143,7 +124,6 @@ export const categoriesControllerFindTree = <ThrowOnError extends boolean = fals
  */
 export const categoriesControllerFindBySlug = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerFindBySlugData, ThrowOnError>) => (options.client ?? client).get<CategoriesControllerFindBySlugResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindBySlugResponseTransformer,
-    responseType: 'json',
     url: '/categories/slug/{slug}',
     ...options
 });
@@ -153,7 +133,6 @@ export const categoriesControllerFindBySlug = <ThrowOnError extends boolean = fa
  */
 export const categoriesControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<CategoriesControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/categories/{id}',
     ...options
 });
@@ -163,7 +142,6 @@ export const categoriesControllerFindOne = <ThrowOnError extends boolean = false
  */
 export const productsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<ProductsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<ProductsControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: productsControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/products',
     ...options
 });
@@ -173,7 +151,6 @@ export const productsControllerFindAll = <ThrowOnError extends boolean = false>(
  */
 export const productsControllerFindBySlug = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerFindBySlugData, ThrowOnError>) => (options.client ?? client).get<ProductsControllerFindBySlugResponses, unknown, ThrowOnError>({
     responseTransformer: productsControllerFindBySlugResponseTransformer,
-    responseType: 'json',
     url: '/products/slug/{slug}',
     ...options
 });
@@ -183,7 +160,6 @@ export const productsControllerFindBySlug = <ThrowOnError extends boolean = fals
  */
 export const productsControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<ProductsControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: productsControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/products/{id}',
     ...options
 });
@@ -191,27 +167,18 @@ export const productsControllerFindOne = <ThrowOnError extends boolean = false>(
 /**
  * List all tags
  */
-export const tagsControllerFindAllTags = <ThrowOnError extends boolean = false>(options?: Options<TagsControllerFindAllTagsData, ThrowOnError>) => (options?.client ?? client).get<TagsControllerFindAllTagsResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/tags',
-    ...options
-});
+export const tagsControllerFindAllTags = <ThrowOnError extends boolean = false>(options?: Options<TagsControllerFindAllTagsData, ThrowOnError>) => (options?.client ?? client).get<TagsControllerFindAllTagsResponses, unknown, ThrowOnError>({ url: '/tags', ...options });
 
 /**
  * Get tag by slug
  */
-export const tagsControllerFindTagBySlug = <ThrowOnError extends boolean = false>(options: Options<TagsControllerFindTagBySlugData, ThrowOnError>) => (options.client ?? client).get<TagsControllerFindTagBySlugResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/tags/slug/{slug}',
-    ...options
-});
+export const tagsControllerFindTagBySlug = <ThrowOnError extends boolean = false>(options: Options<TagsControllerFindTagBySlugData, ThrowOnError>) => (options.client ?? client).get<TagsControllerFindTagBySlugResponses, unknown, ThrowOnError>({ url: '/tags/slug/{slug}', ...options });
 
 /**
  * List my addresses
  */
 export const addressesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<AddressesControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<AddressesControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses',
     ...options
 });
@@ -221,7 +188,6 @@ export const addressesControllerFindAll = <ThrowOnError extends boolean = false>
  */
 export const addressesControllerCreate = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerCreateData, ThrowOnError>) => (options.client ?? client).post<AddressesControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses',
     ...options,
     headers: {
@@ -240,7 +206,6 @@ export const addressesControllerRemove = <ThrowOnError extends boolean = false>(
  */
 export const addressesControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<AddressesControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}',
     ...options
 });
@@ -250,7 +215,6 @@ export const addressesControllerFindOne = <ThrowOnError extends boolean = false>
  */
 export const addressesControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<AddressesControllerUpdateResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerUpdateResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}',
     ...options,
     headers: {
@@ -264,7 +228,6 @@ export const addressesControllerUpdate = <ThrowOnError extends boolean = false>(
  */
 export const addressesControllerSetDefault = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerSetDefaultData, ThrowOnError>) => (options.client ?? client).patch<AddressesControllerSetDefaultResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerSetDefaultResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}/default',
     ...options
 });
@@ -274,7 +237,6 @@ export const addressesControllerSetDefault = <ThrowOnError extends boolean = fal
  */
 export const ordersControllerCreate = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCreateData, ThrowOnError>) => (options.client ?? client).post<OrdersControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/orders',
     ...options,
     headers: {
@@ -288,7 +250,6 @@ export const ordersControllerCreate = <ThrowOnError extends boolean = false>(opt
  */
 export const ordersControllerCheckout = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCheckoutData, ThrowOnError>) => (options.client ?? client).post<OrdersControllerCheckoutResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerCheckoutResponseTransformer,
-    responseType: 'json',
     url: '/orders/checkout',
     ...options,
     headers: {
@@ -302,7 +263,6 @@ export const ordersControllerCheckout = <ThrowOnError extends boolean = false>(o
  */
 export const ordersControllerFindMine = <ThrowOnError extends boolean = false>(options?: Options<OrdersControllerFindMineData, ThrowOnError>) => (options?.client ?? client).get<OrdersControllerFindMineResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerFindMineResponseTransformer,
-    responseType: 'json',
     url: '/orders/me',
     ...options
 });
@@ -312,7 +272,6 @@ export const ordersControllerFindMine = <ThrowOnError extends boolean = false>(o
  */
 export const ordersControllerFindMineOne = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerFindMineOneData, ThrowOnError>) => (options.client ?? client).get<OrdersControllerFindMineOneResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerFindMineOneResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}',
     ...options
 });
@@ -322,7 +281,6 @@ export const ordersControllerFindMineOne = <ThrowOnError extends boolean = false
  */
 export const ordersControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<OrdersControllerUpdateResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerUpdateResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}',
     ...options,
     headers: {
@@ -336,7 +294,6 @@ export const ordersControllerUpdate = <ThrowOnError extends boolean = false>(opt
  */
 export const ordersControllerCancel = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCancelData, ThrowOnError>) => (options.client ?? client).patch<OrdersControllerCancelResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerCancelResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}/cancel',
     ...options
 });
@@ -346,7 +303,6 @@ export const ordersControllerCancel = <ThrowOnError extends boolean = false>(opt
  */
 export const ordersControllerGetHistory = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerGetHistoryData, ThrowOnError>) => (options.client ?? client).get<OrdersControllerGetHistoryResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerGetHistoryResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}/history',
     ...options
 });
@@ -355,7 +311,6 @@ export const ordersControllerGetHistory = <ThrowOnError extends boolean = false>
  * Validate a discount code against a subtotal
  */
 export const discountsControllerValidate = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerValidateData, ThrowOnError>) => (options.client ?? client).post<DiscountsControllerValidateResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/discounts/validate',
     ...options,
     headers: {
@@ -374,7 +329,6 @@ export const cartsControllerClearCart = <ThrowOnError extends boolean = false>(o
  */
 export const cartsControllerGetCart = <ThrowOnError extends boolean = false>(options?: Options<CartsControllerGetCartData, ThrowOnError>) => (options?.client ?? client).get<CartsControllerGetCartResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerGetCartResponseTransformer,
-    responseType: 'json',
     url: '/carts/me',
     ...options
 });
@@ -384,7 +338,6 @@ export const cartsControllerGetCart = <ThrowOnError extends boolean = false>(opt
  */
 export const cartsControllerAddItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerAddItemData, ThrowOnError>) => (options.client ?? client).post<CartsControllerAddItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerAddItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items',
     ...options,
     headers: {
@@ -398,7 +351,6 @@ export const cartsControllerAddItem = <ThrowOnError extends boolean = false>(opt
  */
 export const cartsControllerRemoveItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerRemoveItemData, ThrowOnError>) => (options.client ?? client).delete<CartsControllerRemoveItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerRemoveItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items/{itemId}',
     ...options
 });
@@ -408,7 +360,6 @@ export const cartsControllerRemoveItem = <ThrowOnError extends boolean = false>(
  */
 export const cartsControllerUpdateItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerUpdateItemData, ThrowOnError>) => (options.client ?? client).patch<CartsControllerUpdateItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerUpdateItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items/{itemId}',
     ...options,
     headers: {
@@ -422,7 +373,6 @@ export const cartsControllerUpdateItem = <ThrowOnError extends boolean = false>(
  */
 export const paymentsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<PaymentsControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: paymentsControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/payments',
     ...options,
     headers: {
@@ -436,7 +386,6 @@ export const paymentsControllerCreate = <ThrowOnError extends boolean = false>(o
  */
 export const paymentsControllerFindMine = <ThrowOnError extends boolean = false>(options?: Options<PaymentsControllerFindMineData, ThrowOnError>) => (options?.client ?? client).get<PaymentsControllerFindMineResponses, unknown, ThrowOnError>({
     responseTransformer: paymentsControllerFindMineResponseTransformer,
-    responseType: 'json',
     url: '/payments/me',
     ...options
 });
@@ -446,7 +395,6 @@ export const paymentsControllerFindMine = <ThrowOnError extends boolean = false>
  */
 export const paymentsControllerFindMineOne = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerFindMineOneData, ThrowOnError>) => (options.client ?? client).get<PaymentsControllerFindMineOneResponses, unknown, ThrowOnError>({
     responseTransformer: paymentsControllerFindMineOneResponseTransformer,
-    responseType: 'json',
     url: '/payments/me/{id}',
     ...options
 });
@@ -456,7 +404,6 @@ export const paymentsControllerFindMineOne = <ThrowOnError extends boolean = fal
  */
 export const reviewsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<ReviewsControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/reviews',
     ...options,
     headers: {
@@ -470,7 +417,6 @@ export const reviewsControllerCreate = <ThrowOnError extends boolean = false>(op
  */
 export const reviewsControllerFindMyReviews = <ThrowOnError extends boolean = false>(options?: Options<ReviewsControllerFindMyReviewsData, ThrowOnError>) => (options?.client ?? client).get<ReviewsControllerFindMyReviewsResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerFindMyReviewsResponseTransformer,
-    responseType: 'json',
     url: '/reviews/me',
     ...options
 });
@@ -478,18 +424,13 @@ export const reviewsControllerFindMyReviews = <ThrowOnError extends boolean = fa
 /**
  * Delete own review (admin can delete any)
  */
-export const reviewsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<ReviewsControllerRemoveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/reviews/{id}',
-    ...options
-});
+export const reviewsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<ReviewsControllerRemoveResponses, unknown, ThrowOnError>({ url: '/reviews/{id}', ...options });
 
 /**
  * Update own review (resets approval)
  */
 export const reviewsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<ReviewsControllerUpdateResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerUpdateResponseTransformer,
-    responseType: 'json',
     url: '/reviews/{id}',
     ...options,
     headers: {
@@ -503,7 +444,6 @@ export const reviewsControllerUpdate = <ThrowOnError extends boolean = false>(op
  */
 export const productReviewsControllerFindApproved = <ThrowOnError extends boolean = false>(options: Options<ProductReviewsControllerFindApprovedData, ThrowOnError>) => (options.client ?? client).get<ProductReviewsControllerFindApprovedResponses, unknown, ThrowOnError>({
     responseTransformer: productReviewsControllerFindApprovedResponseTransformer,
-    responseType: 'json',
     url: '/products/{productId}/reviews',
     ...options
 });
@@ -518,7 +458,6 @@ export const wishlistsControllerClearWishlist = <ThrowOnError extends boolean = 
  */
 export const wishlistsControllerGetWishlist = <ThrowOnError extends boolean = false>(options?: Options<WishlistsControllerGetWishlistData, ThrowOnError>) => (options?.client ?? client).get<WishlistsControllerGetWishlistResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerGetWishlistResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me',
     ...options
 });
@@ -528,7 +467,6 @@ export const wishlistsControllerGetWishlist = <ThrowOnError extends boolean = fa
  */
 export const wishlistsControllerAddProduct = <ThrowOnError extends boolean = false>(options: Options<WishlistsControllerAddProductData, ThrowOnError>) => (options.client ?? client).post<WishlistsControllerAddProductResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerAddProductResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me',
     ...options,
     headers: {
@@ -542,7 +480,6 @@ export const wishlistsControllerAddProduct = <ThrowOnError extends boolean = fal
  */
 export const wishlistsControllerRemoveProduct = <ThrowOnError extends boolean = false>(options: Options<WishlistsControllerRemoveProductData, ThrowOnError>) => (options.client ?? client).delete<WishlistsControllerRemoveProductResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerRemoveProductResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me/{productId}',
     ...options
 });
@@ -552,7 +489,6 @@ export const wishlistsControllerRemoveProduct = <ThrowOnError extends boolean = 
  */
 export const bannersControllerFindActive = <ThrowOnError extends boolean = false>(options?: Options<BannersControllerFindActiveData, ThrowOnError>) => (options?.client ?? client).get<BannersControllerFindActiveResponses, unknown, ThrowOnError>({
     responseTransformer: bannersControllerFindActiveResponseTransformer,
-    responseType: 'json',
     url: '/banners',
     ...options
 });

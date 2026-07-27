@@ -6,7 +6,7 @@ export default defineConfig({
     path: "./src/api/main",
   },
   plugins: [
-    "@hey-api/client-axios",
+    "@hey-api/client-fetch",
     "@hey-api/schemas",
     {
       dates: true,
