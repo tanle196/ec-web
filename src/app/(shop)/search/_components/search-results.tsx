@@ -6,6 +6,7 @@ import { ChevronDown, X } from "lucide-react";
 import { ProductGrid } from "@/components/commons/product-grid";
 import { useProducts } from "@/queries/products";
 import { mapProductListItem } from "@/lib/api/mappers";
+import { Container } from "@/components/commons/container";
 
 // ─── FilterGroup ──────────────────────────────────────────────────────────────
 
@@ -264,7 +265,7 @@ export function SearchResults({ query }: { query: string }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
+    <Container className="py-8 pb-20">
       {/* Breadcrumb */}
       <nav className="text-[13px] text-text-secondary mb-4">
         <Link
@@ -401,6 +402,6 @@ export function SearchResults({ query }: { query: string }) {
           )}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

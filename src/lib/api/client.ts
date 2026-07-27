@@ -15,17 +15,17 @@ const getToken = () => {
 
 export const createApiClient = () => {
   const client = createClient({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
   });
 
-  client.instance.interceptors.request.use((config) => {
+  client.interceptors.request.use((request) => {
     const token = getToken();
 
     if (token) {
-      config.headers.set("Authorization", `Bearer ${token}`);
+      request.headers.set("Authorization", `Bearer ${token}`);
     }
 
-    return config;
+    return request;
   });
 
   return client;

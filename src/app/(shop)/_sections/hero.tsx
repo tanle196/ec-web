@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/commons/badge";
+import { Container } from "@/components/commons/container";
 
 export function Hero() {
   return (
-    <section className="max-w-360 mx-auto px-16 pt-8">
+    <Container size="wide" className="pt-8">
       <div
         className="rounded-[24px] border border-marlo-border grid grid-cols-2 gap-12 items-center px-14 py-16"
         style={{ background: "var(--muted)" }}
@@ -12,16 +13,14 @@ export function Hero() {
         {/* Text */}
         <div>
           <Badge kind="persimmon">Mới ra mắt · Tháng 5/2026</Badge>
-          <h1
-            className="text-[clamp(52px,5.5vw,80px)] font-bold leading-[0.97] tracking-[-0.03em] text-foreground mt-5 mb-4"
-          >
+          <h1 className="text-[clamp(52px,5.5vw,80px)] font-bold leading-[0.97] tracking-[-0.03em] text-foreground mt-5 mb-4">
             Ngày mua sắm.
             <br />
-            <span style={{ color: "var(--color-cta)" }}>Tiết kiệm đến 8 triệu.</span>
+            <span style={{ color: "var(--color-cta)" }}>
+              Tiết kiệm đến 8 triệu.
+            </span>
           </h1>
-          <p
-            className="text-[18px] leading-relaxed text-text-secondary max-w-110 mb-7"
-          >
+          <p className="text-[18px] leading-relaxed text-text-secondary max-w-110 mb-7">
             Đổi máy cũ, nhận credit ngay — mua điện thoại mới với giá tốt nhất
             thị trường. Giao miễn phí, đổi trả miễn phí.
           </p>
@@ -69,6 +68,6 @@ export function Hero() {
           />
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

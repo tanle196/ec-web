@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import { addressesControllerCreateResponseTransformer, addressesControllerFindAllResponseTransformer, addressesControllerFindOneResponseTransformer, addressesControllerSetDefaultResponseTransformer, addressesControllerUpdateResponseTransformer, cartsControllerAddItemResponseTransformer, cartsControllerGetCartResponseTransformer, cartsControllerRemoveItemResponseTransformer, cartsControllerUpdateItemResponseTransformer, categoriesControllerCreateResponseTransformer, categoriesControllerFindAllResponseTransformer, categoriesControllerFindOneResponseTransformer, categoriesControllerFindTreeResponseTransformer, categoriesControllerUpdateResponseTransformer, discountsControllerCreateResponseTransformer, discountsControllerFindAllResponseTransformer, discountsControllerFindOneResponseTransformer, discountsControllerUpdateResponseTransformer, ordersControllerCancelResponseTransformer, ordersControllerCreateResponseTransformer, ordersControllerFindAllResponseTransformer, ordersControllerFindMineOneResponseTransformer, ordersControllerFindMineResponseTransformer, ordersControllerFindOneResponseTransformer, ordersControllerUpdateStatusResponseTransformer, paymentsControllerCreateResponseTransformer, paymentsControllerFindAllResponseTransformer, paymentsControllerFindMineOneResponseTransformer, paymentsControllerFindMineResponseTransformer, paymentsControllerFindOneResponseTransformer, paymentsControllerUpdateStatusResponseTransformer, permissionsControllerCreateResponseTransformer, permissionsControllerFindAllResponseTransformer, permissionsControllerFindOneResponseTransformer, permissionsControllerUpdateResponseTransformer, productReviewsControllerFindApprovedResponseTransformer, productsControllerAddVariantResponseTransformer, productsControllerCreateResponseTransformer, productsControllerFindAllResponseTransformer, productsControllerFindOneResponseTransformer, productsControllerUpdateResponseTransformer, productsControllerUpdateVariantResponseTransformer, reviewsControllerApproveResponseTransformer, reviewsControllerCreateResponseTransformer, reviewsControllerFindAllResponseTransformer, reviewsControllerFindMyReviewsResponseTransformer, reviewsControllerUpdateResponseTransformer, rolesControllerAssignPermissionsResponseTransformer, rolesControllerCreateRoleResponseTransformer, rolesControllerFindAllResponseTransformer, rolesControllerFindOneResponseTransformer, rolesControllerUpdateResponseTransformer, usersControllerAssignPermissionsResponseTransformer, usersControllerAssignRolesResponseTransformer, usersControllerFindAllResponseTransformer, usersControllerFindOneResponseTransformer, usersControllerUpdateResponseTransformer, wishlistsControllerAddProductResponseTransformer, wishlistsControllerGetWishlistResponseTransformer, wishlistsControllerRemoveProductResponseTransformer } from './transformers.gen';
-import type { AddressesControllerCreateData, AddressesControllerCreateResponses, AddressesControllerFindAllData, AddressesControllerFindAllResponses, AddressesControllerFindOneData, AddressesControllerFindOneResponses, AddressesControllerRemoveData, AddressesControllerRemoveResponses, AddressesControllerSetDefaultData, AddressesControllerSetDefaultResponses, AddressesControllerUpdateData, AddressesControllerUpdateResponses, AppControllerHealthData, AppControllerHealthResponses, AuthControllerActiveData, AuthControllerActiveResponses, AuthControllerForgotPasswordData, AuthControllerForgotPasswordResponses, AuthControllerGoogleCallbackData, AuthControllerGoogleCallbackResponses, AuthControllerGoogleLoginData, AuthControllerGoogleLoginResponses, AuthControllerLoginData, AuthControllerLoginResponses, AuthControllerRefreshData, AuthControllerRefreshResponses, AuthControllerRegisterData, AuthControllerRegisterResponses, AuthControllerResetPasswordData, AuthControllerResetPasswordResponses, CartsControllerAddItemData, CartsControllerAddItemResponses, CartsControllerClearCartData, CartsControllerClearCartResponses, CartsControllerGetCartData, CartsControllerGetCartResponses, CartsControllerRemoveItemData, CartsControllerRemoveItemResponses, CartsControllerUpdateItemData, CartsControllerUpdateItemResponses, CategoriesControllerCreateData, CategoriesControllerCreateResponses, CategoriesControllerFindAllData, CategoriesControllerFindAllResponses, CategoriesControllerFindOneData, CategoriesControllerFindOneResponses, CategoriesControllerFindTreeData, CategoriesControllerFindTreeResponses, CategoriesControllerRemoveData, CategoriesControllerRemoveResponses, CategoriesControllerUpdateData, CategoriesControllerUpdateResponses, DiscountsControllerCreateData, DiscountsControllerCreateResponses, DiscountsControllerFindAllData, DiscountsControllerFindAllResponses, DiscountsControllerFindOneData, DiscountsControllerFindOneResponses, DiscountsControllerRemoveData, DiscountsControllerRemoveResponses, DiscountsControllerUpdateData, DiscountsControllerUpdateResponses, DiscountsControllerValidateData, DiscountsControllerValidateResponses, OrdersControllerCancelData, OrdersControllerCancelResponses, OrdersControllerCreateData, OrdersControllerCreateResponses, OrdersControllerFindAllData, OrdersControllerFindAllResponses, OrdersControllerFindMineData, OrdersControllerFindMineOneData, OrdersControllerFindMineOneResponses, OrdersControllerFindMineResponses, OrdersControllerFindOneData, OrdersControllerFindOneResponses, OrdersControllerUpdateStatusData, OrdersControllerUpdateStatusResponses, PaymentsControllerCreateData, PaymentsControllerCreateResponses, PaymentsControllerFindAllData, PaymentsControllerFindAllResponses, PaymentsControllerFindMineData, PaymentsControllerFindMineOneData, PaymentsControllerFindMineOneResponses, PaymentsControllerFindMineResponses, PaymentsControllerFindOneData, PaymentsControllerFindOneResponses, PaymentsControllerUpdateStatusData, PaymentsControllerUpdateStatusResponses, PermissionsControllerCreateData, PermissionsControllerCreateResponses, PermissionsControllerFindAllData, PermissionsControllerFindAllResponses, PermissionsControllerFindOneData, PermissionsControllerFindOneResponses, PermissionsControllerGetMetaData, PermissionsControllerGetMetaResponses, PermissionsControllerRemoveData, PermissionsControllerRemoveResponses, PermissionsControllerUpdateData, PermissionsControllerUpdateResponses, ProductReviewsControllerFindApprovedData, ProductReviewsControllerFindApprovedResponses, ProductsControllerAddImageData, ProductsControllerAddImageResponses, ProductsControllerAddVariantData, ProductsControllerAddVariantResponses, ProductsControllerCreateData, ProductsControllerCreateResponses, ProductsControllerFindAllData, ProductsControllerFindAllResponses, ProductsControllerFindOneData, ProductsControllerFindOneResponses, ProductsControllerRemoveData, ProductsControllerRemoveImageData, ProductsControllerRemoveImageResponses, ProductsControllerRemoveResponses, ProductsControllerRemoveVariantData, ProductsControllerRemoveVariantResponses, ProductsControllerUpdateData, ProductsControllerUpdateResponses, ProductsControllerUpdateVariantData, ProductsControllerUpdateVariantResponses, ReviewsControllerApproveData, ReviewsControllerApproveResponses, ReviewsControllerCreateData, ReviewsControllerCreateResponses, ReviewsControllerFindAllData, ReviewsControllerFindAllResponses, ReviewsControllerFindMyReviewsData, ReviewsControllerFindMyReviewsResponses, ReviewsControllerRemoveData, ReviewsControllerRemoveResponses, ReviewsControllerUpdateData, ReviewsControllerUpdateResponses, RolesControllerAssignPermissionsData, RolesControllerAssignPermissionsResponses, RolesControllerCreateRoleData, RolesControllerCreateRoleResponses, RolesControllerFindAllData, RolesControllerFindAllResponses, RolesControllerFindOneData, RolesControllerFindOneResponses, RolesControllerRemoveData, RolesControllerRemoveResponses, RolesControllerUpdateData, RolesControllerUpdateResponses, TagsControllerCreateTagData, TagsControllerCreateTagResponses, TagsControllerFindAllTagsData, TagsControllerFindAllTagsResponses, TagsControllerRemoveTagData, TagsControllerRemoveTagResponses, UsersControllerAssignPermissionsData, UsersControllerAssignPermissionsResponses, UsersControllerAssignRolesData, UsersControllerAssignRolesResponses, UsersControllerFindAllData, UsersControllerFindAllResponses, UsersControllerFindOneData, UsersControllerFindOneResponses, UsersControllerGetProfileData, UsersControllerGetProfileResponses, UsersControllerRemoveData, UsersControllerRemoveResponses, UsersControllerUpdateData, UsersControllerUpdateResponses, WishlistsControllerAddProductData, WishlistsControllerAddProductResponses, WishlistsControllerClearWishlistData, WishlistsControllerClearWishlistResponses, WishlistsControllerGetWishlistData, WishlistsControllerGetWishlistResponses, WishlistsControllerRemoveProductData, WishlistsControllerRemoveProductResponses } from './types.gen';
+import { addressesControllerCreateResponseTransformer, addressesControllerFindAllResponseTransformer, addressesControllerFindOneResponseTransformer, addressesControllerSetDefaultResponseTransformer, addressesControllerUpdateResponseTransformer, bannersControllerFindActiveResponseTransformer, cartsControllerAddItemResponseTransformer, cartsControllerGetCartResponseTransformer, cartsControllerRemoveItemResponseTransformer, cartsControllerUpdateItemResponseTransformer, categoriesControllerFindAllResponseTransformer, categoriesControllerFindBySlugResponseTransformer, categoriesControllerFindOneResponseTransformer, categoriesControllerFindTreeResponseTransformer, ordersControllerCancelResponseTransformer, ordersControllerCheckoutResponseTransformer, ordersControllerCreateResponseTransformer, ordersControllerFindMineOneResponseTransformer, ordersControllerFindMineResponseTransformer, ordersControllerGetHistoryResponseTransformer, ordersControllerUpdateResponseTransformer, paymentsControllerCreateResponseTransformer, paymentsControllerFindMineOneResponseTransformer, paymentsControllerFindMineResponseTransformer, productReviewsControllerFindApprovedResponseTransformer, productsControllerFindAllResponseTransformer, productsControllerFindBySlugResponseTransformer, productsControllerFindOneResponseTransformer, reviewsControllerCreateResponseTransformer, reviewsControllerFindMyReviewsResponseTransformer, reviewsControllerUpdateResponseTransformer, wishlistsControllerAddProductResponseTransformer, wishlistsControllerGetWishlistResponseTransformer, wishlistsControllerRemoveProductResponseTransformer } from './transformers.gen';
+import type { AddressesControllerCreateData, AddressesControllerCreateResponses, AddressesControllerFindAllData, AddressesControllerFindAllResponses, AddressesControllerFindOneData, AddressesControllerFindOneResponses, AddressesControllerRemoveData, AddressesControllerRemoveResponses, AddressesControllerSetDefaultData, AddressesControllerSetDefaultResponses, AddressesControllerUpdateData, AddressesControllerUpdateResponses, AppControllerHealthData, AppControllerHealthResponses, AuthControllerActiveData, AuthControllerActiveResponses, AuthControllerForgotPasswordData, AuthControllerForgotPasswordResponses, AuthControllerGoogleCallbackData, AuthControllerGoogleCallbackResponses, AuthControllerGoogleLoginData, AuthControllerGoogleLoginResponses, AuthControllerLoginData, AuthControllerLoginResponses, AuthControllerRefreshData, AuthControllerRefreshResponses, AuthControllerRegisterData, AuthControllerRegisterResponses, AuthControllerResetPasswordData, AuthControllerResetPasswordResponses, BannersControllerFindActiveData, BannersControllerFindActiveResponses, BannersControllerTrackClickData, BannersControllerTrackClickResponses, CartsControllerAddItemData, CartsControllerAddItemResponses, CartsControllerClearCartData, CartsControllerClearCartResponses, CartsControllerGetCartData, CartsControllerGetCartResponses, CartsControllerRemoveItemData, CartsControllerRemoveItemResponses, CartsControllerUpdateItemData, CartsControllerUpdateItemResponses, CategoriesControllerFindAllData, CategoriesControllerFindAllResponses, CategoriesControllerFindBySlugData, CategoriesControllerFindBySlugResponses, CategoriesControllerFindOneData, CategoriesControllerFindOneResponses, CategoriesControllerFindTreeData, CategoriesControllerFindTreeResponses, DiscountsControllerValidateData, DiscountsControllerValidateResponses, OrdersControllerCancelData, OrdersControllerCancelResponses, OrdersControllerCheckoutData, OrdersControllerCheckoutResponses, OrdersControllerCreateData, OrdersControllerCreateResponses, OrdersControllerFindMineData, OrdersControllerFindMineOneData, OrdersControllerFindMineOneResponses, OrdersControllerFindMineResponses, OrdersControllerGetHistoryData, OrdersControllerGetHistoryResponses, OrdersControllerUpdateData, OrdersControllerUpdateResponses, PaymentsControllerCreateData, PaymentsControllerCreateResponses, PaymentsControllerFindMineData, PaymentsControllerFindMineOneData, PaymentsControllerFindMineOneResponses, PaymentsControllerFindMineResponses, ProductReviewsControllerFindApprovedData, ProductReviewsControllerFindApprovedResponses, ProductsControllerFindAllData, ProductsControllerFindAllResponses, ProductsControllerFindBySlugData, ProductsControllerFindBySlugResponses, ProductsControllerFindOneData, ProductsControllerFindOneResponses, ReviewsControllerCreateData, ReviewsControllerCreateResponses, ReviewsControllerFindMyReviewsData, ReviewsControllerFindMyReviewsResponses, ReviewsControllerRemoveData, ReviewsControllerRemoveResponses, ReviewsControllerUpdateData, ReviewsControllerUpdateResponses, TagsControllerFindAllTagsData, TagsControllerFindAllTagsResponses, TagsControllerFindTagBySlugData, TagsControllerFindTagBySlugResponses, UsersControllerGetProfileData, UsersControllerGetProfileResponses, WishlistsControllerAddProductData, WishlistsControllerAddProductResponses, WishlistsControllerClearWishlistData, WishlistsControllerClearWishlistResponses, WishlistsControllerGetWishlistData, WishlistsControllerGetWishlistResponses, WishlistsControllerRemoveProductData, WishlistsControllerRemoveProductResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -25,7 +25,6 @@ export const appControllerHealth = <ThrowOnError extends boolean = false>(option
  * User login
  */
 export const authControllerLogin = <ThrowOnError extends boolean = false>(options: Options<AuthControllerLoginData, ThrowOnError>) => (options.client ?? client).post<AuthControllerLoginResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/login',
     ...options,
     headers: {
@@ -38,7 +37,6 @@ export const authControllerLogin = <ThrowOnError extends boolean = false>(option
  * User registration
  */
 export const authControllerRegister = <ThrowOnError extends boolean = false>(options: Options<AuthControllerRegisterData, ThrowOnError>) => (options.client ?? client).post<AuthControllerRegisterResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/register',
     ...options,
     headers: {
@@ -51,7 +49,6 @@ export const authControllerRegister = <ThrowOnError extends boolean = false>(opt
  * Activate user account
  */
 export const authControllerActive = <ThrowOnError extends boolean = false>(options: Options<AuthControllerActiveData, ThrowOnError>) => (options.client ?? client).post<AuthControllerActiveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/active',
     ...options,
     headers: {
@@ -63,17 +60,12 @@ export const authControllerActive = <ThrowOnError extends boolean = false>(optio
 /**
  * Refresh access token
  */
-export const authControllerRefresh = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerRefreshData, ThrowOnError>) => (options?.client ?? client).post<AuthControllerRefreshResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/auth/refresh',
-    ...options
-});
+export const authControllerRefresh = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerRefreshData, ThrowOnError>) => (options?.client ?? client).post<AuthControllerRefreshResponses, unknown, ThrowOnError>({ url: '/auth/refresh', ...options });
 
 /**
  * Request password reset
  */
 export const authControllerForgotPassword = <ThrowOnError extends boolean = false>(options: Options<AuthControllerForgotPasswordData, ThrowOnError>) => (options.client ?? client).post<AuthControllerForgotPasswordResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/forgot-password',
     ...options,
     headers: {
@@ -86,7 +78,6 @@ export const authControllerForgotPassword = <ThrowOnError extends boolean = fals
  * Reset password with token
  */
 export const authControllerResetPassword = <ThrowOnError extends boolean = false>(options: Options<AuthControllerResetPasswordData, ThrowOnError>) => (options.client ?? client).post<AuthControllerResetPasswordResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/auth/reset-password',
     ...options,
     headers: {
@@ -103,241 +94,20 @@ export const authControllerGoogleLogin = <ThrowOnError extends boolean = false>(
 /**
  * Google OAuth callback
  */
-export const authControllerGoogleCallback = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerGoogleCallbackData, ThrowOnError>) => (options?.client ?? client).get<AuthControllerGoogleCallbackResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/auth/google/callback',
-    ...options
-});
-
-/**
- * List all users
- */
-export const usersControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<UsersControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<UsersControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: usersControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/users',
-    ...options
-});
+export const authControllerGoogleCallback = <ThrowOnError extends boolean = false>(options?: Options<AuthControllerGoogleCallbackData, ThrowOnError>) => (options?.client ?? client).get<AuthControllerGoogleCallbackResponses, unknown, ThrowOnError>({ url: '/auth/google/callback', ...options });
 
 /**
  * Get current user profile
  */
-export const usersControllerGetProfile = <ThrowOnError extends boolean = false>(options?: Options<UsersControllerGetProfileData, ThrowOnError>) => (options?.client ?? client).get<UsersControllerGetProfileResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/users/profile',
-    ...options
-});
-
-/**
- * Delete user
- */
-export const usersControllerRemove = <ThrowOnError extends boolean = false>(options: Options<UsersControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<UsersControllerRemoveResponses, unknown, ThrowOnError>({ url: '/users/{id}', ...options });
-
-/**
- * Get user by id with roles and permissions
- */
-export const usersControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<UsersControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<UsersControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: usersControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/users/{id}',
-    ...options
-});
-
-/**
- * Update user fullName or avatar
- */
-export const usersControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<UsersControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<UsersControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: usersControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/users/{id}',
-    ...options
-});
-
-/**
- * Assign roles to user (replaces existing)
- */
-export const usersControllerAssignRoles = <ThrowOnError extends boolean = false>(options: Options<UsersControllerAssignRolesData, ThrowOnError>) => (options.client ?? client).put<UsersControllerAssignRolesResponses, unknown, ThrowOnError>({
-    responseTransformer: usersControllerAssignRolesResponseTransformer,
-    responseType: 'json',
-    url: '/users/{id}/roles',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Assign direct permissions to user (replaces existing)
- */
-export const usersControllerAssignPermissions = <ThrowOnError extends boolean = false>(options: Options<UsersControllerAssignPermissionsData, ThrowOnError>) => (options.client ?? client).put<UsersControllerAssignPermissionsResponses, unknown, ThrowOnError>({
-    responseTransformer: usersControllerAssignPermissionsResponseTransformer,
-    responseType: 'json',
-    url: '/users/{id}/permissions',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * List roles (paginated)
- */
-export const rolesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<RolesControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<RolesControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: rolesControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/roles',
-    ...options
-});
-
-/**
- * Create a new role
- */
-export const rolesControllerCreateRole = <ThrowOnError extends boolean = false>(options: Options<RolesControllerCreateRoleData, ThrowOnError>) => (options.client ?? client).post<RolesControllerCreateRoleResponses, unknown, ThrowOnError>({
-    responseTransformer: rolesControllerCreateRoleResponseTransformer,
-    responseType: 'json',
-    url: '/roles',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Delete role (not applicable to ADMIN)
- */
-export const rolesControllerRemove = <ThrowOnError extends boolean = false>(options: Options<RolesControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<RolesControllerRemoveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/roles/{id}',
-    ...options
-});
-
-/**
- * Get role by id
- */
-export const rolesControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<RolesControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<RolesControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: rolesControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/roles/{id}',
-    ...options
-});
-
-/**
- * Update role
- */
-export const rolesControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<RolesControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<RolesControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: rolesControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/roles/{id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Assign permissions to role
- */
-export const rolesControllerAssignPermissions = <ThrowOnError extends boolean = false>(options: Options<RolesControllerAssignPermissionsData, ThrowOnError>) => (options.client ?? client).put<RolesControllerAssignPermissionsResponses, unknown, ThrowOnError>({
-    responseTransformer: rolesControllerAssignPermissionsResponseTransformer,
-    responseType: 'json',
-    url: '/roles/{id}/permissions',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * List permissions (paginated)
- */
-export const permissionsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<PermissionsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<PermissionsControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: permissionsControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/permissions',
-    ...options
-});
-
-/**
- * Create a new permission
- */
-export const permissionsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<PermissionsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<PermissionsControllerCreateResponses, unknown, ThrowOnError>({
-    responseTransformer: permissionsControllerCreateResponseTransformer,
-    responseType: 'json',
-    url: '/permissions',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Get permission metadata for frontend
- *
- * Used to render UI (module, system action, custom action). Not for auth.
- */
-export const permissionsControllerGetMeta = <ThrowOnError extends boolean = false>(options?: Options<PermissionsControllerGetMetaData, ThrowOnError>) => (options?.client ?? client).get<PermissionsControllerGetMetaResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/permissions/meta',
-    ...options
-});
-
-/**
- * Delete permission
- */
-export const permissionsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<PermissionsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<PermissionsControllerRemoveResponses, unknown, ThrowOnError>({ url: '/permissions/{id}', ...options });
-
-/**
- * Get permission by id
- */
-export const permissionsControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<PermissionsControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<PermissionsControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: permissionsControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/permissions/{id}',
-    ...options
-});
-
-/**
- * Update permission
- */
-export const permissionsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<PermissionsControllerUpdateData, ThrowOnError>) => (options.client ?? client).put<PermissionsControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: permissionsControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/permissions/{id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
+export const usersControllerGetProfile = <ThrowOnError extends boolean = false>(options?: Options<UsersControllerGetProfileData, ThrowOnError>) => (options?.client ?? client).get<UsersControllerGetProfileResponses, unknown, ThrowOnError>({ url: '/users/profile', ...options });
 
 /**
  * List categories (paginated)
  */
 export const categoriesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<CategoriesControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<CategoriesControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/categories',
     ...options
-});
-
-/**
- * Create a new category
- */
-export const categoriesControllerCreate = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerCreateData, ThrowOnError>) => (options.client ?? client).post<CategoriesControllerCreateResponses, unknown, ThrowOnError>({
-    responseTransformer: categoriesControllerCreateResponseTransformer,
-    responseType: 'json',
-    url: '/categories',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
 });
 
 /**
@@ -345,17 +115,16 @@ export const categoriesControllerCreate = <ThrowOnError extends boolean = false>
  */
 export const categoriesControllerFindTree = <ThrowOnError extends boolean = false>(options?: Options<CategoriesControllerFindTreeData, ThrowOnError>) => (options?.client ?? client).get<CategoriesControllerFindTreeResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindTreeResponseTransformer,
-    responseType: 'json',
     url: '/categories/tree',
     ...options
 });
 
 /**
- * Delete category (must have no children)
+ * Get category by slug
  */
-export const categoriesControllerRemove = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<CategoriesControllerRemoveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/categories/{id}',
+export const categoriesControllerFindBySlug = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerFindBySlugData, ThrowOnError>) => (options.client ?? client).get<CategoriesControllerFindBySlugResponses, unknown, ThrowOnError>({
+    responseTransformer: categoriesControllerFindBySlugResponseTransformer,
+    url: '/categories/slug/{slug}',
     ...options
 });
 
@@ -364,23 +133,8 @@ export const categoriesControllerRemove = <ThrowOnError extends boolean = false>
  */
 export const categoriesControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<CategoriesControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: categoriesControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/categories/{id}',
     ...options
-});
-
-/**
- * Update category
- */
-export const categoriesControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<CategoriesControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<CategoriesControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: categoriesControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/categories/{id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
 });
 
 /**
@@ -388,31 +142,16 @@ export const categoriesControllerUpdate = <ThrowOnError extends boolean = false>
  */
 export const productsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<ProductsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<ProductsControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: productsControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/products',
     ...options
 });
 
 /**
- * Create a new product
+ * Get product detail by slug with images, variants, tags
  */
-export const productsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<ProductsControllerCreateResponses, unknown, ThrowOnError>({
-    responseTransformer: productsControllerCreateResponseTransformer,
-    responseType: 'json',
-    url: '/products',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Delete product
- */
-export const productsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<ProductsControllerRemoveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/products/{id}',
+export const productsControllerFindBySlug = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerFindBySlugData, ThrowOnError>) => (options.client ?? client).get<ProductsControllerFindBySlugResponses, unknown, ThrowOnError>({
+    responseTransformer: productsControllerFindBySlugResponseTransformer,
+    url: '/products/slug/{slug}',
     ...options
 });
 
@@ -421,121 +160,25 @@ export const productsControllerRemove = <ThrowOnError extends boolean = false>(o
  */
 export const productsControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<ProductsControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: productsControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/products/{id}',
     ...options
-});
-
-/**
- * Update product
- */
-export const productsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<ProductsControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: productsControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/products/{id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Add image to product
- */
-export const productsControllerAddImage = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerAddImageData, ThrowOnError>) => (options.client ?? client).post<ProductsControllerAddImageResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/products/{id}/images',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Remove image from product
- */
-export const productsControllerRemoveImage = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerRemoveImageData, ThrowOnError>) => (options.client ?? client).delete<ProductsControllerRemoveImageResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/products/{id}/images/{imageId}',
-    ...options
-});
-
-/**
- * Add variant to product
- */
-export const productsControllerAddVariant = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerAddVariantData, ThrowOnError>) => (options.client ?? client).post<ProductsControllerAddVariantResponses, unknown, ThrowOnError>({
-    responseTransformer: productsControllerAddVariantResponseTransformer,
-    responseType: 'json',
-    url: '/products/{id}/variants',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Remove product variant
- */
-export const productsControllerRemoveVariant = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerRemoveVariantData, ThrowOnError>) => (options.client ?? client).delete<ProductsControllerRemoveVariantResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/products/{id}/variants/{variantId}',
-    ...options
-});
-
-/**
- * Update product variant
- */
-export const productsControllerUpdateVariant = <ThrowOnError extends boolean = false>(options: Options<ProductsControllerUpdateVariantData, ThrowOnError>) => (options.client ?? client).patch<ProductsControllerUpdateVariantResponses, unknown, ThrowOnError>({
-    responseTransformer: productsControllerUpdateVariantResponseTransformer,
-    responseType: 'json',
-    url: '/products/{id}/variants/{variantId}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
 });
 
 /**
  * List all tags
  */
-export const tagsControllerFindAllTags = <ThrowOnError extends boolean = false>(options?: Options<TagsControllerFindAllTagsData, ThrowOnError>) => (options?.client ?? client).get<TagsControllerFindAllTagsResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/tags',
-    ...options
-});
+export const tagsControllerFindAllTags = <ThrowOnError extends boolean = false>(options?: Options<TagsControllerFindAllTagsData, ThrowOnError>) => (options?.client ?? client).get<TagsControllerFindAllTagsResponses, unknown, ThrowOnError>({ url: '/tags', ...options });
 
 /**
- * Create a tag
+ * Get tag by slug
  */
-export const tagsControllerCreateTag = <ThrowOnError extends boolean = false>(options: Options<TagsControllerCreateTagData, ThrowOnError>) => (options.client ?? client).post<TagsControllerCreateTagResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/tags',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Delete a tag
- */
-export const tagsControllerRemoveTag = <ThrowOnError extends boolean = false>(options: Options<TagsControllerRemoveTagData, ThrowOnError>) => (options.client ?? client).delete<TagsControllerRemoveTagResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/tags/{id}',
-    ...options
-});
+export const tagsControllerFindTagBySlug = <ThrowOnError extends boolean = false>(options: Options<TagsControllerFindTagBySlugData, ThrowOnError>) => (options.client ?? client).get<TagsControllerFindTagBySlugResponses, unknown, ThrowOnError>({ url: '/tags/slug/{slug}', ...options });
 
 /**
  * List my addresses
  */
 export const addressesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<AddressesControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<AddressesControllerFindAllResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerFindAllResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses',
     ...options
 });
@@ -545,7 +188,6 @@ export const addressesControllerFindAll = <ThrowOnError extends boolean = false>
  */
 export const addressesControllerCreate = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerCreateData, ThrowOnError>) => (options.client ?? client).post<AddressesControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses',
     ...options,
     headers: {
@@ -564,7 +206,6 @@ export const addressesControllerRemove = <ThrowOnError extends boolean = false>(
  */
 export const addressesControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<AddressesControllerFindOneResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerFindOneResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}',
     ...options
 });
@@ -574,7 +215,6 @@ export const addressesControllerFindOne = <ThrowOnError extends boolean = false>
  */
 export const addressesControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<AddressesControllerUpdateResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerUpdateResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}',
     ...options,
     headers: {
@@ -588,18 +228,7 @@ export const addressesControllerUpdate = <ThrowOnError extends boolean = false>(
  */
 export const addressesControllerSetDefault = <ThrowOnError extends boolean = false>(options: Options<AddressesControllerSetDefaultData, ThrowOnError>) => (options.client ?? client).patch<AddressesControllerSetDefaultResponses, unknown, ThrowOnError>({
     responseTransformer: addressesControllerSetDefaultResponseTransformer,
-    responseType: 'json',
     url: '/users/me/addresses/{id}/default',
-    ...options
-});
-
-/**
- * Admin: list all orders
- */
-export const ordersControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<OrdersControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<OrdersControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: ordersControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/orders',
     ...options
 });
 
@@ -608,8 +237,20 @@ export const ordersControllerFindAll = <ThrowOnError extends boolean = false>(op
  */
 export const ordersControllerCreate = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCreateData, ThrowOnError>) => (options.client ?? client).post<OrdersControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/orders',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Create an order from my cart, then clear it
+ */
+export const ordersControllerCheckout = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCheckoutData, ThrowOnError>) => (options.client ?? client).post<OrdersControllerCheckoutResponses, unknown, ThrowOnError>({
+    responseTransformer: ordersControllerCheckoutResponseTransformer,
+    url: '/orders/checkout',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -622,7 +263,6 @@ export const ordersControllerCreate = <ThrowOnError extends boolean = false>(opt
  */
 export const ordersControllerFindMine = <ThrowOnError extends boolean = false>(options?: Options<OrdersControllerFindMineData, ThrowOnError>) => (options?.client ?? client).get<OrdersControllerFindMineResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerFindMineResponseTransformer,
-    responseType: 'json',
     url: '/orders/me',
     ...options
 });
@@ -632,9 +272,21 @@ export const ordersControllerFindMine = <ThrowOnError extends boolean = false>(o
  */
 export const ordersControllerFindMineOne = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerFindMineOneData, ThrowOnError>) => (options.client ?? client).get<OrdersControllerFindMineOneResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerFindMineOneResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}',
     ...options
+});
+
+/**
+ * Update my order (address/items/notes) while still pending
+ */
+export const ordersControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<OrdersControllerUpdateResponses, unknown, ThrowOnError>({
+    responseTransformer: ordersControllerUpdateResponseTransformer,
+    url: '/orders/me/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -642,162 +294,24 @@ export const ordersControllerFindMineOne = <ThrowOnError extends boolean = false
  */
 export const ordersControllerCancel = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerCancelData, ThrowOnError>) => (options.client ?? client).patch<OrdersControllerCancelResponses, unknown, ThrowOnError>({
     responseTransformer: ordersControllerCancelResponseTransformer,
-    responseType: 'json',
     url: '/orders/me/{id}/cancel',
     ...options
 });
 
 /**
- * Admin: get order detail
+ * Get status history of my order
  */
-export const ordersControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<OrdersControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: ordersControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/orders/{id}',
+export const ordersControllerGetHistory = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerGetHistoryData, ThrowOnError>) => (options.client ?? client).get<OrdersControllerGetHistoryResponses, unknown, ThrowOnError>({
+    responseTransformer: ordersControllerGetHistoryResponseTransformer,
+    url: '/orders/me/{id}/history',
     ...options
-});
-
-/**
- * Admin: update order status
- */
-export const ordersControllerUpdateStatus = <ThrowOnError extends boolean = false>(options: Options<OrdersControllerUpdateStatusData, ThrowOnError>) => (options.client ?? client).patch<OrdersControllerUpdateStatusResponses, unknown, ThrowOnError>({
-    responseTransformer: ordersControllerUpdateStatusResponseTransformer,
-    responseType: 'json',
-    url: '/orders/{id}/status',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
 });
 
 /**
  * Validate a discount code against a subtotal
  */
 export const discountsControllerValidate = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerValidateData, ThrowOnError>) => (options.client ?? client).post<DiscountsControllerValidateResponses, unknown, ThrowOnError>({
-    responseType: 'json',
     url: '/discounts/validate',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Admin: list discount codes
- */
-export const discountsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<DiscountsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<DiscountsControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: discountsControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/discounts',
-    ...options
-});
-
-/**
- * Admin: create a discount code
- */
-export const discountsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<DiscountsControllerCreateResponses, unknown, ThrowOnError>({
-    responseTransformer: discountsControllerCreateResponseTransformer,
-    responseType: 'json',
-    url: '/discounts',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Admin: delete a discount code
- */
-export const discountsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<DiscountsControllerRemoveResponses, unknown, ThrowOnError>({ url: '/discounts/{id}', ...options });
-
-/**
- * Admin: get discount by ID
- */
-export const discountsControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<DiscountsControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: discountsControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/discounts/{id}',
-    ...options
-});
-
-/**
- * Admin: update a discount code
- */
-export const discountsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<DiscountsControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<DiscountsControllerUpdateResponses, unknown, ThrowOnError>({
-    responseTransformer: discountsControllerUpdateResponseTransformer,
-    responseType: 'json',
-    url: '/discounts/{id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Admin: list all payments
- */
-export const paymentsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<PaymentsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<PaymentsControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/payments',
-    ...options
-});
-
-/**
- * Create a payment for an order
- */
-export const paymentsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<PaymentsControllerCreateResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerCreateResponseTransformer,
-    responseType: 'json',
-    url: '/payments',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * List my payments
- */
-export const paymentsControllerFindMine = <ThrowOnError extends boolean = false>(options?: Options<PaymentsControllerFindMineData, ThrowOnError>) => (options?.client ?? client).get<PaymentsControllerFindMineResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerFindMineResponseTransformer,
-    responseType: 'json',
-    url: '/payments/me',
-    ...options
-});
-
-/**
- * Get my payment detail
- */
-export const paymentsControllerFindMineOne = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerFindMineOneData, ThrowOnError>) => (options.client ?? client).get<PaymentsControllerFindMineOneResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerFindMineOneResponseTransformer,
-    responseType: 'json',
-    url: '/payments/me/{id}',
-    ...options
-});
-
-/**
- * Admin: get payment detail
- */
-export const paymentsControllerFindOne = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerFindOneData, ThrowOnError>) => (options.client ?? client).get<PaymentsControllerFindOneResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerFindOneResponseTransformer,
-    responseType: 'json',
-    url: '/payments/{id}',
-    ...options
-});
-
-/**
- * Admin: update payment status
- */
-export const paymentsControllerUpdateStatus = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerUpdateStatusData, ThrowOnError>) => (options.client ?? client).patch<PaymentsControllerUpdateStatusResponses, unknown, ThrowOnError>({
-    responseTransformer: paymentsControllerUpdateStatusResponseTransformer,
-    responseType: 'json',
-    url: '/payments/{id}/status',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -815,7 +329,6 @@ export const cartsControllerClearCart = <ThrowOnError extends boolean = false>(o
  */
 export const cartsControllerGetCart = <ThrowOnError extends boolean = false>(options?: Options<CartsControllerGetCartData, ThrowOnError>) => (options?.client ?? client).get<CartsControllerGetCartResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerGetCartResponseTransformer,
-    responseType: 'json',
     url: '/carts/me',
     ...options
 });
@@ -825,7 +338,6 @@ export const cartsControllerGetCart = <ThrowOnError extends boolean = false>(opt
  */
 export const cartsControllerAddItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerAddItemData, ThrowOnError>) => (options.client ?? client).post<CartsControllerAddItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerAddItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items',
     ...options,
     headers: {
@@ -839,7 +351,6 @@ export const cartsControllerAddItem = <ThrowOnError extends boolean = false>(opt
  */
 export const cartsControllerRemoveItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerRemoveItemData, ThrowOnError>) => (options.client ?? client).delete<CartsControllerRemoveItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerRemoveItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items/{itemId}',
     ...options
 });
@@ -849,7 +360,6 @@ export const cartsControllerRemoveItem = <ThrowOnError extends boolean = false>(
  */
 export const cartsControllerUpdateItem = <ThrowOnError extends boolean = false>(options: Options<CartsControllerUpdateItemData, ThrowOnError>) => (options.client ?? client).patch<CartsControllerUpdateItemResponses, unknown, ThrowOnError>({
     responseTransformer: cartsControllerUpdateItemResponseTransformer,
-    responseType: 'json',
     url: '/carts/me/items/{itemId}',
     ...options,
     headers: {
@@ -859,12 +369,33 @@ export const cartsControllerUpdateItem = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * (Admin) List all reviews with filters
+ * Create a payment for an order
  */
-export const reviewsControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<ReviewsControllerFindAllData, ThrowOnError>) => (options?.client ?? client).get<ReviewsControllerFindAllResponses, unknown, ThrowOnError>({
-    responseTransformer: reviewsControllerFindAllResponseTransformer,
-    responseType: 'json',
-    url: '/reviews',
+export const paymentsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<PaymentsControllerCreateResponses, unknown, ThrowOnError>({
+    responseTransformer: paymentsControllerCreateResponseTransformer,
+    url: '/payments',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List my payments
+ */
+export const paymentsControllerFindMine = <ThrowOnError extends boolean = false>(options?: Options<PaymentsControllerFindMineData, ThrowOnError>) => (options?.client ?? client).get<PaymentsControllerFindMineResponses, unknown, ThrowOnError>({
+    responseTransformer: paymentsControllerFindMineResponseTransformer,
+    url: '/payments/me',
+    ...options
+});
+
+/**
+ * Get my payment detail
+ */
+export const paymentsControllerFindMineOne = <ThrowOnError extends boolean = false>(options: Options<PaymentsControllerFindMineOneData, ThrowOnError>) => (options.client ?? client).get<PaymentsControllerFindMineOneResponses, unknown, ThrowOnError>({
+    responseTransformer: paymentsControllerFindMineOneResponseTransformer,
+    url: '/payments/me/{id}',
     ...options
 });
 
@@ -873,7 +404,6 @@ export const reviewsControllerFindAll = <ThrowOnError extends boolean = false>(o
  */
 export const reviewsControllerCreate = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerCreateData, ThrowOnError>) => (options.client ?? client).post<ReviewsControllerCreateResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerCreateResponseTransformer,
-    responseType: 'json',
     url: '/reviews',
     ...options,
     headers: {
@@ -887,7 +417,6 @@ export const reviewsControllerCreate = <ThrowOnError extends boolean = false>(op
  */
 export const reviewsControllerFindMyReviews = <ThrowOnError extends boolean = false>(options?: Options<ReviewsControllerFindMyReviewsData, ThrowOnError>) => (options?.client ?? client).get<ReviewsControllerFindMyReviewsResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerFindMyReviewsResponseTransformer,
-    responseType: 'json',
     url: '/reviews/me',
     ...options
 });
@@ -895,18 +424,13 @@ export const reviewsControllerFindMyReviews = <ThrowOnError extends boolean = fa
 /**
  * Delete own review (admin can delete any)
  */
-export const reviewsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<ReviewsControllerRemoveResponses, unknown, ThrowOnError>({
-    responseType: 'json',
-    url: '/reviews/{id}',
-    ...options
-});
+export const reviewsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerRemoveData, ThrowOnError>) => (options.client ?? client).delete<ReviewsControllerRemoveResponses, unknown, ThrowOnError>({ url: '/reviews/{id}', ...options });
 
 /**
  * Update own review (resets approval)
  */
 export const reviewsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerUpdateData, ThrowOnError>) => (options.client ?? client).patch<ReviewsControllerUpdateResponses, unknown, ThrowOnError>({
     responseTransformer: reviewsControllerUpdateResponseTransformer,
-    responseType: 'json',
     url: '/reviews/{id}',
     ...options,
     headers: {
@@ -916,21 +440,10 @@ export const reviewsControllerUpdate = <ThrowOnError extends boolean = false>(op
 });
 
 /**
- * (Admin) Approve or reject a review
- */
-export const reviewsControllerApprove = <ThrowOnError extends boolean = false>(options: Options<ReviewsControllerApproveData, ThrowOnError>) => (options.client ?? client).patch<ReviewsControllerApproveResponses, unknown, ThrowOnError>({
-    responseTransformer: reviewsControllerApproveResponseTransformer,
-    responseType: 'json',
-    url: '/reviews/{id}/approve',
-    ...options
-});
-
-/**
  * List approved reviews for a product
  */
 export const productReviewsControllerFindApproved = <ThrowOnError extends boolean = false>(options: Options<ProductReviewsControllerFindApprovedData, ThrowOnError>) => (options.client ?? client).get<ProductReviewsControllerFindApprovedResponses, unknown, ThrowOnError>({
     responseTransformer: productReviewsControllerFindApprovedResponseTransformer,
-    responseType: 'json',
     url: '/products/{productId}/reviews',
     ...options
 });
@@ -945,7 +458,6 @@ export const wishlistsControllerClearWishlist = <ThrowOnError extends boolean = 
  */
 export const wishlistsControllerGetWishlist = <ThrowOnError extends boolean = false>(options?: Options<WishlistsControllerGetWishlistData, ThrowOnError>) => (options?.client ?? client).get<WishlistsControllerGetWishlistResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerGetWishlistResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me',
     ...options
 });
@@ -955,7 +467,6 @@ export const wishlistsControllerGetWishlist = <ThrowOnError extends boolean = fa
  */
 export const wishlistsControllerAddProduct = <ThrowOnError extends boolean = false>(options: Options<WishlistsControllerAddProductData, ThrowOnError>) => (options.client ?? client).post<WishlistsControllerAddProductResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerAddProductResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me',
     ...options,
     headers: {
@@ -969,7 +480,20 @@ export const wishlistsControllerAddProduct = <ThrowOnError extends boolean = fal
  */
 export const wishlistsControllerRemoveProduct = <ThrowOnError extends boolean = false>(options: Options<WishlistsControllerRemoveProductData, ThrowOnError>) => (options.client ?? client).delete<WishlistsControllerRemoveProductResponses, unknown, ThrowOnError>({
     responseTransformer: wishlistsControllerRemoveProductResponseTransformer,
-    responseType: 'json',
     url: '/wishlists/me/{productId}',
     ...options
 });
+
+/**
+ * Lấy banner đang active theo vị trí (dành cho home page)
+ */
+export const bannersControllerFindActive = <ThrowOnError extends boolean = false>(options?: Options<BannersControllerFindActiveData, ThrowOnError>) => (options?.client ?? client).get<BannersControllerFindActiveResponses, unknown, ThrowOnError>({
+    responseTransformer: bannersControllerFindActiveResponseTransformer,
+    url: '/banners',
+    ...options
+});
+
+/**
+ * Ghi nhận click vào banner
+ */
+export const bannersControllerTrackClick = <ThrowOnError extends boolean = false>(options: Options<BannersControllerTrackClickData, ThrowOnError>) => (options.client ?? client).post<BannersControllerTrackClickResponses, unknown, ThrowOnError>({ url: '/banners/{id}/click', ...options });

@@ -1,551 +1,612 @@
 "use client";
 
-import { useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
-import { Badge } from "@/components/commons/badge";
-import { Price } from "@/components/commons/price";
-import { ProductGrid } from "@/components/commons/product-grid";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { FLAGSHIP } from "@/app/(shop)/categories/_data/phones";
-import { ProductImage } from "@/components/commons/product-image";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
+import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+import { Container } from "@/components/commons/container";
+import Image from "next/image";
 
-const ORDERS_PER_PAGE = 2;
-const SAVED_PER_PAGE = 8;
-
-function paginate<T>(items: T[], page: number, size: number) {
-  const start = (page - 1) * size;
-  return {
-    items: items.slice(start, start + size),
-    total: Math.ceil(items.length / size),
-  };
-}
-
-function Pager({
-  page,
-  total,
-  onChange,
-}: {
-  page: number;
-  total: number;
-  onChange: (p: number) => void;
-}) {
-  if (total <= 1) return null;
-  return (
-    <div className="flex items-center justify-center gap-1 mt-6">
-      <button
-        onClick={() => onChange(page - 1)}
-        disabled={page === 1}
-        className="inline-flex items-center gap-1 px-3 py-2 rounded-[8px] text-[13px] font-medium border border-marlo-border bg-white text-foreground cursor-pointer hover:bg-cream-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-      >
-        ← Trước
-      </button>
-      {Array.from({ length: total }, (_, i) => i + 1).map((p) => (
-        <button
-          key={p}
-          onClick={() => onChange(p)}
-          className={`w-9 h-9 rounded-[8px] text-[13px] font-medium border cursor-pointer transition-colors ${
-            p === page
-              ? "bg-ink text-cream border-ink"
-              : "bg-white text-foreground border-marlo-border hover:bg-cream-2"
-          }`}
-        >
-          {p}
-        </button>
-      ))}
-      <button
-        onClick={() => onChange(page + 1)}
-        disabled={page === total}
-        className="inline-flex items-center gap-1 px-3 py-2 rounded-[8px] text-[13px] font-medium border border-marlo-border bg-white text-foreground cursor-pointer hover:bg-cream-2 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-      >
-        Sau →
-      </button>
-    </div>
-  );
-}
-
-type Tab = "orders" | "saved" | "addresses" | "payment" | "settings";
-
-const NAV_ITEMS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  {
-    id: "orders",
-    label: "Đơn hàng",
-    icon: (
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-        <polyline points="12 22 12 13" />
-        <path d="m3.3 7 8.7 5 8.7-5" />
-      </svg>
-    ),
-  },
-  {
-    id: "saved",
-    label: "Đã lưu",
-    icon: (
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-      </svg>
-    ),
-  },
-  {
-    id: "addresses",
-    label: "Địa chỉ",
-    icon: (
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-        <circle cx="12" cy="10" r="3" />
-      </svg>
-    ),
-  },
-  {
-    id: "payment",
-    label: "Thanh toán",
-    icon: (
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect width="20" height="14" x="2" y="5" rx="2" />
-        <line x1="2" x2="22" y1="10" y2="10" />
-      </svg>
-    ),
-  },
-  {
-    id: "settings",
-    label: "Cài đặt",
-    icon: (
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    ),
-  },
-];
+const imgUserAvatar =
+  "https://www.figma.com/api/mcp/asset/22b3c6d0-39a3-4d05-8723-697ef67828aa";
+const imgProduct1 =
+  "https://www.figma.com/api/mcp/asset/fee931d8-36b7-47f4-b683-9e4a96c38cd6";
+const imgProduct2 =
+  "https://www.figma.com/api/mcp/asset/d72852a2-0fca-4ae2-bef6-d84bb123ebf3";
+const imgProduct3 =
+  "https://www.figma.com/api/mcp/asset/f7a1aa9a-7a99-42bd-b732-3629ae018d76";
+const imgProduct4 =
+  "https://www.figma.com/api/mcp/asset/626db840-8813-4182-b4d6-200a6975baea";
 
 const ORDERS = [
   {
-    id: "M-2026-58291",
-    date: "14 tháng 3, 2026",
-    status: "Đang giao",
-    statusKind: "info" as const,
-    total: 33990000,
-    imgs: ["/phone-orange.svg"],
-    eta: "Dự kiến Thứ 3, 17/3 — đang trên đường giao",
+    id: "#96459761",
+    status: "IN PROGRESS",
+    statusColor: "text-primary-500",
+    date: "Dec 30, 2019 05:18",
+    total: "$1,500 (5 Products)",
   },
   {
-    id: "M-2026-58102",
-    date: "6 tháng 3, 2026",
-    status: "Đã giao",
-    statusKind: "success" as const,
-    total: 29990000,
-    imgs: ["/phone-green.svg", "/phone-orange.svg"],
-    eta: "Đã giao 9/3 — để tại cửa trước",
+    id: "#71667167",
+    status: "COMPLETED",
+    statusColor: "text-success-500",
+    date: "Feb 2, 2019 19:28",
+    total: "$80 (11 Products)",
   },
   {
-    id: "M-2026-57804",
-    date: "18 tháng 2, 2026",
-    status: "Đã giao",
-    statusKind: "success" as const,
-    total: 9990000,
-    imgs: ["/phone-green.svg"],
-    eta: "Đã giao 21/2",
+    id: "#95214362",
+    status: "CANCELED",
+    statusColor: "text-danger-500",
+    date: "Mar 20, 2019 23:14",
+    total: "$160 (3 Products)",
+  },
+  {
+    id: "#71667167",
+    status: "COMPLETED",
+    statusColor: "text-success-500",
+    date: "Feb 2, 2019 19:28",
+    total: "$80 (1 Products)",
+  },
+  {
+    id: "#51746385",
+    status: "COMPLETED",
+    statusColor: "text-success-500",
+    date: "Feb 2, 2019 19:28",
+    total: "$2,300 (2 Products)",
+  },
+  {
+    id: "#51746385",
+    status: "CANCELED",
+    statusColor: "text-danger-500",
+    date: "Dec 30, 2019 07:52",
+    total: "$70 (1 Products)",
+  },
+  {
+    id: "#673971743",
+    status: "COMPLETED",
+    statusColor: "text-success-500",
+    date: "Dec 7, 2019 23:26",
+    total: "$220 (1 Products)",
   },
 ];
 
-const STATUS_STYLES: Record<string, string> = {
-  info: "bg-secondary text-primary",
-  success: "bg-success/10 text-success",
-  default: "bg-muted text-text-secondary",
-};
+const BROWSING_PRODUCTS = [
+  {
+    img: imgProduct1,
+    name: "TOZO T6 True Wireless Earbuds Bluetooth Headphon...",
+    rating: 5,
+    reviews: 738,
+    price: "$70",
+    badge: { label: "HOT", color: "bg-danger-500" },
+  },
+  {
+    img: imgProduct2,
+    name: "Samsung Electronics Samsung Galaxy S21 5G",
+    rating: 5,
+    reviews: 536,
+    price: "$2,300",
+    badge: null,
+  },
+  {
+    img: imgProduct3,
+    name: "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/6...",
+    rating: 5,
+    reviews: 423,
+    price: "$360",
+    badge: { label: "BEST DEALS", color: "bg-secondary-500" },
+  },
+  {
+    img: imgProduct4,
+    name: "Portable Washing Machine, 11lbs capacity Model 18NMF...",
+    rating: 4,
+    reviews: 816,
+    price: "$80",
+    badge: null,
+  },
+];
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function StarRating({ rating, max = 5 }: { rating: number; max?: number }) {
   return (
-    <h2 className="text-[clamp(22px,2.5vw,28px)] font-semibold tracking-[-0.02em] text-foreground mb-5">
-      {children}
-    </h2>
-  );
-}
-
-function OrderCard({ order }: { order: (typeof ORDERS)[number] }) {
-  return (
-    <div className="bg-white border border-marlo-border rounded-[12px] mb-4 overflow-hidden">
-      {/* Header */}
-      <div
-        className="grid items-center gap-8 px-5 py-4 border-b border-marlo-border bg-muted"
-        style={{ gridTemplateColumns: "auto auto auto 1fr" }}
-      >
-        <div>
-          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
-            Đơn hàng
-          </div>
-          <div className="font-mono-marlo text-[14px] font-medium text-foreground">
-            {order.id}
-          </div>
-        </div>
-        <div>
-          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
-            Ngày đặt
-          </div>
-          <div className="text-[14px] text-foreground">{order.date}</div>
-        </div>
-        <div>
-          <div className="text-[11px] font-semibold tracking-[0.12em] uppercase text-text-secondary mb-0.5">
-            Tổng tiền
-          </div>
-          <Price amount={order.total} />
-        </div>
-        <div className="justify-self-end">
-          <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-semibold ${STATUS_STYLES[order.statusKind]}`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-current flex-none" />
-            {order.status}
-          </span>
-        </div>
-      </div>
-      {/* Body */}
-      <div className="flex items-center gap-4 px-5 py-4">
-        <div className="flex gap-2">
-          {order.imgs.map((src, i) => (
-            <div
-              key={i}
-              className="w-16 h-16 bg-cream rounded-[8px] p-1.5 flex items-center justify-center"
-            >
-              <ProductImage
-                src={src}
-                alt=""
-                width={52}
-                height={52}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex-1 text-[14px] text-text-secondary">
-          {order.eta}
-        </div>
-        <div className="flex gap-2">
-          {(["Theo dõi", "Xem đơn"] as const).map((label) => (
-            <button
-              key={label}
-              className="px-4 py-2 rounded-[8px] bg-white border border-marlo-border text-[13px] font-semibold text-foreground cursor-pointer hover:bg-cream-2 transition-colors duration-150"
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="flex items-center">
+      {Array.from({ length: max }, (_, i) => (
+        <svg
+          key={i}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden
+        >
+          <path
+            d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.93L8 10.27l-3.52 1.08.67-3.93L2.3 5.64l3.94-.57L8 1.5z"
+            fill={i < rating ? "#FA8232" : "none"}
+            stroke={i < rating ? "#FA8232" : "#ADB7BC"}
+            strokeWidth="1.2"
+          />
+        </svg>
+      ))}
     </div>
   );
 }
 
-export default function AccountPage() {
-  const { user } = useAuth();
-  const displayName = user?.name || user?.email || "Tài khoản";
-  const initial = displayName[0].toUpperCase();
-
-  const [ordersPage, setOrdersPage] = useState(1);
-  const [savedPage, setSavedPage] = useState(1);
-  const { items: pagedOrders, total: orderTotal } = paginate(
-    ORDERS,
-    ordersPage,
-    ORDERS_PER_PAGE,
-  );
-  const { items: pagedSaved, total: savedTotal } = paginate(
-    FLAGSHIP,
-    savedPage,
-    SAVED_PER_PAGE,
-  );
-
+function SectionHeading({ title, action }: { title: string; action?: string }) {
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
-        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8">
-          Tài khoản của bạn
-        </h1>
+    <div className="flex items-center justify-between px-6 h-13 border-b border-gray-100">
+      <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+        {title}
+      </span>
+      {action && (
+        <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
+          {action}
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M4 10h12M12 5l5 5-5 5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
 
-        <Tabs
-          defaultValue="orders"
-          orientation="vertical"
-          className="flex gap-12 items-start"
-        >
-          {/* Sidebar */}
-          <aside className="w-64 flex-none flex flex-col">
-            {/* Avatar */}
-            <div className="flex items-center gap-3.5 pb-6 border-b border-marlo-border">
-              <div className="w-12 h-12 rounded-full bg-persimmon flex items-center justify-center text-white text-[20px] font-semibold flex-none">
-                {initial}
-              </div>
-              <div>
-                <div className="text-[15px] font-semibold text-ink">
-                  {displayName}
+export default function AccountDashboardPage() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Container className="py-6 pb-20">
+        <PageBreadcrumb
+          items={[{ label: "Home", href: "/" }, { label: "Dashboard" }]}
+        />
+
+        <div className="flex gap-18 items-start mt-2">
+          <DashboardSidebar />
+
+          {/* Main content */}
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
+            {/* Welcome heading */}
+            <div>
+              <h1 className="text-[24px] font-semibold text-gray-900 leading-7">
+                Hello, Kevin
+              </h1>
+              <p className="mt-2 text-[14px] text-gray-600 leading-5 max-w-105.75">
+                From your account dashboard. you can easily check &amp; view
+                your Recent Orders, manage your Shipping and Billing Addresses
+                and edit your Password and Account Details.
+              </p>
+            </div>
+
+            {/* Top row: Account Info + Billing Address + Stats */}
+            <div className="flex gap-6">
+              {/* Account Info */}
+              <div className="w-78 flex-none bg-white border border-gray-100 rounded-[4px]">
+                <SectionHeading title="Account Info" />
+                <div className="px-6 pt-5.5 pb-6 flex flex-col gap-5">
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={imgUserAvatar}
+                      alt="Kevin Gilbert"
+                      width={48}
+                      height={48}
+                      className="rounded-full size-12 object-cover flex-none"
+                    />
+                    <div>
+                      <p className="text-[16px] font-semibold text-gray-900 leading-6">
+                        Kevin Gilbert
+                      </p>
+                      <p className="text-[14px] text-gray-600 leading-5">
+                        Dhaka - 1207, Bangladesh
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 text-[14px] leading-5">
+                    <div className="flex gap-1">
+                      <span className="text-gray-900">Email:</span>
+                      <span className="text-gray-600">
+                        {" "}
+                        kevin.gilbert@gmail.com
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-gray-900">Sec Email:</span>
+                      <span className="text-gray-600">
+                        {" "}
+                        kevin12345@gmail.com
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-gray-900">Phone:</span>
+                      <span className="text-gray-600"> +1-202-555-0118</span>
+                    </div>
+                  </div>
+                  <button className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
+                    Edit Account
+                  </button>
                 </div>
-                <div className="text-[13px] text-text-secondary">
-                  {user?.email}
+              </div>
+
+              {/* Billing Address */}
+              <div className="w-[312px] flex-none bg-white border border-gray-100 rounded-[4px]">
+                <SectionHeading title="Billing Address" />
+                <div className="px-6 pt-[22px] pb-6 flex flex-col gap-5">
+                  <div className="flex flex-col gap-2 text-[14px] leading-5">
+                    <p className="font-medium text-gray-900">Kevin Gilbert</p>
+                    <p className="text-gray-600">
+                      East Tejturi Bazar, Word No. 04, Road No. 13/x, House no.
+                      1320/C, Flat No. 5D, Dhaka - 1200, Bangladesh
+                    </p>
+                    <div className="flex gap-1">
+                      <span className="text-gray-900">Phone Number:</span>
+                      <span className="text-gray-600"> +1-202-555-0118</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="text-gray-900">Email:</span>
+                      <span className="text-gray-600">
+                        {" "}
+                        kevin.gilbert@gmail.com
+                      </span>
+                    </div>
+                  </div>
+                  <button className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
+                    Edit Address
+                  </button>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="flex-1 flex flex-col gap-6">
+                <div className="flex items-center gap-4 p-4 bg-secondary-50 rounded-[4px]">
+                  <div className="bg-white p-3 rounded-[2px] flex-none">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden
+                    >
+                      <path
+                        d="M16 4L28 10v12L16 28 4 22V10L16 4z"
+                        fill="#2DA5F3"
+                        opacity="0.2"
+                      />
+                      <path
+                        d="M16 4L28 10v12L16 28 4 22V10L16 4z"
+                        stroke="#2DA5F3"
+                        strokeWidth="1.5"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M16 28V16M4 10l12 6 12-6"
+                        stroke="#2DA5F3"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                      154
+                    </p>
+                    <p className="text-[14px] text-gray-700 leading-5">
+                      Total Orders
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-primary-50 rounded-[4px]">
+                  <div className="bg-white p-3 rounded-[2px] flex-none">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden
+                    >
+                      <rect
+                        x="8"
+                        y="6"
+                        width="16"
+                        height="20"
+                        rx="1"
+                        fill="#FA8232"
+                        opacity="0.2"
+                      />
+                      <rect
+                        x="8"
+                        y="6"
+                        width="16"
+                        height="20"
+                        rx="1"
+                        stroke="#FA8232"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M12 13h8M12 17h6M12 21h4"
+                        stroke="#FA8232"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                      05
+                    </p>
+                    <p className="text-[14px] text-gray-700 leading-5">
+                      Pending Orders
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-success-50 rounded-[4px]">
+                  <div className="bg-white p-3 rounded-[2px] flex-none">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden
+                    >
+                      <path
+                        d="M6 10l10 10 10-10"
+                        fill="#2DB224"
+                        opacity="0.2"
+                      />
+                      <path
+                        d="M6 10l10 10 10-10"
+                        stroke="#2DB224"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                      149
+                    </p>
+                    <p className="text-[14px] text-gray-700 leading-5">
+                      Completed Orders
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Nav */}
-            <TabsList
-              variant="line"
-              orientation="vertical"
-              className="pt-4 flex-col gap-0.5 bg-transparent rounded-none w-full h-auto"
-            >
-              {NAV_ITEMS.map((item) => (
-                <TabsTrigger
-                  key={item.id}
-                  value={item.id}
-                  className="w-full justify-start gap-3 px-3 py-2.5 h-auto rounded-[8px] text-[14px] font-medium text-text-secondary data-[state=active]:bg-cream-2 data-[state=active]:text-ink data-[state=active]:font-semibold"
+            {/* Payment Option */}
+            <div className="bg-white border border-gray-100 rounded-[4px]">
+              <SectionHeading title="Payment Option" action="Add Card" />
+              <div className="flex gap-6 px-6 py-[22px]">
+                <div
+                  className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 0 0, #1b6392, #124261)",
+                  }}
                 >
-                  {item.icon}
-                  {item.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </aside>
-
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <TabsContent value="orders">
-              <div className="flex items-end justify-between mb-5">
-                <SectionTitle>Đơn hàng gần đây</SectionTitle>
-                <Select defaultValue="6m">
-                  <SelectTrigger className="bg-white border-marlo-border text-[14px] text-ink rounded-[8px] h-9.5">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="6m">6 tháng gần nhất</SelectItem>
-                    <SelectItem value="1y">1 năm gần nhất</SelectItem>
-                    <SelectItem value="all">Tất cả</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {pagedOrders.map((o) => (
-                <OrderCard key={o.id} order={o} />
-              ))}
-              <Pager
-                page={ordersPage}
-                total={orderTotal}
-                onChange={setOrdersPage}
-              />
-            </TabsContent>
-
-            <TabsContent value="saved">
-              <SectionTitle>Sản phẩm đã lưu</SectionTitle>
-              <ProductGrid products={pagedSaved} cols={4} carousel={false} />
-              <Pager
-                page={savedPage}
-                total={savedTotal}
-                onChange={setSavedPage}
-              />
-            </TabsContent>
-
-            <TabsContent value="addresses">
-              <div className="flex items-end justify-between mb-5">
-                <SectionTitle>Địa chỉ</SectionTitle>
-                <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] bg-persimmon text-white text-[13px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  >
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                  Thêm địa chỉ
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  {
-                    label: "Nhà",
-                    name: "Kira Lee",
-                    line1: "42 Trần Hưng Đạo, Căn hộ 4B",
-                    line2: "Hoàn Kiếm, Hà Nội",
-                    isDefault: true,
-                  },
-                  {
-                    label: "Công ty",
-                    name: "Kira Lee",
-                    line1: "88 Lý Thường Kiệt, Tầng 12",
-                    line2: "Đống Đa, Hà Nội",
-                    isDefault: false,
-                  },
-                ].map(({ label, name, line1, line2, isDefault }) => (
-                  <div
-                    key={label}
-                    className="bg-white border border-marlo-border rounded-[12px] p-5"
-                  >
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <span className="text-[13px] font-semibold text-ink">
-                        {label}
-                      </span>
-                      {isDefault && <Badge kind="persimmon">Mặc định</Badge>}
-                    </div>
-                    <div className="text-[14px] text-ink leading-relaxed">
-                      {name}
-                      <br />
-                      {line1}
-                      <br />
-                      {line2}
-                    </div>
-                    <div className="flex gap-4 mt-4">
-                      {(["Sửa", "Xóa"] as const).map((action) => (
-                        <button
-                          key={action}
-                          className="bg-transparent border-0 text-[13px] font-medium cursor-pointer underline underline-offset-3 p-0 hover:text-text-secondary transition-colors"
-                          style={{
-                            color:
-                              action === "Sửa"
-                                ? "var(--foreground)"
-                                : "var(--color-text-secondary)",
-                          }}
-                        >
-                          {action}
-                        </button>
-                      ))}
-                    </div>
+                  <div className="absolute top-6 left-6">
+                    <p className="text-white text-[16px] leading-6">
+                      <span className="font-semibold">$95,400.00 </span>
+                      <span className="font-normal">USD</span>
+                    </p>
                   </div>
-                ))}
+                  <div className="absolute top-[72px] left-6">
+                    <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
+                      Card number
+                    </p>
+                    <p className="text-white text-[20px] font-normal tracking-wide">
+                      **** **** **** 3814
+                    </p>
+                  </div>
+                  <div className="absolute bottom-[54px] right-6">
+                    <p className="text-white text-[14px] font-medium">
+                      Kevin Gilbert
+                    </p>
+                  </div>
+                  <div className="absolute bottom-6 left-6">
+                    <span className="text-white text-[16px] font-bold tracking-widest">
+                      VISA
+                    </span>
+                  </div>
+                  <button className="absolute top-6 right-6 text-white opacity-70 hover:opacity-100 cursor-pointer">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden
+                    >
+                      <circle cx="12" cy="12" r="2" />
+                      <circle cx="5" cy="12" r="2" />
+                      <circle cx="19" cy="12" r="2" />
+                    </svg>
+                  </button>
+                </div>
+                <div
+                  className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 0 0, #248e1d, #2db224)",
+                  }}
+                >
+                  <div className="absolute top-6 left-6">
+                    <p className="text-white text-[16px] leading-6">
+                      <span className="font-semibold">$87,583.00 </span>
+                      <span className="font-normal">USD</span>
+                    </p>
+                  </div>
+                  <div className="absolute top-[72px] left-6">
+                    <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
+                      Card number
+                    </p>
+                    <p className="text-white text-[20px] font-normal tracking-wide">
+                      **** **** **** 1761
+                    </p>
+                  </div>
+                  <div className="absolute bottom-[54px] right-6">
+                    <p className="text-white text-[14px] font-medium">
+                      Kevin Gilbert
+                    </p>
+                  </div>
+                  <div className="absolute bottom-6 right-6 flex">
+                    <div className="w-7 h-7 rounded-full bg-yellow-400 opacity-90" />
+                    <div className="w-7 h-7 rounded-full bg-red-500 opacity-90 -ml-3" />
+                  </div>
+                  <button className="absolute top-6 right-6 text-white opacity-70 hover:opacity-100 cursor-pointer">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden
+                    >
+                      <circle cx="12" cy="12" r="2" />
+                      <circle cx="5" cy="12" r="2" />
+                      <circle cx="19" cy="12" r="2" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </TabsContent>
+            </div>
 
-            <TabsContent value="payment">
-              <SectionTitle>Phương thức thanh toán</SectionTitle>
-              <div className="flex flex-col gap-3">
-                {[
-                  {
-                    brand: "VISA",
-                    last: "••• 4421",
-                    exp: "08/28",
-                    isDefault: true,
-                  },
-                  {
-                    brand: "MC",
-                    last: "••• 9013",
-                    exp: "03/27",
-                    isDefault: false,
-                  },
-                ].map(({ brand, last, exp, isDefault }) => (
-                  <div
-                    key={last}
-                    className="bg-white border border-marlo-border rounded-[12px] p-5 flex items-center gap-4"
+            {/* Recent Orders */}
+            <div className="bg-white border border-gray-100 rounded-[4px]">
+              <SectionHeading title="Recent Order" action="View All" />
+              <div className="flex items-center gap-6 px-6 py-[10px] bg-gray-50 border-y border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+                <span className="w-[124px] flex-none">Order ID</span>
+                <span className="w-[152px] flex-none">Status</span>
+                <span className="w-[200px] flex-none">Date</span>
+                <span className="w-[248px] flex-none">Total</span>
+                <span className="flex-none">Action</span>
+              </div>
+              {ORDERS.map((order, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-6 px-6 py-3 border-b border-gray-100 last:border-b-0"
+                >
+                  <span className="w-[124px] flex-none text-[14px] font-medium text-gray-900">
+                    {order.id}
+                  </span>
+                  <span
+                    className={`w-[152px] flex-none text-[14px] font-semibold ${order.statusColor}`}
                   >
-                    <div className="w-14 h-9 rounded-[6px] bg-ink flex items-center justify-center text-cream text-[11px] font-bold tracking-wider flex-none">
-                      {brand}
-                    </div>
-                    <div>
-                      <div className="font-mono-marlo text-[14px] text-ink">
-                        {last}
-                      </div>
-                      <div className="text-[12px] text-text-secondary">
-                        Hết hạn {exp}
-                      </div>
-                    </div>
-                    {isDefault && <Badge kind="persimmon">Mặc định</Badge>}
-                    <button className="ml-auto bg-transparent border-0 text-text-secondary cursor-pointer hover:text-ink transition-colors p-1">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
+                    {order.status}
+                  </span>
+                  <span className="w-[200px] flex-none text-[14px] text-gray-600">
+                    {order.date}
+                  </span>
+                  <span className="w-[248px] flex-none text-[14px] text-gray-700">
+                    {order.total}
+                  </span>
+                  <button className="flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors cursor-pointer">
+                    View Details
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      aria-hidden
+                    >
+                      <path
+                        d="M2 8h12M10 4l4 4-4 4"
                         stroke="currentColor"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                      >
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="m19 6-.867 12.142A2 2 0 0 1 16.138 20H7.862a2 2 0 0 1-1.995-1.858L5 6" />
-                        <path d="M10 11v6M14 11v6" />
-                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                      </svg>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="settings">
-              <SectionTitle>Cài đặt tài khoản</SectionTitle>
-              <div className="bg-white border border-marlo-border rounded-[12px] p-6 flex flex-col gap-5">
-                {[
-                  { label: "Họ và tên", value: user?.name ?? "" },
-                  { label: "Email", value: user?.email ?? "" },
-                  { label: "Số điện thoại", value: "" },
-                ].map(({ label, value }) => (
-                  <div key={label}>
-                    <label className="block text-[12px] font-semibold tracking-[0.08em] uppercase text-text-secondary mb-1.5">
-                      {label}
-                    </label>
-                    <input
-                      defaultValue={value}
-                      className="w-full bg-cream border border-marlo-border rounded-[8px] px-3 py-2.5 text-[14px] text-ink outline-none focus:border-ink transition-colors"
-                    />
-                  </div>
-                ))}
-                <div className="pt-2">
-                  <button className="px-6 py-3 rounded-[8px] bg-persimmon text-white text-[14px] font-semibold border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150">
-                    Lưu thay đổi
+                      />
+                    </svg>
                   </button>
                 </div>
+              ))}
+            </div>
+
+            {/* Browsing History */}
+            <div className="bg-white border border-gray-100 rounded-[4px]">
+              <SectionHeading title="Browsing History" action="View All" />
+              <div className="grid grid-cols-4 divide-x divide-gray-100 px-3 pt-5 pb-3">
+                {BROWSING_PRODUCTS.map((product, i) => (
+                  <div key={i} className="px-3 flex flex-col gap-3">
+                    <div className="relative">
+                      <Image
+                        src={product.img}
+                        alt={product.name}
+                        className="w-full h-[172px] object-contain"
+                      />
+                      {product.badge && (
+                        <span
+                          className={`absolute top-3 left-3 ${product.badge.color} text-white text-[12px] font-semibold px-[10px] py-[5px] rounded-[2px]`}
+                        >
+                          {product.badge.label}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <StarRating rating={product.rating} />
+                      <span className="text-[12px] text-gray-500">
+                        ({product.reviews})
+                      </span>
+                    </div>
+                    <p className="text-[14px] text-gray-900 leading-5 line-clamp-2">
+                      {product.name}
+                    </p>
+                    <p className="text-[14px] font-semibold text-secondary-500">
+                      {product.price}
+                    </p>
+                  </div>
+                ))}
               </div>
-            </TabsContent>
+              <div className="flex items-center justify-center gap-4 pb-6 pt-2">
+                <button className="w-10 h-10 rounded-full border-[1.5px] border-primary-500 flex items-center justify-center text-primary-500 hover:bg-primary-50 transition-colors cursor-pointer">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <path
+                      d="M13 4l-6 6 6 6"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div className="flex items-center gap-2">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className={`h-2 rounded-full transition-all ${i === 0 ? "w-4 bg-primary-500" : "w-2 bg-primary-200"}`}
+                    />
+                  ))}
+                </div>
+                <button className="w-10 h-10 rounded-full border-[1.5px] border-primary-500 flex items-center justify-center text-primary-500 hover:bg-primary-50 transition-colors cursor-pointer">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <path
+                      d="M7 4l6 6-6 6"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
-        </Tabs>
-      </div>
+        </div>
+      </Container>
     </div>
   );
 }

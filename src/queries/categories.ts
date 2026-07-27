@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   categoriesControllerFindAll,
+  categoriesControllerFindBySlug,
   categoriesControllerFindOne,
   categoriesControllerFindTree,
 } from "@/api/main";
@@ -11,6 +12,7 @@ export const categoryKeys = {
   list: () => [...categoryKeys.all, "list"] as const,
   tree: () => [...categoryKeys.all, "tree"] as const,
   detail: (id: string) => [...categoryKeys.all, "detail", id] as const,
+  bySlug: (slug: string) => [...categoryKeys.all, "slug", slug] as const,
 };
 
 export function useCategories() {
@@ -34,5 +36,16 @@ export function useCategory(id: string) {
     queryFn: () =>
       mainService.request(categoriesControllerFindOne)({ path: { id } }),
     enabled: !!id,
+  });
+}
+
+export function useCategoryBySlug(slug: string) {
+  return useQuery({
+    queryKey: categoryKeys.bySlug(slug),
+    queryFn: () =>
+      mainService.request(categoriesControllerFindBySlug)({
+        path: { slug },
+      }),
+    enabled: !!slug,
   });
 }

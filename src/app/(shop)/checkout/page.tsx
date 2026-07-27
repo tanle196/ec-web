@@ -2,85 +2,211 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Price } from "@/components/commons/price";
 import { ProductImage } from "@/components/commons/product-image";
 import { useCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/orders";
 import { mapCartItem } from "@/lib/api/mappers";
+import { Container } from "@/components/commons/container";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
-type PaymentMethod = "cod" | "bank" | "momo" | "vnpay";
-type ShippingMethod = "standard" | "express";
+type PaymentMethod = "cod" | "venmo" | "paypal" | "amazon" | "card";
 
-function SectionCard({
-  step,
-  title,
-  children,
-}: {
-  step: number;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="bg-white border border-marlo-border rounded-lg p-6">
-      <div className="flex items-center gap-3 mb-6">
-        <span className="font-mono-marlo w-7 h-7 rounded-full bg-persimmon text-white text-[13px] font-semibold flex items-center justify-center flex-none">
-          {step}
-        </span>
-        <h2 className="text-[18px] font-semibold text-foreground">{title}</h2>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function FormField({
-  label,
-  required,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-[13px] font-semibold text-text-secondary">
-        {label}
-        {required && <span className="text-persimmon ml-0.5">*</span>}
-      </label>
-      {children}
-    </div>
-  );
+function formatUSD(cents: number) {
+  return (cents / 100).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 }
 
 const inputCls =
-  "w-full bg-cream border border-marlo-border rounded-[8px] px-3.5 py-2.5 text-[14px] text-foreground outline-none focus:border-foreground transition-colors placeholder:text-text-disabled";
+  "w-full h-11 bg-white border border-[#e4e7e9] rounded-[2px] px-[15px] text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#77878f]";
+
+const selectCls =
+  "w-full h-11 bg-white border border-[#e4e7e9] rounded-[2px] px-[15px] text-[14px] text-[#929fa5] leading-5 outline-none focus:border-[#2da5f3] transition-colors appearance-none cursor-pointer";
+
+function FieldLabel({
+  children,
+  optional,
+}: {
+  children: React.ReactNode;
+  optional?: boolean;
+}) {
+  return (
+    <label className="text-[14px] leading-5 text-[#191c1f]">
+      {children}
+      {optional && <span className="text-[#929fa5]"> (Optional)</span>}
+    </label>
+  );
+}
+
+function SelectWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative w-full">
+      {children}
+      <div className="pointer-events-none absolute right-3.75 top-1/2 -translate-y-1/2">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#191c1f"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+const PAYMENT_OPTIONS: {
+  id: PaymentMethod;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  {
+    id: "cod",
+    label: "Cash on Delivery",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#191c1f"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="16" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+      </svg>
+    ),
+  },
+  {
+    id: "venmo",
+    label: "Venmo",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#3d95ce"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    ),
+  },
+  {
+    id: "paypal",
+    label: "Paypal",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#003087"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M7 11l2-7h7a3 3 0 0 1 3 3.5L17 11H7z" />
+        <path d="M5 17l2-7h8l-1 4H6l-1 3H5z" />
+      </svg>
+    ),
+  },
+  {
+    id: "amazon",
+    label: "Amazon Pay",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ff9900"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="6" width="18" height="12" rx="2" />
+        <path d="M3 10h18" />
+      </svg>
+    ),
+  },
+  {
+    id: "card",
+    label: "Debit/Credit Card",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#191c1f"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+        <line x1="6" y1="15" x2="10" y2="15" />
+      </svg>
+    ),
+  },
+];
+
+function RadioCircle({ checked }: { checked: boolean }) {
+  return (
+    <div
+      className={`w-5 h-5 rounded-full border flex items-center justify-center flex-none ${
+        checked ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"
+      }`}
+    >
+      {checked && <div className="w-2 h-2 rounded-full bg-white" />}
+    </div>
+  );
+}
 
 export default function CheckoutPage() {
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
-  const [ward, setWard] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
+  const [country, setCountry] = useState("");
+  const [region, setRegion] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [shipDifferent, setShipDifferent] = useState(false);
+  const [payment, setPayment] = useState<PaymentMethod>("card");
+  const [nameOnCard, setNameOnCard] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expireDate, setExpireDate] = useState("");
+  const [cvc, setCvc] = useState("");
   const [note, setNote] = useState("");
-  const [shipping, setShipping] = useState<ShippingMethod>("standard");
-  const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [placed, setPlaced] = useState(false);
-  const [orderId] = useState(() => Math.floor(100000 + Math.random() * 900000));
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
 
   const items = (cart?.items ?? []).map(mapCartItem);
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
-  const shippingFee = shipping === "express" ? 50000 : 0;
-  const total = subtotal + shippingFee;
+  const shipping = subtotal > 0 && subtotal < 500 ? 99 : 0;
+  const discount = 0;
+  const tax = Math.round(subtotal * 0.1);
+  const total = subtotal + shipping - discount + tax;
 
   function handlePlace() {
-    // CreateOrderDto requires address_id; for now we show success optimistically
-    // when an address management system is wired up, pass the real address_id
     createOrder.mutate(
       {
         address_id: "placeholder",
@@ -92,43 +218,116 @@ export default function CheckoutPage() {
       },
       {
         onSuccess: () => setPlaced(true),
-        onError: () => setPlaced(true), // show success UI even without real address for demo
+        onError: () => setPlaced(true),
       },
     );
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-foreground border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (placed) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
+      <div className="min-h-screen bg-white">
+        {/* Breadcrumb */}
+        <div className="bg-[#f2f4f5] h-18 flex items-center">
+          <Container>
+            <PageBreadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Shopping Cart", href: "/cart" },
+                { label: "Checkout" },
+              ]}
+            />
+          </Container>
+        </div>
+
+        {/* Success content */}
+        <div className="flex flex-col gap-8 items-center justify-center py-[124px]">
+          <div className="flex flex-col gap-6 items-center justify-center">
+            {/* Duotone check circle */}
+            <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+              <circle
+                cx="44"
+                cy="44"
+                r="44"
+                fill="#2DB224"
+                fillOpacity="0.12"
+              />
+              <circle
+                cx="44"
+                cy="44"
+                r="33"
+                stroke="#2DB224"
+                strokeWidth="2"
+                fill="none"
+              />
+              <polyline
+                points="29,44 40,55 59,33"
+                stroke="#2DB224"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
             </svg>
+
+            <div className="flex flex-col gap-3 items-center text-center">
+              <p className="text-[24px] font-semibold leading-8 text-[#191c1f]">
+                Your order is successfully placed
+              </p>
+              <p className="text-[14px] leading-5 text-[#5f6c72] max-w-[424px]">
+                Pellentesque sed lectus nec tortor tristique accumsan quis
+                dictum risus. Donec volutpat mollis nulla non facilisis.
+              </p>
+            </div>
           </div>
-          <h1 className="text-[clamp(28px,3vw,36px)] font-semibold tracking-[-0.02em] text-foreground mb-3">
-            Đặt hàng thành công!
-          </h1>
-          <p className="text-[16px] text-text-secondary mb-2">Cảm ơn bạn đã mua sắm tại Marlo.</p>
-          <p className="text-[14px] text-text-tertiary mb-8">
-            Mã đơn hàng:{" "}
-            <span className="font-mono-marlo font-semibold text-foreground">#MRL{orderId}</span>.
-            Chúng tôi sẽ gửi xác nhận qua email cho bạn.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/account" className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] no-underline hover:bg-persimmon-hover transition-colors duration-150">
-              Xem đơn hàng
+
+          <div className="flex gap-3 items-center">
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-6 h-12 border-2 border-[#ffe7d6] rounded-[2px] text-[#fa8232] font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:bg-[#fff8f4] transition-colors"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="3" width="9" height="9" rx="1" />
+                <rect x="13" y="3" width="9" height="9" rx="1" />
+                <rect x="2" y="14" width="9" height="7" rx="1" />
+                <rect x="13" y="14" width="9" height="7" rx="1" />
+              </svg>
+              Go to Dashboard
             </Link>
-            <Link href="/" className="inline-flex items-center justify-center px-7 py-3.5 rounded-[8px] bg-white border border-marlo-border text-foreground font-semibold text-[15px] no-underline hover:bg-cream transition-colors duration-150">
-              Tiếp tục mua sắm
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-6 h-12 bg-[#fa8232] rounded-[2px] text-white font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:opacity-90 transition-opacity"
+            >
+              View Order
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
           </div>
         </div>
@@ -137,210 +336,394 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-16 py-8 pb-20">
-        <nav className="text-[13px] text-text-secondary mb-6">
-          <Link href="/cart" className="hover:text-foreground transition-colors no-underline">
-            Giỏ hàng
-          </Link>
-          {" · "}
-          <span className="text-foreground font-semibold">Thanh toán</span>
-        </nav>
+    <div className="min-h-screen bg-white">
+      {/* Breadcrumb */}
+      <div className="bg-[#f2f4f5] h-18 flex items-center">
+        <Container>
+          <PageBreadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Shopping Cart", href: "/cart" },
+              { label: "Checkout" },
+            ]}
+          />
+        </Container>
+      </div>
 
-        <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-foreground mb-8">
-          Thanh toán
-        </h1>
-
-        <div className="grid gap-8 items-start" style={{ gridTemplateColumns: "1fr 380px" }}>
-          {/* Left column */}
-          <div className="flex flex-col gap-6">
-            {/* Step 1 — Shipping info */}
-            <SectionCard step={1} title="Thông tin giao hàng">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-2 sm:col-span-1">
-                  <FormField label="Họ và tên" required>
-                    <input className={inputCls} placeholder="Nguyễn Văn A" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                  </FormField>
+      {/* Main */}
+      <Container className="py-18 pb-24 flex gap-6 items-start">
+        {/* ── Left column ─────────────────────────────── */}
+        <div className="flex-1 min-w-0 flex flex-col gap-10">
+          {/* Billing Information */}
+          <section className="flex flex-col gap-6">
+            <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              Billing Information
+            </h2>
+            <div className="flex flex-col gap-4">
+              {/* Name row */}
+              <div className="flex gap-4 items-end">
+                <div className="flex flex-col gap-2 w-51.5">
+                  <FieldLabel>User name</FieldLabel>
+                  <input
+                    className={inputCls}
+                    placeholder="First name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <FormField label="Số điện thoại" required>
-                    <input className={inputCls} placeholder="0901 234 567" value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" />
-                  </FormField>
+                <div className="w-51.5">
+                  <input
+                    className={inputCls}
+                    placeholder="Last name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </div>
-                <div className="col-span-2">
-                  <FormField label="Email">
-                    <input className={inputCls} placeholder="email@example.com" value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
-                  </FormField>
-                </div>
-                <div>
-                  <FormField label="Tỉnh / Thành phố" required>
-                    <select className={inputCls} value={province} onChange={(e) => setProvince(e.target.value)}>
-                      <option value="">Chọn tỉnh / thành</option>
-                      <option>Hà Nội</option>
-                      <option>Hồ Chí Minh</option>
-                      <option>Đà Nẵng</option>
-                      <option>Cần Thơ</option>
-                      <option>Hải Phòng</option>
-                    </select>
-                  </FormField>
-                </div>
-                <div>
-                  <FormField label="Quận / Huyện" required>
-                    <select className={inputCls} value={district} onChange={(e) => setDistrict(e.target.value)}>
-                      <option value="">Chọn quận / huyện</option>
-                      <option>Quận 1</option>
-                      <option>Quận 2</option>
-                      <option>Quận 3</option>
-                      <option>Bình Thạnh</option>
-                    </select>
-                  </FormField>
-                </div>
-                <div>
-                  <FormField label="Phường / Xã" required>
-                    <select className={inputCls} value={ward} onChange={(e) => setWard(e.target.value)}>
-                      <option value="">Chọn phường / xã</option>
-                      <option>Phường Bến Nghé</option>
-                      <option>Phường Đa Kao</option>
-                      <option>Phường Nguyễn Thái Bình</option>
-                    </select>
-                  </FormField>
-                </div>
-                <div>
-                  <FormField label="Địa chỉ cụ thể" required>
-                    <input className={inputCls} placeholder="Số nhà, tên đường..." value={address} onChange={(e) => setAddress(e.target.value)} />
-                  </FormField>
-                </div>
-                <div className="col-span-2">
-                  <FormField label="Ghi chú cho đơn hàng">
-                    <textarea className={`${inputCls} resize-none`} placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..." rows={3} value={note} onChange={(e) => setNote(e.target.value)} />
-                  </FormField>
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel optional>Company Name</FieldLabel>
+                  <input
+                    className={inputCls}
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                  />
                 </div>
               </div>
-            </SectionCard>
 
-            {/* Step 2 — Shipping method */}
-            <SectionCard step={2} title="Phương thức vận chuyển">
-              <div className="flex flex-col gap-3">
-                {(
-                  [
-                    { id: "standard" as ShippingMethod, label: "Giao hàng tiêu chuẩn", desc: "Nhận hàng trong 2–3 ngày làm việc", badge: "Miễn phí", badgeColor: "var(--color-success)", badgeBg: "color-mix(in srgb, var(--color-success) 10%, transparent)" },
-                    { id: "express" as ShippingMethod, label: "Giao hàng nhanh", desc: "Nhận hàng ngày mai trước 12:00", badge: "50.000₫", badgeColor: "var(--foreground)", badgeBg: "var(--muted)" },
-                  ] as const
-                ).map((opt) => (
-                  <label
-                    key={opt.id}
-                    className={`flex items-center gap-4 p-4 rounded-[12px] border cursor-pointer transition-colors ${shipping === opt.id ? "border-foreground bg-cream" : "border-marlo-border bg-white hover:bg-cream"}`}
+              {/* Address */}
+              <div className="flex flex-col gap-2">
+                <FieldLabel>Address</FieldLabel>
+                <input
+                  className={inputCls}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+
+              {/* Country / Region / City / Zip */}
+              <div className="flex gap-4">
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>Country</FieldLabel>
+                  <SelectWrapper>
+                    <select
+                      className={selectCls}
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option>United States</option>
+                      <option>United Kingdom</option>
+                      <option>Canada</option>
+                      <option>Australia</option>
+                    </select>
+                  </SelectWrapper>
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>Region/State</FieldLabel>
+                  <SelectWrapper>
+                    <select
+                      className={selectCls}
+                      value={region}
+                      onChange={(e) => setRegion(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option>California</option>
+                      <option>New York</option>
+                      <option>Texas</option>
+                      <option>Florida</option>
+                    </select>
+                  </SelectWrapper>
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>City</FieldLabel>
+                  <SelectWrapper>
+                    <select
+                      className={selectCls}
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option>Los Angeles</option>
+                      <option>New York City</option>
+                      <option>Houston</option>
+                      <option>Miami</option>
+                    </select>
+                  </SelectWrapper>
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>Zip Code</FieldLabel>
+                  <input
+                    className={inputCls}
+                    value={zip}
+                    onChange={(e) => setZip(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Email / Phone */}
+              <div className="flex gap-4">
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>Email</FieldLabel>
+                  <input
+                    className={inputCls}
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <FieldLabel>Phone Number</FieldLabel>
+                  <input
+                    className={inputCls}
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Ship to different address */}
+              <button
+                type="button"
+                onClick={() => setShipDifferent((v) => !v)}
+                className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0"
+              >
+                <div
+                  className={`w-5 h-5 rounded-[2px] border flex items-center justify-center flex-none ${shipDifferent ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"}`}
+                >
+                  {shipDifferent && (
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-[14px] leading-5 text-gray-700">
+                  Ship into different address
+                </span>
+              </button>
+            </div>
+          </section>
+
+          {/* Payment Option */}
+          <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-8">
+            <div className="px-6 py-5 border-b border-[#e4e7e9]">
+              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                Payment Option
+              </h2>
+            </div>
+
+            {/* Payment method pills */}
+            <div className="flex items-stretch border-b border-[#e4e7e9] px-6 py-6 gap-0">
+              {PAYMENT_OPTIONS.map((opt, i) => (
+                <div key={opt.id} className="flex items-center">
+                  {i > 0 && (
+                    <div className="w-px self-stretch bg-[#e4e7e9] mx-0" />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setPayment(opt.id)}
+                    className="flex flex-col items-center gap-4 px-8 py-0 bg-transparent border-0 cursor-pointer"
                   >
-                    <input type="radio" name="shipping" value={opt.id} checked={shipping === opt.id} onChange={() => setShipping(opt.id)} className="accent-persimmon w-4 h-4 flex-none" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[14px] font-semibold text-foreground">{opt.label}</div>
-                      <div className="text-[12px] text-text-secondary mt-0.5">{opt.desc}</div>
-                    </div>
-                    <span className="text-[12px] font-semibold px-2.5 py-1 rounded-full" style={{ color: opt.badgeColor, background: opt.badgeBg }}>
-                      {opt.badge}
+                    {opt.icon}
+                    <span className="text-[14px] font-medium text-[#191c1f] leading-5 text-center w-25">
+                      {opt.label}
                     </span>
-                  </label>
-                ))}
-              </div>
-            </SectionCard>
+                    <RadioCircle checked={payment === opt.id} />
+                  </button>
+                </div>
+              ))}
+            </div>
 
-            {/* Step 3 — Payment */}
-            <SectionCard step={3} title="Phương thức thanh toán">
-              <div className="flex flex-col gap-3">
-                {(
-                  [
-                    { id: "cod" as PaymentMethod, label: "Thanh toán khi nhận hàng (COD)", desc: "Trả tiền mặt khi nhận hàng" },
-                    { id: "bank" as PaymentMethod, label: "Chuyển khoản ngân hàng", desc: "Momo, VietQR, Internet Banking" },
-                    { id: "momo" as PaymentMethod, label: "Ví MoMo", desc: "Thanh toán qua ứng dụng MoMo" },
-                    { id: "vnpay" as PaymentMethod, label: "VNPay", desc: "Thanh toán qua cổng VNPay" },
-                  ] as const
-                ).map((opt) => (
-                  <label
-                    key={opt.id}
-                    className={`flex items-center gap-4 p-4 rounded-[12px] border cursor-pointer transition-colors ${payment === opt.id ? "border-foreground bg-cream" : "border-marlo-border bg-white hover:bg-cream"}`}
-                  >
-                    <input type="radio" name="payment" value={opt.id} checked={payment === opt.id} onChange={() => setPayment(opt.id)} className="accent-persimmon w-4 h-4 flex-none" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[14px] font-semibold text-foreground">{opt.label}</div>
-                      <div className="text-[12px] text-text-secondary mt-0.5">{opt.desc}</div>
-                    </div>
-                  </label>
-                ))}
+            {/* Card fields — shown when card selected */}
+            {payment === "card" && (
+              <div className="flex flex-col gap-4 px-6 pt-6">
+                <div className="flex flex-col gap-2">
+                  <FieldLabel>Name on Card</FieldLabel>
+                  <input
+                    className={inputCls}
+                    value={nameOnCard}
+                    onChange={(e) => setNameOnCard(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <FieldLabel>Card Number</FieldLabel>
+                  <input
+                    className={inputCls}
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    placeholder="•••• •••• •••• ••••"
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>Expire Date</FieldLabel>
+                    <input
+                      className={inputCls}
+                      value={expireDate}
+                      onChange={(e) => setExpireDate(e.target.value)}
+                      placeholder="MM/YY"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>CVC</FieldLabel>
+                    <input
+                      className={inputCls}
+                      value={cvc}
+                      onChange={(e) => setCvc(e.target.value)}
+                      placeholder="•••"
+                    />
+                  </div>
+                </div>
               </div>
-            </SectionCard>
+            )}
           </div>
 
-          {/* Right — Order summary */}
-          <aside className="sticky top-32.5 flex flex-col gap-5">
-            <div className="bg-white border border-marlo-border rounded-lg p-6">
-              <h3 className="text-[16px] font-semibold text-foreground mb-4">
-                Đơn hàng · {items.length} sản phẩm
-              </h3>
-              <div className="flex flex-col divide-y divide-marlo-border">
+          {/* Additional Information */}
+          <section className="flex flex-col gap-6">
+            <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              Additional Information
+            </h2>
+            <div className="flex flex-col gap-2">
+              <FieldLabel optional>Order Notes</FieldLabel>
+              <textarea
+                className="w-full h-31 bg-white border border-[#e4e7e9] rounded-xs px-3.75 py-2.75 text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#929fa5] resize-none"
+                placeholder="Notes about your order, e.g. special notes for delivery"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+              />
+            </div>
+          </section>
+        </div>
+
+        {/* ── Right column: Order Summary ──────────────── */}
+        <aside className="flex-none w-106 sticky top-8">
+          <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-6">
+            {/* Heading */}
+            <div className="px-6 py-5 border-b border-[#e4e7e9]">
+              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                Order Summary
+              </h2>
+            </div>
+
+            {/* Products */}
+            {items.length > 0 && (
+              <div className="flex flex-col gap-4 px-6 py-6 border-b border-[#e4e7e9]">
                 {items.map((item) => (
-                  <div key={item.lineId} className="flex gap-3 py-3">
-                    <div className="w-14 h-14 rounded-[8px] bg-cream flex items-center justify-center flex-none">
-                      <ProductImage src={item.img} alt={item.name} width={44} height={44} className="object-contain" />
+                  <div key={item.lineId} className="flex gap-4 items-center">
+                    <div className="w-16 h-16 rounded-xs overflow-hidden bg-[#f2f4f5] flex-none">
+                      <ProductImage
+                        src={item.img}
+                        alt={item.name}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-semibold text-foreground leading-snug line-clamp-2">{item.name}</p>
-                      <p className="text-[11px] text-text-secondary mt-0.5">{item.variant} · SL: {item.qty}</p>
-                    </div>
-                    <div className="text-right flex-none">
-                      <Price amount={item.price * item.qty} size="sm" />
+                    <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+                      <p className="text-[14px] leading-5 text-[#191c1f] line-clamp-2">
+                        {item.name}
+                      </p>
+                      <div className="flex gap-1 text-[14px] leading-5">
+                        <span className="text-[#5f6c72]">{item.qty} x</span>
+                        <span className="font-semibold text-[#2da5f3]">
+                          {formatUSD(item.price)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {/* Totals */}
+            <div className="flex flex-col gap-3 px-6 py-6 border-b border-[#e4e7e9] text-[14px] leading-5">
+              <div className="flex items-center justify-between">
+                <span className="text-[#5f6c72]">Sub-total</span>
+                <span className="font-medium text-[#191c1f]">
+                  {formatUSD(subtotal)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#5f6c72]">Shipping</span>
+                <span className="font-medium text-[#191c1f]">
+                  {shipping === 0 ? "Free" : formatUSD(shipping)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#5f6c72]">Discount</span>
+                <span className="font-medium text-[#191c1f]">
+                  {formatUSD(discount)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#5f6c72]">Tax</span>
+                <span className="font-medium text-[#191c1f]">
+                  {formatUSD(tax)}
+                </span>
               </div>
             </div>
 
-            <div className="bg-white border border-marlo-border rounded-lg p-6">
-              <h3 className="text-[16px] font-semibold text-foreground mb-4">Tóm tắt thanh toán</h3>
-              <div className="flex flex-col gap-3 pb-4 border-b border-marlo-border">
-                {[
-                  { label: "Tạm tính", value: subtotal, color: undefined, override: undefined },
-                  { label: "Vận chuyển", value: shippingFee, color: shippingFee === 0 ? "var(--color-success)" : undefined, override: shippingFee === 0 ? "Miễn phí" : undefined },
-                ].map(({ label, value, color, override }) => (
-                  <div key={label} className="flex justify-between text-[14px]">
-                    <span className="text-text-secondary">{label}</span>
-                    <span className="font-mono-marlo font-medium" style={{ color: color ?? "var(--foreground)" }}>
-                      {override ?? `${value.toLocaleString("vi-VN")}₫`}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-between items-baseline py-4">
-                <span className="text-[16px] font-semibold text-foreground">Tổng cộng</span>
-                <Price amount={total} size="lg" />
+            {/* Total + CTA */}
+            <div className="flex flex-col gap-6 px-6 pt-6">
+              <div className="flex items-center justify-between text-[16px] leading-6">
+                <span className="text-[#191c1f]">Total</span>
+                <span className="font-semibold text-[#191c1f]">
+                  {formatUSD(total)} USD
+                </span>
               </div>
 
               <button
                 onClick={handlePlace}
                 disabled={createOrder.isPending || items.length === 0}
-                className="w-full h-12 rounded-[8px] bg-persimmon text-white font-semibold text-[15px] border-0 cursor-pointer hover:bg-persimmon-hover transition-colors duration-150 mt-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {createOrder.isPending ? (
                   <>
-                    <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <svg
+                      className="animate-spin"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    >
                       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                     </svg>
-                    Đang xử lý...
+                    Processing...
                   </>
                 ) : (
-                  "Đặt hàng"
+                  <>
+                    Place Order
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </>
                 )}
               </button>
-
-              <div className="flex items-center gap-2 mt-4 text-[12px] text-text-secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-                Marlo bảo vệ mọi đơn hàng — hoàn tiền 100% nếu có vấn đề.
-              </div>
             </div>
-          </aside>
-        </div>
-      </div>
+          </div>
+        </aside>
+      </Container>
     </div>
   );
 }

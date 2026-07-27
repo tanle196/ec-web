@@ -1,13 +1,19 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { productsControllerFindOne } from "@/api/main";
+import { productsControllerFindBySlug } from "@/api/main";
 import { mainService } from "@/lib/api/client";
 import { PdpClient } from "./_components/pdp-client";
-import Link from "next/link";
+import { PageBreadcrumb } from "@/components/commons/breadcrumb";
+import { Container } from "@/components/commons/container";
 
-async function fetchProduct(id: string) {
+// No React `cache()` wrapper needed: the API client now runs on native fetch,
+// which Next.js already dedupes per render (same URL+options called from
+// generateMetadata and the page below hits the network once).
+async function fetchProduct(slug: string) {
   try {
-    return await mainService.request(productsControllerFindOne)({ path: { id } });
+    return await mainService.request(productsControllerFindBySlug)({
+      path: { slug },
+    });
   } catch {
     return null;
   }
@@ -19,9 +25,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await fetchProduct(slug);
   if (!product) return {};
+
+  const primaryImage = product.images.find((i) => i.isPrimary) ?? product.images[0];
+
   return {
     title: `${product.name} | Marlo`,
     description: `Mua ${product.name} chính hãng tại Marlo. Giao hàng nhanh, đổi trả miễn phí.`,
+    alternates: { canonical: `/products/${product.slug}` },
+    openGraph: primaryImage ? { images: [primaryImage.url] } : undefined,
   };
 }
 
@@ -33,27 +44,17 @@ export default async function ProductDetailPage({
   if (!product) notFound();
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-20 py-10 pb-24">
-        <nav className="text-[13px] text-text-secondary mb-5">
-          <Link
-            href="/"
-            className="hover:text-foreground transition-colors no-underline"
-          >
-            Trang chủ
-          </Link>
-          {" · "}
-          <Link
-            href="/search"
-            className="hover:text-foreground transition-colors no-underline"
-          >
-            Sản phẩm
-          </Link>
-          {" · "}
-          <span className="text-foreground font-semibold">{product.name}</span>
-        </nav>
+    <div className="min-h-screen bg-muted">
+      <Container className="py-6 pb-20">
+        <PageBreadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Products", href: "/search" },
+            { label: product.name },
+          ]}
+        />
         <PdpClient product={product} />
-      </div>
+      </Container>
     </div>
   );
 }

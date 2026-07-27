@@ -9,6 +9,7 @@ import { ProductImage } from "./product-image";
 
 export interface Product {
   id: string;
+  slug: string;
   name: string;
   seller: string;
   price: number;
@@ -35,7 +36,7 @@ export function ProductCard({
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/products/${product.slug}`}
       className={`${"group relative bg-white border border-border-light rounded-[12px] p-[8px_8px_14px] flex flex-col h-full text-inherit no-underline transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(15,23,42,0.06),0_8px_24px_rgba(15,23,42,0.08)]"} ${className ?? ""}`}
     >
       {/* Badges top-left */}
