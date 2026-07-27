@@ -7,6 +7,9 @@ import { CategoryHero } from "../_sections/category-hero";
 import { ProductRow } from "../_sections/product-row";
 import { TrustStrip } from "../_sections/trust-strip";
 
+// No React `cache()` wrapper needed: the API client now runs on native fetch,
+// which Next.js already dedupes per render (same URL+options called from
+// generateMetadata and the page below hits the network once).
 async function fetchCategory(slug: string) {
   try {
     return await mainService.request(categoriesControllerFindBySlug)({
@@ -26,6 +29,7 @@ export async function generateMetadata({
   return {
     title: `${category.name} | Marlo`,
     description: category.description ? String(category.description) : undefined,
+    alternates: { canonical: `/categories/${category.slug}` },
   };
 }
 

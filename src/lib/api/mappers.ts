@@ -10,6 +10,7 @@ const PLACEHOLDER_IMG = "/no-image.svg";
 export function mapProductListItem(p: ProductListItemDto): Product {
   return {
     id: p.id,
+    slug: p.slug,
     name: p.name,
     seller: "Marlo",
     price: p.basePrice,
@@ -26,6 +27,7 @@ export function mapProductResponse(p: ProductResponseDto): Product {
   const firstVariant = p.variants[0];
   return {
     id: p.id,
+    slug: p.slug,
     name: p.name,
     seller: "Marlo",
     price: firstVariant?.price ?? p.basePrice,
