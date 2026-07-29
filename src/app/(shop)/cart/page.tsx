@@ -4,7 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { ProductImage } from "@/components/commons/product-image";
 import { useCart, useUpdateCartItem, useRemoveCartItem } from "@/queries/cart";
-import { mapCartItem } from "@/lib/api/mappers";
+import { mapCartItem, type CartLine } from "@/lib/api/mappers";
+import { useAuth } from "@/hooks/use-auth";
+import { useGuestCart } from "@/hooks/use-guest-cart";
 import { Container } from "@/components/commons/container";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
@@ -71,7 +73,7 @@ function CartRow({
   onUpdateQty,
   onRemove,
 }: {
-  item: ReturnType<typeof mapCartItem>;
+  item: CartLine;
   onUpdateQty: (id: string, qty: number) => void;
   onRemove: (id: string) => void;
 }) {
@@ -145,11 +147,28 @@ function CartRow({
 export default function CartPage() {
   const [coupon, setCoupon] = useState("");
 
-  const { data: cart, isLoading } = useCart();
+  const { isLoggedIn } = useAuth();
+  const { data: cart, isLoading: isCartLoading } = useCart({
+    enabled: isLoggedIn,
+  });
   const updateItem = useUpdateCartItem();
   const removeItem = useRemoveCartItem();
+  const guestCart = useGuestCart();
 
-  const items = (cart?.items ?? []).map(mapCartItem);
+  const isLoading = isLoggedIn && isCartLoading;
+
+  const items: CartLine[] = isLoggedIn
+    ? (cart?.items ?? []).map(mapCartItem)
+    : guestCart.items.map((i) => ({
+        lineId: i.variantId,
+        img: i.image,
+        name: i.name,
+        seller: "Marlo",
+        variant: i.variantName,
+        price: i.price,
+        qty: i.quantity,
+      }));
+
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
   const shipping = subtotal > 0 && subtotal < 5000 ? 999 : 0;
   const discount = 0;
@@ -157,11 +176,19 @@ export default function CartPage() {
   const total = subtotal + shipping - discount + tax;
 
   function handleUpdateQty(itemId: string, quantity: number) {
-    updateItem.mutate({ itemId, body: { quantity } });
+    if (isLoggedIn) {
+      updateItem.mutate({ itemId, body: { quantity } });
+    } else {
+      guestCart.updateQuantity(itemId, quantity);
+    }
   }
 
   function handleRemove(itemId: string) {
-    removeItem.mutate(itemId);
+    if (isLoggedIn) {
+      removeItem.mutate(itemId);
+    } else {
+      guestCart.removeItem(itemId);
+    }
   }
 
   if (isLoading) {
@@ -346,7 +373,7 @@ export default function CartPage() {
                   </div>
 
                   <Link
-                    href="/checkout"
+                    href={isLoggedIn ? "/checkout" : "/login"}
                     className="flex items-center justify-center gap-3 h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-wide rounded-[3px] no-underline hover:opacity-90 transition-opacity"
                   >
                     Proceed to Checkout

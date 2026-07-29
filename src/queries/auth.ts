@@ -5,6 +5,7 @@ import {
   authControllerRegister,
   authControllerForgotPassword,
   usersControllerGetProfile,
+  cartsControllerAddItem,
 } from "@/api/main";
 import type {
   ActiveDto,
@@ -16,7 +17,9 @@ import { mainService } from "@/lib/api/client";
 import { setCookie, getCookie } from "@/lib/cookies";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/cookies";
 import { useAuthStore } from "@/stores/auth-store";
+import { useGuestCartStore } from "@/stores/guest-cart-store";
 import { queryClient } from "@/lib/query/client";
+import { cartKeys } from "@/queries/cart";
 
 export const PROFILE_QUERY_KEY = ["profile"] as const;
 
@@ -42,6 +45,17 @@ export function useLogin() {
         queryFn: () => mainService.request(usersControllerGetProfile)(),
       });
       setUser(profile);
+
+      const guestItems = useGuestCartStore.getState().items;
+      if (guestItems.length > 0) {
+        for (const item of guestItems) {
+          await mainService.request(cartsControllerAddItem)({
+            body: { variant_id: item.variantId, quantity: item.quantity },
+          });
+        }
+        useGuestCartStore.getState().clearCart();
+        queryClient.invalidateQueries({ queryKey: cartKeys.all });
+      }
     },
   });
 }

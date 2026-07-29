@@ -8,6 +8,8 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useAddToCart } from "@/queries/cart";
 import { useProducts, useProductReviews } from "@/queries/products";
 import { mapProductListItem } from "@/lib/api/mappers";
+import { useAuth } from "@/hooks/use-auth";
+import { useGuestCart } from "@/hooks/use-guest-cart";
 import type { ProductResponseDto, ProductVariantResponseDto } from "@/api/main";
 
 const PLACEHOLDER_IMG = "/no-image.svg";
@@ -248,6 +250,8 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
   const [addedMsg, setAddedMsg] = useState("");
 
   const addToCart = useAddToCart();
+  const { isLoggedIn } = useAuth();
+  const guestCart = useGuestCart();
   const reviewsQuery = useProductReviews(product.id);
   const relatedQuery = useProducts({ status: "published", limit: 9 });
 
@@ -269,6 +273,28 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
 
   function handleAddToCart() {
     if (!selectedVariant) return;
+
+    if (!isLoggedIn) {
+      const primaryImage =
+        product.images.find((i) => i.isPrimary)?.url ??
+        product.images[0]?.url ??
+        PLACEHOLDER_IMG;
+      guestCart.addItem(
+        {
+          variantId: selectedVariant.id,
+          productSlug: product.slug,
+          name: product.name,
+          variantName: selectedVariant.name,
+          price: selectedVariant.price,
+          image: primaryImage,
+        },
+        qty,
+      );
+      setAddedMsg("Added!");
+      setTimeout(() => setAddedMsg(""), 2000);
+      return;
+    }
+
     addToCart.mutate(
       { variant_id: selectedVariant.id, quantity: qty },
       {

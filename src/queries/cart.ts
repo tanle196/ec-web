@@ -13,10 +13,11 @@ export const cartKeys = {
   all: ["cart"] as const,
 };
 
-export function useCart() {
+export function useCart(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: cartKeys.all,
     queryFn: () => mainService.request(cartsControllerGetCart)({}),
+    enabled: options?.enabled,
   });
 }
 

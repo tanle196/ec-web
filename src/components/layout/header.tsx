@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   Search,
-  ShoppingCart,
   Heart,
   User,
   ChevronDown,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import { PromoBanner } from "./promo-banner";
 import { CategoryMenu } from "./category-menu";
+import { CartBadge } from "./cart-badge";
 import { Container } from "../commons/container";
 
 /* ── Brand social icons ──────────────────────────────────────────── */
@@ -236,23 +236,7 @@ export function Header() {
             </form>
 
             <div className="flex items-center gap-5 flex-none">
-              <Link
-                href="/cart"
-                className="relative"
-                aria-label="Cart, 2 items"
-              >
-                <ShoppingCart
-                  size={30}
-                  className="text-white"
-                  strokeWidth={1.5}
-                />
-                <span
-                  aria-hidden
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white border-[1.5px] border-secondary-700 rounded-full text-[11px] font-semibold text-secondary-700 flex items-center justify-center leading-none"
-                >
-                  2
-                </span>
-              </Link>
+              <CartBadge />
               <Link href="/wishlist" aria-label="Wishlist">
                 <Heart size={30} className="text-white" strokeWidth={1.5} />
               </Link>
