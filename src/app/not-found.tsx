@@ -22,22 +22,26 @@ export default function NotFound() {
           <Image
             src={robotBackground}
             alt=""
-            className="absolute inset-0 w-full h-full object-contain"
+            fill
+            className="object-contain"
           />
           <Image
             src={robotShadow}
             alt=""
-            className="absolute bottom-0 left-0 right-0 w-full object-contain"
+            fill
+            className="object-contain object-bottom"
           />
           <Image
             src={robotIllustration}
             alt="Broken robot"
-            className="absolute inset-0 w-full h-full object-contain"
+            fill
+            className="object-contain"
           />
           <Image
             src={robotParts}
             alt=""
-            className="absolute bottom-0 left-0 right-0 w-full object-contain"
+            fill
+            className="object-contain object-bottom"
           />
         </div>
 

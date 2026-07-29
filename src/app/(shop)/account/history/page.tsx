@@ -298,7 +298,7 @@ export default function BrowsingHistoryPage() {
         <PageBreadcrumb
           items={[
             { label: "Home", href: "/" },
-            { label: "User Account", href: "/account" },
+            { label: "Account", href: "/account" },
             { label: "Browsing History" },
           ]}
         />

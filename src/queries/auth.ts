@@ -3,9 +3,15 @@ import {
   authControllerActive,
   authControllerLogin,
   authControllerRegister,
+  authControllerForgotPassword,
   usersControllerGetProfile,
 } from "@/api/main";
-import type { ActiveDto, LoginDto, RegisterDto } from "@/api/main";
+import type {
+  ActiveDto,
+  LoginDto,
+  RegisterDto,
+  ForgotPasswordDto,
+} from "@/api/main";
 import { mainService } from "@/lib/api/client";
 import { setCookie, getCookie } from "@/lib/cookies";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/cookies";
@@ -51,5 +57,12 @@ export function useVerifyEmail() {
   return useMutation({
     mutationFn: (body: ActiveDto) =>
       mainService.request(authControllerActive)({ body }),
+  });
+}
+
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: (body: ForgotPasswordDto) =>
+      mainService.request(authControllerForgotPassword)({ body }),
   });
 }

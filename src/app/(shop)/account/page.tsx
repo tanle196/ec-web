@@ -1,9 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { Container } from "@/components/commons/container";
 import Image from "next/image";
+import { useGetProfile } from "@/queries/auth";
+import { useAddresses } from "@/queries/addresses";
+import { useMyOrders } from "@/queries/orders";
+import { useMyPayments } from "@/queries/payments";
+import { formatCurrency, formatDate } from "@/lib/utils";
+import { orderStatusColor, orderStatusLabel } from "@/lib/order-status";
+import type { PaymentResponseDto } from "@/api/main";
 
 const imgUserAvatar =
   "https://www.figma.com/api/mcp/asset/22b3c6d0-39a3-4d05-8723-697ef67828aa";
@@ -12,61 +20,9 @@ const imgProduct1 =
 const imgProduct2 =
   "https://www.figma.com/api/mcp/asset/d72852a2-0fca-4ae2-bef6-d84bb123ebf3";
 const imgProduct3 =
-  "https://www.figma.com/api/mcp/asset/f7a1aa9a-7a99-42bd-b732-3629ae018d76";
+  "https://www.figma.com/api/mcp/asset/f7a1aa9a-7a99-42bd-b683-9e4a96c38cd6";
 const imgProduct4 =
   "https://www.figma.com/api/mcp/asset/626db840-8813-4182-b4d6-200a6975baea";
-
-const ORDERS = [
-  {
-    id: "#96459761",
-    status: "IN PROGRESS",
-    statusColor: "text-primary-500",
-    date: "Dec 30, 2019 05:18",
-    total: "$1,500 (5 Products)",
-  },
-  {
-    id: "#71667167",
-    status: "COMPLETED",
-    statusColor: "text-success-500",
-    date: "Feb 2, 2019 19:28",
-    total: "$80 (11 Products)",
-  },
-  {
-    id: "#95214362",
-    status: "CANCELED",
-    statusColor: "text-danger-500",
-    date: "Mar 20, 2019 23:14",
-    total: "$160 (3 Products)",
-  },
-  {
-    id: "#71667167",
-    status: "COMPLETED",
-    statusColor: "text-success-500",
-    date: "Feb 2, 2019 19:28",
-    total: "$80 (1 Products)",
-  },
-  {
-    id: "#51746385",
-    status: "COMPLETED",
-    statusColor: "text-success-500",
-    date: "Feb 2, 2019 19:28",
-    total: "$2,300 (2 Products)",
-  },
-  {
-    id: "#51746385",
-    status: "CANCELED",
-    statusColor: "text-danger-500",
-    date: "Dec 30, 2019 07:52",
-    total: "$70 (1 Products)",
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    statusColor: "text-success-500",
-    date: "Dec 7, 2019 23:26",
-    total: "$220 (1 Products)",
-  },
-];
 
 const BROWSING_PRODUCTS = [
   {
@@ -103,6 +59,20 @@ const BROWSING_PRODUCTS = [
   },
 ];
 
+const PAYMENT_METHOD_LABEL: Record<PaymentResponseDto["method"], string> = {
+  cod: "Cash on Delivery",
+  vnpay: "VNPay",
+  momo: "MoMo",
+  zalopay: "ZaloPay",
+  stripe: "Stripe",
+  bank_transfer: "Bank Transfer",
+};
+
+const PAYMENT_GRADIENTS = [
+  "radial-gradient(circle at 0 0, #1b6392, #124261)",
+  "radial-gradient(circle at 0 0, #248e1d, #2db224)",
+];
+
 function StarRating({ rating, max = 5 }: { rating: number; max?: number }) {
   return (
     <div className="flex items-center">
@@ -127,14 +97,25 @@ function StarRating({ rating, max = 5 }: { rating: number; max?: number }) {
   );
 }
 
-function SectionHeading({ title, action }: { title: string; action?: string }) {
+function SectionHeading({
+  title,
+  action,
+  actionHref,
+}: {
+  title: string;
+  action?: string;
+  actionHref?: string;
+}) {
   return (
     <div className="flex items-center justify-between px-6 h-13 border-b border-gray-100">
       <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
         {title}
       </span>
       {action && (
-        <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
+        <Link
+          href={actionHref ?? "#"}
+          className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors no-underline"
+        >
           {action}
           <svg
             width="20"
@@ -151,18 +132,39 @@ function SectionHeading({ title, action }: { title: string; action?: string }) {
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </Link>
       )}
     </div>
   );
 }
 
 export default function AccountDashboardPage() {
+  const { data: profile } = useGetProfile();
+  const { data: addresses } = useAddresses();
+  const { data: orders } = useMyOrders({
+    limit: 200,
+    sort_by: "createdAt",
+    sort_order: "DESC",
+  });
+  const { data: payments } = useMyPayments({ limit: 2 });
+
+  const defaultAddress = addresses?.find((a) => a.isDefault) ?? addresses?.[0];
+
+  const totalOrders = orders?.total ?? 0;
+  const pendingOrders =
+    orders?.data.filter((o) =>
+      ["pending", "confirmed", "processing", "shipped"].includes(o.status),
+    ).length ?? 0;
+  const completedOrders =
+    orders?.data.filter((o) => o.status === "delivered").length ?? 0;
+
+  const recentOrders = orders?.data.slice(0, 7) ?? [];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Container className="py-6 pb-20">
         <PageBreadcrumb
-          items={[{ label: "Home", href: "/" }, { label: "Dashboard" }]}
+          items={[{ label: "Home", href: "/" }, { label: "Account" }]}
         />
 
         <div className="flex gap-18 items-start mt-2">
@@ -173,7 +175,7 @@ export default function AccountDashboardPage() {
             {/* Welcome heading */}
             <div>
               <h1 className="text-[24px] font-semibold text-gray-900 leading-7">
-                Hello, Kevin
+                Hello, {profile?.name?.split(" ")[0] ?? "there"}
               </h1>
               <p className="mt-2 text-[14px] text-gray-600 leading-5 max-w-105.75">
                 From your account dashboard. you can easily check &amp; view
@@ -191,17 +193,19 @@ export default function AccountDashboardPage() {
                   <div className="flex items-center gap-4">
                     <Image
                       src={imgUserAvatar}
-                      alt="Kevin Gilbert"
+                      alt={profile?.name ?? "User avatar"}
                       width={48}
                       height={48}
                       className="rounded-full size-12 object-cover flex-none"
                     />
                     <div>
                       <p className="text-[16px] font-semibold text-gray-900 leading-6">
-                        Kevin Gilbert
+                        {profile?.name ?? "-"}
                       </p>
                       <p className="text-[14px] text-gray-600 leading-5">
-                        Dhaka - 1207, Bangladesh
+                        {defaultAddress
+                          ? `${defaultAddress.city}, ${defaultAddress.country}`
+                          : "No address added"}
                       </p>
                     </div>
                   </div>
@@ -210,24 +214,25 @@ export default function AccountDashboardPage() {
                       <span className="text-gray-900">Email:</span>
                       <span className="text-gray-600">
                         {" "}
-                        kevin.gilbert@gmail.com
+                        {profile?.email ?? "-"}
                       </span>
                     </div>
-                    <div className="flex gap-1">
-                      <span className="text-gray-900">Sec Email:</span>
-                      <span className="text-gray-600">
-                        {" "}
-                        kevin12345@gmail.com
-                      </span>
-                    </div>
-                    <div className="flex gap-1">
-                      <span className="text-gray-900">Phone:</span>
-                      <span className="text-gray-600"> +1-202-555-0118</span>
-                    </div>
+                    {defaultAddress && (
+                      <div className="flex gap-1">
+                        <span className="text-gray-900">Phone:</span>
+                        <span className="text-gray-600">
+                          {" "}
+                          {defaultAddress.phone}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <button className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
+                  <Link
+                    href="/account/settings"
+                    className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 flex items-center text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors no-underline"
+                  >
                     Edit Account
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -235,27 +240,45 @@ export default function AccountDashboardPage() {
               <div className="w-[312px] flex-none bg-white border border-gray-100 rounded-[4px]">
                 <SectionHeading title="Billing Address" />
                 <div className="px-6 pt-[22px] pb-6 flex flex-col gap-5">
-                  <div className="flex flex-col gap-2 text-[14px] leading-5">
-                    <p className="font-medium text-gray-900">Kevin Gilbert</p>
-                    <p className="text-gray-600">
-                      East Tejturi Bazar, Word No. 04, Road No. 13/x, House no.
-                      1320/C, Flat No. 5D, Dhaka - 1200, Bangladesh
+                  {defaultAddress ? (
+                    <div className="flex flex-col gap-2 text-[14px] leading-5">
+                      <p className="font-medium text-gray-900">
+                        {defaultAddress.fullName}
+                      </p>
+                      <p className="text-gray-600">
+                        {defaultAddress.addressLine1}
+                        {defaultAddress.addressLine2
+                          ? `, ${defaultAddress.addressLine2}`
+                          : ""}
+                        , {defaultAddress.city}, {defaultAddress.province},{" "}
+                        {defaultAddress.country}
+                      </p>
+                      <div className="flex gap-1">
+                        <span className="text-gray-900">Phone Number:</span>
+                        <span className="text-gray-600">
+                          {" "}
+                          {defaultAddress.phone}
+                        </span>
+                      </div>
+                      <div className="flex gap-1">
+                        <span className="text-gray-900">Email:</span>
+                        <span className="text-gray-600">
+                          {" "}
+                          {profile?.email ?? "-"}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-[14px] text-gray-600 leading-5">
+                      You haven&apos;t added an address yet.
                     </p>
-                    <div className="flex gap-1">
-                      <span className="text-gray-900">Phone Number:</span>
-                      <span className="text-gray-600"> +1-202-555-0118</span>
-                    </div>
-                    <div className="flex gap-1">
-                      <span className="text-gray-900">Email:</span>
-                      <span className="text-gray-600">
-                        {" "}
-                        kevin.gilbert@gmail.com
-                      </span>
-                    </div>
-                  </div>
-                  <button className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
+                  )}
+                  <Link
+                    href="/account/cards"
+                    className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 flex items-center text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors no-underline"
+                  >
                     Edit Address
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -291,7 +314,7 @@ export default function AccountDashboardPage() {
                   </div>
                   <div>
                     <p className="text-[20px] font-semibold text-gray-900 leading-7">
-                      154
+                      {String(totalOrders).padStart(2, "0")}
                     </p>
                     <p className="text-[14px] text-gray-700 leading-5">
                       Total Orders
@@ -335,7 +358,7 @@ export default function AccountDashboardPage() {
                   </div>
                   <div>
                     <p className="text-[20px] font-semibold text-gray-900 leading-7">
-                      05
+                      {String(pendingOrders).padStart(2, "0")}
                     </p>
                     <p className="text-[14px] text-gray-700 leading-5">
                       Pending Orders
@@ -367,7 +390,7 @@ export default function AccountDashboardPage() {
                   </div>
                   <div>
                     <p className="text-[20px] font-semibold text-gray-900 leading-7">
-                      149
+                      {String(completedOrders).padStart(2, "0")}
                     </p>
                     <p className="text-[14px] text-gray-700 leading-5">
                       Completed Orders
@@ -379,103 +402,64 @@ export default function AccountDashboardPage() {
 
             {/* Payment Option */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
-              <SectionHeading title="Payment Option" action="Add Card" />
+              <SectionHeading
+                title="Payment Option"
+                action="View All"
+                actionHref="/account/cards"
+              />
               <div className="flex gap-6 px-6 py-[22px]">
-                <div
-                  className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 0 0, #1b6392, #124261)",
-                  }}
-                >
-                  <div className="absolute top-6 left-6">
-                    <p className="text-white text-[16px] leading-6">
-                      <span className="font-semibold">$95,400.00 </span>
-                      <span className="font-normal">USD</span>
-                    </p>
-                  </div>
-                  <div className="absolute top-[72px] left-6">
-                    <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
-                      Card number
-                    </p>
-                    <p className="text-white text-[20px] font-normal tracking-wide">
-                      **** **** **** 3814
-                    </p>
-                  </div>
-                  <div className="absolute bottom-[54px] right-6">
-                    <p className="text-white text-[14px] font-medium">
-                      Kevin Gilbert
-                    </p>
-                  </div>
-                  <div className="absolute bottom-6 left-6">
-                    <span className="text-white text-[16px] font-bold tracking-widest">
-                      VISA
-                    </span>
-                  </div>
-                  <button className="absolute top-6 right-6 text-white opacity-70 hover:opacity-100 cursor-pointer">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden
+                {payments && payments.data.length > 0 ? (
+                  payments.data.map((payment, i) => (
+                    <div
+                      key={payment.id}
+                      className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
+                      style={{
+                        background:
+                          PAYMENT_GRADIENTS[i % PAYMENT_GRADIENTS.length],
+                      }}
                     >
-                      <circle cx="12" cy="12" r="2" />
-                      <circle cx="5" cy="12" r="2" />
-                      <circle cx="19" cy="12" r="2" />
-                    </svg>
-                  </button>
-                </div>
-                <div
-                  className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 0 0, #248e1d, #2db224)",
-                  }}
-                >
-                  <div className="absolute top-6 left-6">
-                    <p className="text-white text-[16px] leading-6">
-                      <span className="font-semibold">$87,583.00 </span>
-                      <span className="font-normal">USD</span>
-                    </p>
-                  </div>
-                  <div className="absolute top-[72px] left-6">
-                    <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
-                      Card number
-                    </p>
-                    <p className="text-white text-[20px] font-normal tracking-wide">
-                      **** **** **** 1761
-                    </p>
-                  </div>
-                  <div className="absolute bottom-[54px] right-6">
-                    <p className="text-white text-[14px] font-medium">
-                      Kevin Gilbert
-                    </p>
-                  </div>
-                  <div className="absolute bottom-6 right-6 flex">
-                    <div className="w-7 h-7 rounded-full bg-yellow-400 opacity-90" />
-                    <div className="w-7 h-7 rounded-full bg-red-500 opacity-90 -ml-3" />
-                  </div>
-                  <button className="absolute top-6 right-6 text-white opacity-70 hover:opacity-100 cursor-pointer">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden
-                    >
-                      <circle cx="12" cy="12" r="2" />
-                      <circle cx="5" cy="12" r="2" />
-                      <circle cx="19" cy="12" r="2" />
-                    </svg>
-                  </button>
-                </div>
+                      <div className="absolute top-6 left-6">
+                        <p className="text-white text-[16px] leading-6">
+                          <span className="font-semibold">
+                            {formatCurrency(payment.amount)}{" "}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="absolute top-[72px] left-6">
+                        <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
+                          Method
+                        </p>
+                        <p className="text-white text-[18px] font-normal tracking-wide">
+                          {PAYMENT_METHOD_LABEL[payment.method]}
+                        </p>
+                      </div>
+                      <div className="absolute bottom-6 left-6">
+                        <span className="text-white text-[13px] font-semibold uppercase tracking-wide">
+                          {payment.status}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-6 right-6">
+                        <p className="text-white text-[12px] opacity-80">
+                          {formatDate(payment.createdAt)}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-[14px] text-gray-600">
+                    No payment records yet.
+                  </p>
+                )}
               </div>
             </div>
 
             {/* Recent Orders */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
-              <SectionHeading title="Recent Order" action="View All" />
+              <SectionHeading
+                title="Recent Order"
+                action="View All"
+                actionHref="/account/orders"
+              />
               <div className="flex items-center gap-6 px-6 py-[10px] bg-gray-50 border-y border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
                 <span className="w-[124px] flex-none">Order ID</span>
                 <span className="w-[152px] flex-none">Status</span>
@@ -483,26 +467,34 @@ export default function AccountDashboardPage() {
                 <span className="w-[248px] flex-none">Total</span>
                 <span className="flex-none">Action</span>
               </div>
-              {ORDERS.map((order, i) => (
+              {recentOrders.length === 0 && (
+                <p className="px-6 py-6 text-[14px] text-gray-600">
+                  You have no orders yet.
+                </p>
+              )}
+              {recentOrders.map((order) => (
                 <div
-                  key={i}
+                  key={order.id}
                   className="flex items-center gap-6 px-6 py-3 border-b border-gray-100 last:border-b-0"
                 >
                   <span className="w-[124px] flex-none text-[14px] font-medium text-gray-900">
-                    {order.id}
+                    {order.orderNumber}
                   </span>
                   <span
-                    className={`w-[152px] flex-none text-[14px] font-semibold ${order.statusColor}`}
+                    className={`w-[152px] flex-none text-[14px] font-semibold ${orderStatusColor(order.status)}`}
                   >
-                    {order.status}
+                    {orderStatusLabel(order.status)}
                   </span>
                   <span className="w-[200px] flex-none text-[14px] text-gray-600">
-                    {order.date}
+                    {formatDate(order.createdAt)}
                   </span>
                   <span className="w-[248px] flex-none text-[14px] text-gray-700">
-                    {order.total}
+                    {formatCurrency(order.total)}
                   </span>
-                  <button className="flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors cursor-pointer">
+                  <Link
+                    href={`/account/orders/${order.id}`}
+                    className="flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors no-underline"
+                  >
                     View Details
                     <svg
                       width="16"
@@ -519,22 +511,28 @@ export default function AccountDashboardPage() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               ))}
             </div>
 
             {/* Browsing History */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
-              <SectionHeading title="Browsing History" action="View All" />
+              <SectionHeading
+                title="Browsing History"
+                action="View All"
+                actionHref="/account/history"
+              />
               <div className="grid grid-cols-4 divide-x divide-gray-100 px-3 pt-5 pb-3">
                 {BROWSING_PRODUCTS.map((product, i) => (
                   <div key={i} className="px-3 flex flex-col gap-3">
-                    <div className="relative">
+                    <div className="relative h-43">
                       <Image
                         src={product.img}
                         alt={product.name}
-                        className="w-full h-[172px] object-contain"
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-contain"
                       />
                       {product.badge && (
                         <span
@@ -558,50 +556,6 @@ export default function AccountDashboardPage() {
                     </p>
                   </div>
                 ))}
-              </div>
-              <div className="flex items-center justify-center gap-4 pb-6 pt-2">
-                <button className="w-10 h-10 rounded-full border-[1.5px] border-primary-500 flex items-center justify-center text-primary-500 hover:bg-primary-50 transition-colors cursor-pointer">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    aria-hidden
-                  >
-                    <path
-                      d="M13 4l-6 6 6 6"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                <div className="flex items-center gap-2">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className={`h-2 rounded-full transition-all ${i === 0 ? "w-4 bg-primary-500" : "w-2 bg-primary-200"}`}
-                    />
-                  ))}
-                </div>
-                <button className="w-10 h-10 rounded-full border-[1.5px] border-primary-500 flex items-center justify-center text-primary-500 hover:bg-primary-50 transition-colors cursor-pointer">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    aria-hidden
-                  >
-                    <path
-                      d="M7 4l6 6-6 6"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
               </div>
             </div>
           </div>

@@ -5,122 +5,12 @@ import Link from "next/link";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { Container } from "@/components/commons/container";
+import { useMyOrders } from "@/queries/orders";
+import { formatCurrency, formatDate } from "@/lib/utils";
+import { orderStatusColor, orderStatusLabel } from "@/lib/order-status";
+import type { OrderListItemDto } from "@/api/main";
 
-type Order = {
-  id: string;
-  status: "IN PROGRESS" | "COMPLETED" | "CANCELED";
-  date: string;
-  total: string;
-  amount: string;
-  products: number;
-};
-
-const STATUS_COLOR: Record<Order["status"], string> = {
-  "IN PROGRESS": "text-primary-500",
-  COMPLETED: "text-success-500",
-  CANCELED: "text-danger-500",
-};
-
-const ORDERS: Order[] = [
-  {
-    id: "#96459761",
-    status: "IN PROGRESS",
-    date: "Dec 30, 2019 07:52",
-    total: "$80 (5 Products)",
-    amount: "$80.00",
-    products: 5,
-  },
-  {
-    id: "#71667167",
-    status: "COMPLETED",
-    date: "Dec 7, 2019 23:26",
-    total: "$70 (4 Products)",
-    amount: "$70.00",
-    products: 4,
-  },
-  {
-    id: "#95214362",
-    status: "CANCELED",
-    date: "Dec 7, 2019 23:26",
-    total: "$2,300 (3 Products)",
-    amount: "$2,300.00",
-    products: 3,
-  },
-  {
-    id: "#71667167",
-    status: "COMPLETED",
-    date: "Feb 2, 2019",
-    total: "$250 (1 Products)",
-    amount: "$250.00",
-    products: 1,
-  },
-  {
-    id: "#51746385",
-    status: "COMPLETED",
-    date: "Dec 30, 2019 07:52",
-    total: "$360 (2 Products)",
-    amount: "$360.00",
-    products: 2,
-  },
-  {
-    id: "#51746385",
-    status: "COMPLETED",
-    date: "Dec 30, 2019",
-    total: "$220 (7 Products)",
-    amount: "$220.00",
-    products: 7,
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    date: "Feb 2, 2019 19:28",
-    total: "$80 (1 Products)",
-    amount: "$80.00",
-    products: 1,
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    date: "Mar 20, 2019",
-    total: "$160 (1 Products)",
-    amount: "$160.00",
-    products: 1,
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    date: "Dec 4, 2019 21:42",
-    total: "$1,500 (3 Products)",
-    amount: "$1,500.00",
-    products: 3,
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    date: "Dec 30, 2019 07:52",
-    total: "$1,200 (9 Products)",
-    amount: "$1,200.00",
-    products: 9,
-  },
-  {
-    id: "#673971743",
-    status: "CANCELED",
-    date: "Dec 30, 2019 05:18",
-    total: "$1,500 (1 Products)",
-    amount: "$1,500.00",
-    products: 1,
-  },
-  {
-    id: "#673971743",
-    status: "COMPLETED",
-    date: "Dec 30, 2019 07:52",
-    total: "$80 (1 Products)",
-    amount: "$80.00",
-    products: 1,
-  },
-];
-
-const TOTAL_PAGES = 6;
+const PAGE_SIZE = 10;
 
 function ArrowIcon({ dir }: { dir: "left" | "right" }) {
   return (
@@ -148,7 +38,20 @@ function ArrowIcon({ dir }: { dir: "left" | "right" }) {
 
 export default function OrderHistoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [hoveredOrder, setHoveredOrder] = useState<Order | null>(null);
+  const [hoveredOrder, setHoveredOrder] = useState<OrderListItemDto | null>(
+    null,
+  );
+
+  const { data: orders, isPending } = useMyOrders({
+    page: currentPage,
+    limit: PAGE_SIZE,
+    sort_by: "createdAt",
+    sort_order: "DESC",
+  });
+
+  const totalPages = orders
+    ? Math.max(1, Math.ceil(orders.total / orders.limit))
+    : 1;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -156,7 +59,7 @@ export default function OrderHistoryPage() {
         <PageBreadcrumb
           items={[
             { label: "Home", href: "/" },
-            { label: "User Account", href: "/account" },
+            { label: "Account", href: "/account" },
             { label: "Order History" },
           ]}
         />
@@ -183,30 +86,42 @@ export default function OrderHistoryPage() {
                 <span className="w-[116px] flex-none">Action</span>
               </div>
 
+              {isPending && (
+                <p className="px-6 py-6 text-[14px] text-gray-600">
+                  Loading orders...
+                </p>
+              )}
+
+              {!isPending && orders?.data.length === 0 && (
+                <p className="px-6 py-6 text-[14px] text-gray-600">
+                  You have no orders yet.
+                </p>
+              )}
+
               {/* Rows */}
-              {ORDERS.map((order, i) => (
+              {orders?.data.map((order) => (
                 <div
-                  key={i}
+                  key={order.id}
                   className="relative flex items-center gap-6 px-6 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors group"
                   onMouseEnter={() => setHoveredOrder(order)}
                   onMouseLeave={() => setHoveredOrder(null)}
                 >
                   <span className="w-[124px] flex-none text-[14px] font-medium text-gray-900">
-                    {order.id}
+                    {order.orderNumber}
                   </span>
                   <span
-                    className={`w-[152px] flex-none text-[14px] font-semibold ${STATUS_COLOR[order.status]}`}
+                    className={`w-[152px] flex-none text-[14px] font-semibold ${orderStatusColor(order.status)}`}
                   >
-                    {order.status}
+                    {orderStatusLabel(order.status)}
                   </span>
                   <span className="w-[200px] flex-none text-[14px] text-gray-600">
-                    {order.date}
+                    {formatDate(order.createdAt)}
                   </span>
                   <span className="flex-1 text-[14px] text-gray-700">
-                    {order.total}
+                    {formatCurrency(order.total)}
                   </span>
                   <Link
-                    href={`/account/orders/${order.id.replace("#", "")}`}
+                    href={`/account/orders/${order.id}`}
                     className="w-[116px] flex-none flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors no-underline"
                   >
                     View Details
@@ -239,7 +154,7 @@ export default function OrderHistoryPage() {
                   <ArrowIcon dir="left" />
                 </button>
 
-                {Array.from({ length: TOTAL_PAGES }, (_, i) => i + 1).map(
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (page) => (
                     <button
                       key={page}
@@ -257,9 +172,9 @@ export default function OrderHistoryPage() {
 
                 <button
                   onClick={() =>
-                    setCurrentPage((p) => Math.min(TOTAL_PAGES, p + 1))
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
-                  disabled={currentPage === TOTAL_PAGES}
+                  disabled={currentPage === totalPages}
                   className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-600 hover:border-primary-500 hover:text-primary-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 >
                   <ArrowIcon dir="right" />
@@ -272,23 +187,26 @@ export default function OrderHistoryPage() {
               <div className="mt-4 inline-flex items-center gap-4 bg-white border border-gray-100 rounded-[4px] shadow-[0px_8px_20px_rgba(0,0,0,0.08)] px-5 py-4">
                 <div className="flex flex-col gap-1">
                   <span
-                    className={`text-[12px] font-semibold ${STATUS_COLOR[hoveredOrder.status]}`}
+                    className={`text-[12px] font-semibold ${orderStatusColor(hoveredOrder.status)}`}
                   >
-                    {hoveredOrder.status}
+                    {orderStatusLabel(hoveredOrder.status)}
                   </span>
                   <p className="text-[14px] font-medium text-gray-900">
-                    Order {hoveredOrder.id}
+                    Order {hoveredOrder.orderNumber}
                   </p>
                   <p className="text-[13px] text-gray-600">
-                    {hoveredOrder.date} · {hoveredOrder.products} Products
+                    {formatDate(hoveredOrder.createdAt)}
                   </p>
                   <p className="text-[16px] font-semibold text-gray-900">
-                    {hoveredOrder.amount} USD
+                    {formatCurrency(hoveredOrder.total)}
                   </p>
                 </div>
-                <button className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white hover:bg-primary-600 transition-colors cursor-pointer flex-none">
+                <Link
+                  href={`/account/orders/${hoveredOrder.id}`}
+                  className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white hover:bg-primary-600 transition-colors cursor-pointer flex-none"
+                >
                   <ArrowIcon dir="right" />
-                </button>
+                </Link>
               </div>
             )}
           </div>
