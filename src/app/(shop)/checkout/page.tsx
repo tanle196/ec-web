@@ -1,15 +1,70 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Link from "next/link";
 import { ProductImage } from "@/components/commons/product-image";
 import { useCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/orders";
+import { useCreateAddress } from "@/queries/addresses";
 import { mapCartItem } from "@/lib/api/mappers";
 import { Container } from "@/components/commons/container";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 
-type PaymentMethod = "cod" | "venmo" | "paypal" | "amazon" | "card";
+const PAYMENT_METHODS = ["cod", "venmo", "paypal", "amazon", "card"] as const;
+type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+
+const checkoutSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  company: z.string(),
+  address: z.string().min(1, "Address is required"),
+  country: z.string(),
+  region: z.string().min(1, "Region is required"),
+  city: z.string().min(1, "City is required"),
+  zip: z.string(),
+  email: z.union([z.literal(""), z.email("Enter a valid email")]),
+  phone: z.string().min(1, "Phone number is required"),
+  shipDifferent: z.boolean(),
+  payment: z.enum(PAYMENT_METHODS),
+  nameOnCard: z.string(),
+  cardNumber: z.string(),
+  expireDate: z.string(),
+  cvc: z.string(),
+  note: z.string(),
+});
+
+type CheckoutFormValues = z.infer<typeof checkoutSchema>;
+
+const defaultValues: CheckoutFormValues = {
+  firstName: "",
+  lastName: "",
+  company: "",
+  address: "",
+  country: "",
+  region: "",
+  city: "",
+  zip: "",
+  email: "",
+  phone: "",
+  shipDifferent: false,
+  payment: "card",
+  nameOnCard: "",
+  cardNumber: "",
+  expireDate: "",
+  cvc: "",
+  note: "",
+};
+
+function getErrorMessage(err: unknown): string {
+  const body = (err as { error?: { message?: string | string[] } })?.error;
+  const message = body?.message;
+  if (Array.isArray(message)) return message.join(", ");
+  if (typeof message === "string") return message;
+  return "Something went wrong. Please try again.";
+}
 
 function formatUSD(cents: number) {
   return (cents / 100).toLocaleString("en-US", {
@@ -37,6 +92,11 @@ function FieldLabel({
       {optional && <span className="text-[#929fa5]"> (Optional)</span>}
     </label>
   );
+}
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="text-[12px] leading-4 text-red-600">{message}</p>;
 }
 
 function SelectWrapper({ children }: { children: React.ReactNode }) {
@@ -177,27 +237,26 @@ function RadioCircle({ checked }: { checked: boolean }) {
 }
 
 export default function CheckoutPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [company, setCompany] = useState("");
-  const [address, setAddress] = useState("");
-  const [country, setCountry] = useState("");
-  const [region, setRegion] = useState("");
-  const [city, setCity] = useState("");
-  const [zip, setZip] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [shipDifferent, setShipDifferent] = useState(false);
-  const [payment, setPayment] = useState<PaymentMethod>("card");
-  const [nameOnCard, setNameOnCard] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expireDate, setExpireDate] = useState("");
-  const [cvc, setCvc] = useState("");
-  const [note, setNote] = useState("");
   const [placed, setPlaced] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues,
+  });
+
+  const shipDifferent = watch("shipDifferent");
+  const payment = watch("payment");
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
+  const createAddress = useCreateAddress();
 
   const items = (cart?.items ?? []).map(mapCartItem);
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
@@ -206,22 +265,38 @@ export default function CheckoutPage() {
   const tax = Math.round(subtotal * 0.1);
   const total = subtotal + shipping - discount + tax;
 
-  function handlePlace() {
-    createOrder.mutate(
-      {
-        address_id: "placeholder",
-        items: (cart?.items ?? []).map((i) => ({
-          variant_id: i.variant_id,
-          quantity: i.quantity,
-        })),
-        notes: note || undefined,
-      },
-      {
-        onSuccess: () => setPlaced(true),
-        onError: () => setPlaced(true),
-      },
-    );
-  }
+  const onSubmit = handleSubmit(async (values) => {
+    setFormError(null);
+
+    try {
+      const savedAddress = await createAddress.mutateAsync({
+        fullName: `${values.firstName} ${values.lastName}`.trim(),
+        phone: values.phone,
+        addressLine1: values.address,
+        city: values.city,
+        province: values.region,
+        country: values.country || undefined,
+        postalCode: values.zip || undefined,
+      });
+
+      createOrder.mutate(
+        {
+          address_id: savedAddress.id,
+          items: (cart?.items ?? []).map((i) => ({
+            variant_id: i.variant_id,
+            quantity: i.quantity,
+          })),
+          notes: values.note || undefined,
+        },
+        {
+          onSuccess: () => setPlaced(true),
+          onError: (err) => setFormError(getErrorMessage(err)),
+        },
+      );
+    } catch (err) {
+      setFormError(getErrorMessage(err));
+    }
+  });
 
   if (isLoading) {
     return (
@@ -351,379 +426,365 @@ export default function CheckoutPage() {
       </div>
 
       {/* Main */}
-      <Container className="py-18 pb-24 flex gap-6 items-start">
-        {/* ── Left column ─────────────────────────────── */}
-        <div className="flex-1 min-w-0 flex flex-col gap-10">
-          {/* Billing Information */}
-          <section className="flex flex-col gap-6">
-            <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
-              Billing Information
-            </h2>
-            <div className="flex flex-col gap-4">
-              {/* Name row */}
-              <div className="flex gap-4 items-end">
-                <div className="flex flex-col gap-2 w-51.5">
-                  <FieldLabel>User name</FieldLabel>
-                  <input
-                    className={inputCls}
-                    placeholder="First name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </div>
-                <div className="w-51.5">
-                  <input
-                    className={inputCls}
-                    placeholder="Last name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel optional>Company Name</FieldLabel>
-                  <input
-                    className={inputCls}
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Address */}
-              <div className="flex flex-col gap-2">
-                <FieldLabel>Address</FieldLabel>
-                <input
-                  className={inputCls}
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-
-              {/* Country / Region / City / Zip */}
-              <div className="flex gap-4">
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>Country</FieldLabel>
-                  <SelectWrapper>
-                    <select
-                      className={selectCls}
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                    >
-                      <option value="">Select...</option>
-                      <option>United States</option>
-                      <option>United Kingdom</option>
-                      <option>Canada</option>
-                      <option>Australia</option>
-                    </select>
-                  </SelectWrapper>
-                </div>
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>Region/State</FieldLabel>
-                  <SelectWrapper>
-                    <select
-                      className={selectCls}
-                      value={region}
-                      onChange={(e) => setRegion(e.target.value)}
-                    >
-                      <option value="">Select...</option>
-                      <option>California</option>
-                      <option>New York</option>
-                      <option>Texas</option>
-                      <option>Florida</option>
-                    </select>
-                  </SelectWrapper>
-                </div>
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>City</FieldLabel>
-                  <SelectWrapper>
-                    <select
-                      className={selectCls}
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                    >
-                      <option value="">Select...</option>
-                      <option>Los Angeles</option>
-                      <option>New York City</option>
-                      <option>Houston</option>
-                      <option>Miami</option>
-                    </select>
-                  </SelectWrapper>
-                </div>
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>Zip Code</FieldLabel>
-                  <input
-                    className={inputCls}
-                    value={zip}
-                    onChange={(e) => setZip(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Email / Phone */}
-              <div className="flex gap-4">
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>Email</FieldLabel>
-                  <input
-                    className={inputCls}
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-2 flex-1">
-                  <FieldLabel>Phone Number</FieldLabel>
-                  <input
-                    className={inputCls}
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Ship to different address */}
-              <button
-                type="button"
-                onClick={() => setShipDifferent((v) => !v)}
-                className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0"
-              >
-                <div
-                  className={`w-5 h-5 rounded-[2px] border flex items-center justify-center flex-none ${shipDifferent ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"}`}
-                >
-                  {shipDifferent && (
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
-                <span className="text-[14px] leading-5 text-gray-700">
-                  Ship into different address
-                </span>
-              </button>
-            </div>
-          </section>
-
-          {/* Payment Option */}
-          <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-8">
-            <div className="px-6 py-5 border-b border-[#e4e7e9]">
+      <form onSubmit={onSubmit}>
+        <Container className="py-18 pb-24 flex gap-6 items-start">
+          {/* ── Left column ─────────────────────────────── */}
+          <div className="flex-1 min-w-0 flex flex-col gap-10">
+            {/* Billing Information */}
+            <section className="flex flex-col gap-6">
               <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
-                Payment Option
+                Billing Information
               </h2>
-            </div>
+              <div className="flex flex-col gap-4">
+                {/* Name row */}
+                <div className="flex gap-4 items-start">
+                  <div className="flex flex-col gap-2 w-51.5">
+                    <FieldLabel>User name</FieldLabel>
+                    <input
+                      className={inputCls}
+                      placeholder="First name"
+                      {...register("firstName")}
+                    />
+                    <FieldError message={errors.firstName?.message} />
+                  </div>
+                  <div className="flex flex-col gap-2 w-51.5">
+                    <FieldLabel>
+                      <span className="invisible">User name</span>
+                    </FieldLabel>
+                    <input
+                      className={inputCls}
+                      placeholder="Last name"
+                      {...register("lastName")}
+                    />
+                    <FieldError message={errors.lastName?.message} />
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel optional>Company Name</FieldLabel>
+                    <input className={inputCls} {...register("company")} />
+                  </div>
+                </div>
 
-            {/* Payment method pills */}
-            <div className="flex items-stretch border-b border-[#e4e7e9] px-6 py-6 gap-0">
-              {PAYMENT_OPTIONS.map((opt, i) => (
-                <div key={opt.id} className="flex items-center">
-                  {i > 0 && (
-                    <div className="w-px self-stretch bg-[#e4e7e9] mx-0" />
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setPayment(opt.id)}
-                    className="flex flex-col items-center gap-4 px-8 py-0 bg-transparent border-0 cursor-pointer"
-                  >
-                    {opt.icon}
-                    <span className="text-[14px] font-medium text-[#191c1f] leading-5 text-center w-25">
-                      {opt.label}
-                    </span>
-                    <RadioCircle checked={payment === opt.id} />
-                  </button>
+                {/* Address */}
+                <div className="flex flex-col gap-2">
+                  <FieldLabel>Address</FieldLabel>
+                  <input className={inputCls} {...register("address")} />
+                  <FieldError message={errors.address?.message} />
                 </div>
-              ))}
-            </div>
 
-            {/* Card fields — shown when card selected */}
-            {payment === "card" && (
-              <div className="flex flex-col gap-4 px-6 pt-6">
-                <div className="flex flex-col gap-2">
-                  <FieldLabel>Name on Card</FieldLabel>
-                  <input
-                    className={inputCls}
-                    value={nameOnCard}
-                    onChange={(e) => setNameOnCard(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <FieldLabel>Card Number</FieldLabel>
-                  <input
-                    className={inputCls}
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="•••• •••• •••• ••••"
-                  />
-                </div>
+                {/* Country / Region / City / Zip */}
                 <div className="flex gap-4">
                   <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>Expire Date</FieldLabel>
-                    <input
-                      className={inputCls}
-                      value={expireDate}
-                      onChange={(e) => setExpireDate(e.target.value)}
-                      placeholder="MM/YY"
-                    />
+                    <FieldLabel>Country</FieldLabel>
+                    <SelectWrapper>
+                      <select className={selectCls} {...register("country")}>
+                        <option value="">Select...</option>
+                        <option>United States</option>
+                        <option>United Kingdom</option>
+                        <option>Canada</option>
+                        <option>Australia</option>
+                      </select>
+                    </SelectWrapper>
                   </div>
                   <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>CVC</FieldLabel>
-                    <input
-                      className={inputCls}
-                      value={cvc}
-                      onChange={(e) => setCvc(e.target.value)}
-                      placeholder="•••"
-                    />
+                    <FieldLabel>Region/State</FieldLabel>
+                    <SelectWrapper>
+                      <select className={selectCls} {...register("region")}>
+                        <option value="">Select...</option>
+                        <option>California</option>
+                        <option>New York</option>
+                        <option>Texas</option>
+                        <option>Florida</option>
+                      </select>
+                    </SelectWrapper>
+                    <FieldError message={errors.region?.message} />
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>City</FieldLabel>
+                    <SelectWrapper>
+                      <select className={selectCls} {...register("city")}>
+                        <option value="">Select...</option>
+                        <option>Los Angeles</option>
+                        <option>New York City</option>
+                        <option>Houston</option>
+                        <option>Miami</option>
+                      </select>
+                    </SelectWrapper>
+                    <FieldError message={errors.city?.message} />
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>Zip Code</FieldLabel>
+                    <input className={inputCls} {...register("zip")} />
                   </div>
                 </div>
+
+                {/* Email / Phone */}
+                <div className="flex gap-4">
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>Email</FieldLabel>
+                    <input
+                      className={inputCls}
+                      type="email"
+                      {...register("email")}
+                    />
+                    <FieldError message={errors.email?.message} />
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <FieldLabel>Phone Number</FieldLabel>
+                    <input
+                      className={inputCls}
+                      type="tel"
+                      {...register("phone")}
+                    />
+                    <FieldError message={errors.phone?.message} />
+                  </div>
+                </div>
+
+                {/* Ship to different address */}
+                <button
+                  type="button"
+                  onClick={() => setValue("shipDifferent", !shipDifferent)}
+                  className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0"
+                >
+                  <div
+                    className={`w-5 h-5 rounded-[2px] border flex items-center justify-center flex-none ${shipDifferent ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"}`}
+                  >
+                    {shipDifferent && (
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-[14px] leading-5 text-gray-700">
+                    Ship into different address
+                  </span>
+                </button>
               </div>
-            )}
-          </div>
+            </section>
 
-          {/* Additional Information */}
-          <section className="flex flex-col gap-6">
-            <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
-              Additional Information
-            </h2>
-            <div className="flex flex-col gap-2">
-              <FieldLabel optional>Order Notes</FieldLabel>
-              <textarea
-                className="w-full h-31 bg-white border border-[#e4e7e9] rounded-xs px-3.75 py-2.75 text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#929fa5] resize-none"
-                placeholder="Notes about your order, e.g. special notes for delivery"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              />
-            </div>
-          </section>
-        </div>
+            {/* Payment Option */}
+            <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-8">
+              <div className="px-6 py-5 border-b border-[#e4e7e9]">
+                <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                  Payment Option
+                </h2>
+              </div>
 
-        {/* ── Right column: Order Summary ──────────────── */}
-        <aside className="flex-none w-106 sticky top-8">
-          <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-6">
-            {/* Heading */}
-            <div className="px-6 py-5 border-b border-[#e4e7e9]">
-              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
-                Order Summary
-              </h2>
-            </div>
-
-            {/* Products */}
-            {items.length > 0 && (
-              <div className="flex flex-col gap-4 px-6 py-6 border-b border-[#e4e7e9]">
-                {items.map((item) => (
-                  <div key={item.lineId} className="flex gap-4 items-center">
-                    <div className="w-16 h-16 rounded-xs overflow-hidden bg-[#f2f4f5] flex-none">
-                      <ProductImage
-                        src={item.img}
-                        alt={item.name}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0 flex flex-col gap-1.5">
-                      <p className="text-[14px] leading-5 text-[#191c1f] line-clamp-2">
-                        {item.name}
-                      </p>
-                      <div className="flex gap-1 text-[14px] leading-5">
-                        <span className="text-[#5f6c72]">{item.qty} x</span>
-                        <span className="font-semibold text-[#2da5f3]">
-                          {formatUSD(item.price)}
-                        </span>
-                      </div>
-                    </div>
+              {/* Payment method pills */}
+              <div className="flex items-stretch border-b border-[#e4e7e9] px-6 py-6 gap-0">
+                {PAYMENT_OPTIONS.map((opt, i) => (
+                  <div key={opt.id} className="flex items-center">
+                    {i > 0 && (
+                      <div className="w-px self-stretch bg-[#e4e7e9] mx-0" />
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setValue("payment", opt.id)}
+                      className="flex flex-col items-center gap-4 px-8 py-0 bg-transparent border-0 cursor-pointer"
+                    >
+                      {opt.icon}
+                      <span className="text-[14px] font-medium text-[#191c1f] leading-5 text-center w-25">
+                        {opt.label}
+                      </span>
+                      <RadioCircle checked={payment === opt.id} />
+                    </button>
                   </div>
                 ))}
               </div>
-            )}
 
-            {/* Totals */}
-            <div className="flex flex-col gap-3 px-6 py-6 border-b border-[#e4e7e9] text-[14px] leading-5">
-              <div className="flex items-center justify-between">
-                <span className="text-[#5f6c72]">Sub-total</span>
-                <span className="font-medium text-[#191c1f]">
-                  {formatUSD(subtotal)}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5f6c72]">Shipping</span>
-                <span className="font-medium text-[#191c1f]">
-                  {shipping === 0 ? "Free" : formatUSD(shipping)}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5f6c72]">Discount</span>
-                <span className="font-medium text-[#191c1f]">
-                  {formatUSD(discount)}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5f6c72]">Tax</span>
-                <span className="font-medium text-[#191c1f]">
-                  {formatUSD(tax)}
-                </span>
-              </div>
+              {/* Card fields — shown when card selected */}
+              {payment === "card" && (
+                <div className="flex flex-col gap-4 px-6 pt-6">
+                  <div className="flex flex-col gap-2">
+                    <FieldLabel>Name on Card</FieldLabel>
+                    <input className={inputCls} {...register("nameOnCard")} />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <FieldLabel>Card Number</FieldLabel>
+                    <input
+                      className={inputCls}
+                      placeholder="•••• •••• •••• ••••"
+                      {...register("cardNumber")}
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex flex-col gap-2 flex-1">
+                      <FieldLabel>Expire Date</FieldLabel>
+                      <input
+                        className={inputCls}
+                        placeholder="MM/YY"
+                        {...register("expireDate")}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2 flex-1">
+                      <FieldLabel>CVC</FieldLabel>
+                      <input
+                        className={inputCls}
+                        placeholder="•••"
+                        {...register("cvc")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Total + CTA */}
-            <div className="flex flex-col gap-6 px-6 pt-6">
-              <div className="flex items-center justify-between text-[16px] leading-6">
-                <span className="text-[#191c1f]">Total</span>
-                <span className="font-semibold text-[#191c1f]">
-                  {formatUSD(total)} USD
-                </span>
+            {/* Additional Information */}
+            <section className="flex flex-col gap-6">
+              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                Additional Information
+              </h2>
+              <div className="flex flex-col gap-2">
+                <FieldLabel optional>Order Notes</FieldLabel>
+                <textarea
+                  className="w-full h-31 bg-white border border-[#e4e7e9] rounded-xs px-3.75 py-2.75 text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#929fa5] resize-none"
+                  placeholder="Notes about your order, e.g. special notes for delivery"
+                  {...register("note")}
+                />
               </div>
-
-              <button
-                onClick={handlePlace}
-                disabled={createOrder.isPending || items.length === 0}
-                className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-              >
-                {createOrder.isPending ? (
-                  <>
-                    <svg
-                      className="animate-spin"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    >
-                      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                    </svg>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    Place Order
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </>
-                )}
-              </button>
-            </div>
+            </section>
           </div>
-        </aside>
-      </Container>
+
+          {/* ── Right column: Order Summary ──────────────── */}
+          <aside className="flex-none w-106 sticky top-8">
+            <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-6">
+              {/* Heading */}
+              <div className="px-6 py-5 border-b border-[#e4e7e9]">
+                <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                  Order Summary
+                </h2>
+              </div>
+
+              {/* Products */}
+              {items.length > 0 && (
+                <div className="flex flex-col gap-4 px-6 py-6 border-b border-[#e4e7e9]">
+                  {items.map((item) => (
+                    <div key={item.lineId} className="flex gap-4 items-center">
+                      <div className="w-16 h-16 rounded-xs overflow-hidden bg-[#f2f4f5] flex-none">
+                        <ProductImage
+                          src={item.img}
+                          alt={item.name}
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+                        <p className="text-[14px] leading-5 text-[#191c1f] line-clamp-2">
+                          {item.name}
+                        </p>
+                        <div className="flex gap-1 text-[14px] leading-5">
+                          <span className="text-[#5f6c72]">{item.qty} x</span>
+                          <span className="font-semibold text-[#2da5f3]">
+                            {formatUSD(item.price)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Totals */}
+              <div className="flex flex-col gap-3 px-6 py-6 border-b border-[#e4e7e9] text-[14px] leading-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#5f6c72]">Sub-total</span>
+                  <span className="font-medium text-[#191c1f]">
+                    {formatUSD(subtotal)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#5f6c72]">Shipping</span>
+                  <span className="font-medium text-[#191c1f]">
+                    {shipping === 0 ? "Free" : formatUSD(shipping)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#5f6c72]">Discount</span>
+                  <span className="font-medium text-[#191c1f]">
+                    {formatUSD(discount)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#5f6c72]">Tax</span>
+                  <span className="font-medium text-[#191c1f]">
+                    {formatUSD(tax)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Total + CTA */}
+              <div className="flex flex-col gap-6 px-6 pt-6">
+                <div className="flex items-center justify-between text-[16px] leading-6">
+                  <span className="text-[#191c1f]">Total</span>
+                  <span className="font-semibold text-[#191c1f]">
+                    {formatUSD(total)} USD
+                  </span>
+                </div>
+
+                {formError && (
+                  <p className="text-[13px] leading-5 text-red-600">
+                    {formError}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={
+                    createOrder.isPending ||
+                    createAddress.isPending ||
+                    items.length === 0
+                  }
+                  className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                >
+                  {createOrder.isPending || createAddress.isPending ? (
+                    <>
+                      <svg
+                        className="animate-spin"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      >
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Place Order
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </aside>
+        </Container>
+      </form>
     </div>
   );
 }
