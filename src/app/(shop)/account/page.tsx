@@ -142,7 +142,7 @@ export default function AccountDashboardPage() {
   const { data: profile } = useGetProfile();
   const { data: addresses } = useAddresses();
   const { data: orders } = useMyOrders({
-    limit: 200,
+    limit: 100,
     sort_by: "createdAt",
     sort_order: "DESC",
   });

@@ -99,21 +99,40 @@ function AddressDropdown({
   );
 }
 
-function AddressBlock({ address }: { address: AddressResponseDto }) {
+function AddressRow({ address }: { address: AddressResponseDto }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="flex-1 bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-5">
-      {/* Heading */}
-      <div className="h-13 -mx-6 -mt-6 px-6 flex items-center justify-between border-b border-gray-100">
-        <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide flex items-center gap-2">
-          {address.fullName}
-          {address.isDefault && (
-            <span className="text-[11px] font-semibold text-primary-500 bg-primary-50 px-2 py-0.5 rounded-[2px] normal-case">
-              Default
-            </span>
-          )}
-        </span>
+    <div className="flex items-center gap-4 px-6 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
+      <span className="w-45 flex-none text-[14px] font-medium text-gray-900 truncate">
+        {address.fullName}
+      </span>
+      <span className="flex-1 min-w-0 text-[14px] text-gray-600 truncate">
+        {address.addressLine1}
+        {address.addressLine2 ? `, ${address.addressLine2}` : ""},{" "}
+        {address.city}, {address.province}, {address.country}
+      </span>
+      <span className="w-35 flex-none text-[14px] text-gray-600 truncate">
+        {address.phone}
+      </span>
+      <span className="w-22.5 flex-none">
+        {address.isDefault ? (
+          <span className="text-[11px] font-semibold text-primary-500 bg-primary-50 px-2 py-0.5 rounded-[2px]">
+            Default
+          </span>
+        ) : (
+          <span className="text-[13px] text-gray-400">—</span>
+        )}
+      </span>
+      <div className="w-25 flex-none flex items-center justify-end gap-3">
+        <AddressFormDialog
+          address={address}
+          trigger={
+            <button className="text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors cursor-pointer">
+              Edit
+            </button>
+          }
+        />
         <div className="relative">
           <button
             onClick={() => setMenuOpen((v) => !v)}
@@ -129,29 +148,6 @@ function AddressBlock({ address }: { address: AddressResponseDto }) {
           />
         </div>
       </div>
-
-      {/* Address details */}
-      <div className="flex flex-col gap-2 text-[14px] leading-5">
-        <p className="text-gray-600">
-          {address.addressLine1}
-          {address.addressLine2 ? `, ${address.addressLine2}` : ""},{" "}
-          {address.city}, {address.province}, {address.country}
-        </p>
-        <p className="text-gray-600">
-          <span className="text-gray-900">Phone Number: </span>
-          {address.phone}
-        </p>
-      </div>
-
-      {/* Edit button */}
-      <AddressFormDialog
-        address={address}
-        trigger={
-          <button className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-10 text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
-            Edit Address
-          </button>
-        }
-      />
     </div>
   );
 }
@@ -238,46 +234,57 @@ export default function CardsAddressPage() {
             </div>
 
             {/* Addresses */}
-            <div className="flex items-center justify-between">
-              <p className="text-[16px] font-semibold text-gray-900">
-                Your Addresses
-              </p>
-              <AddressFormDialog
-                trigger={
-                  <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
-                    Add Address
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      aria-hidden
-                    >
-                      <path
-                        d="M4 10h12M12 5l5 5-5 5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                }
-              />
-            </div>
-            <div className="flex gap-6 flex-wrap">
+            <div className="bg-white border border-gray-100 rounded-[4px]">
+              {/* Table heading */}
+              <div className="px-6 h-13 flex items-center justify-between border-b border-gray-100">
+                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+                  Your Addresses
+                </span>
+                <AddressFormDialog
+                  trigger={
+                    <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
+                      Add Address
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        aria-hidden
+                      >
+                        <path
+                          d="M4 10h12M12 5l5 5-5 5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  }
+                />
+              </div>
+
+              {/* Column headers */}
+              <div className="flex items-center gap-4 px-6 py-2.5 bg-gray-50 border-b border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+                <span className="w-45 flex-none">Name</span>
+                <span className="flex-1">Address</span>
+                <span className="w-35 flex-none">Phone</span>
+                <span className="w-22.5 flex-none">Default</span>
+                <span className="w-25 flex-none text-right">Action</span>
+              </div>
+
               {addressesPending && (
-                <p className="text-[14px] text-gray-600">
+                <p className="px-6 py-6 text-[14px] text-gray-600">
                   Loading addresses...
                 </p>
               )}
               {!addressesPending && addresses?.length === 0 && (
-                <p className="text-[14px] text-gray-600">
+                <p className="px-6 py-6 text-[14px] text-gray-600">
                   You haven&apos;t added any address yet.
                 </p>
               )}
               {addresses?.map((address) => (
-                <AddressBlock key={address.id} address={address} />
+                <AddressRow key={address.id} address={address} />
               ))}
             </div>
           </div>

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
   Dialog,
   DialogContent,
@@ -11,39 +14,38 @@ import {
 import { useCreateAddress, useUpdateAddress } from "@/queries/addresses";
 import type { AddressResponseDto, CreateAddressDto } from "@/api/main";
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
+function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className="block text-[13px] text-gray-600 mb-1.5">
-        {label}
-      </label>
+      <label className="block text-[13px] text-gray-600 mb-1.5">{label}</label>
       {children}
     </div>
   );
 }
 
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="mt-1 text-[12px] text-red-600">{message}</p>;
+}
+
 const inputClass =
   "w-full h-10 border border-gray-200 rounded-[4px] px-3 text-[14px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-primary-500 transition-colors bg-white";
 
-type FormState = {
-  fullName: string;
-  phone: string;
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  province: string;
-  country: string;
-  postalCode: string;
-  isDefault: boolean;
-};
+const addressSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  addressLine1: z.string().min(1, "Address is required"),
+  addressLine2: z.string(),
+  city: z.string().min(1, "City is required"),
+  province: z.string().min(1, "Province/State is required"),
+  country: z.string(),
+  postalCode: z.string(),
+  isDefault: z.boolean(),
+});
 
-function toFormState(address?: AddressResponseDto): FormState {
+type AddressFormValues = z.infer<typeof addressSchema>;
+
+function toFormValues(address?: AddressResponseDto): AddressFormValues {
   return {
     fullName: address?.fullName ?? "",
     phone: address?.phone ?? "",
@@ -67,30 +69,38 @@ export function AddressFormDialog({
   trigger: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<FormState>(() => toFormState(address));
   const createAddress = useCreateAddress();
   const updateAddress = useUpdateAddress();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AddressFormValues>({
+    resolver: zodResolver(addressSchema),
+    defaultValues: toFormValues(address),
+  });
 
   const isEdit = !!address;
   const isSaving = createAddress.isPending || updateAddress.isPending;
 
   function handleOpenChange(next: boolean) {
-    if (next) setForm(toFormState(address));
+    if (next) reset(toFormValues(address));
     setOpen(next);
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  const onSubmit = handleSubmit((values) => {
     const body: CreateAddressDto = {
-      fullName: form.fullName,
-      phone: form.phone,
-      addressLine1: form.addressLine1,
-      addressLine2: form.addressLine2 || undefined,
-      city: form.city,
-      province: form.province,
-      country: form.country || undefined,
-      postalCode: form.postalCode || undefined,
-      isDefault: form.isDefault,
+      fullName: values.fullName,
+      phone: values.phone,
+      addressLine1: values.addressLine1,
+      addressLine2: values.addressLine2 || undefined,
+      city: values.city,
+      province: values.province,
+      country: values.country || undefined,
+      postalCode: values.postalCode || undefined,
+      isDefault: values.isDefault,
     };
 
     const mutation = isEdit
@@ -98,7 +108,7 @@ export function AddressFormDialog({
       : createAddress.mutateAsync(body);
 
     mutation.then(() => setOpen(false));
-  }
+  });
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -107,99 +117,44 @@ export function AddressFormDialog({
         <DialogHeader>
           <DialogTitle>{isEdit ? "Edit Address" : "Add Address"}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-4">
             <Field label="Full Name">
-              <input
-                required
-                className={inputClass}
-                value={form.fullName}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, fullName: e.target.value }))
-                }
-              />
+              <input className={inputClass} {...register("fullName")} />
+              <FieldError message={errors.fullName?.message} />
             </Field>
             <Field label="Phone Number">
-              <input
-                required
-                type="tel"
-                className={inputClass}
-                value={form.phone}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, phone: e.target.value }))
-                }
-              />
+              <input type="tel" className={inputClass} {...register("phone")} />
+              <FieldError message={errors.phone?.message} />
             </Field>
           </div>
           <Field label="Address Line 1">
-            <input
-              required
-              className={inputClass}
-              value={form.addressLine1}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, addressLine1: e.target.value }))
-              }
-            />
+            <input className={inputClass} {...register("addressLine1")} />
+            <FieldError message={errors.addressLine1?.message} />
           </Field>
           <Field label="Address Line 2 (Optional)">
-            <input
-              className={inputClass}
-              value={form.addressLine2}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, addressLine2: e.target.value }))
-              }
-            />
+            <input className={inputClass} {...register("addressLine2")} />
           </Field>
           <div className="grid grid-cols-2 gap-4">
             <Field label="City">
-              <input
-                required
-                className={inputClass}
-                value={form.city}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, city: e.target.value }))
-                }
-              />
+              <input className={inputClass} {...register("city")} />
+              <FieldError message={errors.city?.message} />
             </Field>
             <Field label="Province/State">
-              <input
-                required
-                className={inputClass}
-                value={form.province}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, province: e.target.value }))
-                }
-              />
+              <input className={inputClass} {...register("province")} />
+              <FieldError message={errors.province?.message} />
             </Field>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Country">
-              <input
-                className={inputClass}
-                value={form.country}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, country: e.target.value }))
-                }
-              />
+              <input className={inputClass} {...register("country")} />
             </Field>
             <Field label="Zip/Postal Code">
-              <input
-                className={inputClass}
-                value={form.postalCode}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, postalCode: e.target.value }))
-                }
-              />
+              <input className={inputClass} {...register("postalCode")} />
             </Field>
           </div>
           <label className="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.isDefault}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, isDefault: e.target.checked }))
-              }
-            />
+            <input type="checkbox" {...register("isDefault")} />
             Set as default address
           </label>
           <button

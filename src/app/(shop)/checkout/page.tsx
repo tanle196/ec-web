@@ -1,14 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
 import { ProductImage } from "@/components/commons/product-image";
 import { useCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/orders";
-import { useCreateAddress } from "@/queries/addresses";
+import { useAddresses } from "@/queries/addresses";
+import { AddressFormDialog } from "@/components/account/address-form-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import type { AddressResponseDto } from "@/api/main";
 import { mapCartItem } from "@/lib/api/mappers";
 import { Container } from "@/components/commons/container";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
@@ -20,14 +29,8 @@ const checkoutSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   company: z.string(),
-  address: z.string().min(1, "Address is required"),
-  country: z.string(),
-  region: z.string().min(1, "Region is required"),
-  city: z.string().min(1, "City is required"),
-  zip: z.string(),
   email: z.union([z.literal(""), z.email("Enter a valid email")]),
   phone: z.string().min(1, "Phone number is required"),
-  shipDifferent: z.boolean(),
   payment: z.enum(PAYMENT_METHODS),
   nameOnCard: z.string(),
   cardNumber: z.string(),
@@ -42,14 +45,8 @@ const defaultValues: CheckoutFormValues = {
   firstName: "",
   lastName: "",
   company: "",
-  address: "",
-  country: "",
-  region: "",
-  city: "",
-  zip: "",
   email: "",
   phone: "",
-  shipDifferent: false,
   payment: "card",
   nameOnCard: "",
   cardNumber: "",
@@ -76,9 +73,6 @@ function formatUSD(cents: number) {
 const inputCls =
   "w-full h-11 bg-white border border-[#e4e7e9] rounded-[2px] px-[15px] text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#77878f]";
 
-const selectCls =
-  "w-full h-11 bg-white border border-[#e4e7e9] rounded-[2px] px-[15px] text-[14px] text-[#929fa5] leading-5 outline-none focus:border-[#2da5f3] transition-colors appearance-none cursor-pointer";
-
 function FieldLabel({
   children,
   optional,
@@ -97,28 +91,6 @@ function FieldLabel({
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return <p className="text-[12px] leading-4 text-red-600">{message}</p>;
-}
-
-function SelectWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative w-full">
-      {children}
-      <div className="pointer-events-none absolute right-3.75 top-1/2 -translate-y-1/2">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#191c1f"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </div>
-    </div>
-  );
 }
 
 const PAYMENT_OPTIONS: {
@@ -236,6 +208,167 @@ function RadioCircle({ checked }: { checked: boolean }) {
   );
 }
 
+function AddressOption({
+  address,
+  selected,
+  onSelect,
+}: {
+  address: AddressResponseDto;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`w-full flex items-start gap-3 text-left border rounded-[4px] px-4 py-4 transition-colors cursor-pointer ${
+        selected
+          ? "border-[#fa8232] bg-[#fff8f4]"
+          : "border-[#e4e7e9] hover:border-[#c9cfd2]"
+      }`}
+    >
+      <div className="pt-0.5">
+        <RadioCircle checked={selected} />
+      </div>
+      <div className="flex-1 min-w-0 flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <span className="text-[14px] font-medium text-[#191c1f]">
+            {address.fullName}
+          </span>
+          {address.isDefault && (
+            <span className="text-[11px] font-semibold text-[#fa8232] bg-[#ffe7d6] px-2 py-0.5 rounded-[2px]">
+              Default
+            </span>
+          )}
+        </div>
+        <p className="text-[13px] leading-5 text-[#5f6c72]">
+          {address.addressLine1}
+          {address.addressLine2 ? `, ${address.addressLine2}` : ""},{" "}
+          {address.city}, {address.province}
+          {address.country ? `, ${address.country}` : ""}
+        </p>
+        <p className="text-[13px] leading-5 text-[#5f6c72]">
+          Phone: {address.phone}
+        </p>
+      </div>
+    </button>
+  );
+}
+
+function AddressSelectDialog({
+  addresses,
+  addressesPending,
+  selectedId,
+  onSelect,
+}: {
+  addresses?: AddressResponseDto[];
+  addressesPending: boolean;
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const selected = addresses?.find((a) => a.id === selectedId);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        {selected ? (
+          <button
+            type="button"
+            className="w-full flex items-start gap-3 text-left border border-[#e4e7e9] rounded-[4px] px-4 py-4 hover:border-[#c9cfd2] transition-colors cursor-pointer"
+          >
+            <div className="flex-1 min-w-0 flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[14px] font-medium text-[#191c1f]">
+                  {selected.fullName}
+                </span>
+                {selected.isDefault && (
+                  <span className="text-[11px] font-semibold text-[#fa8232] bg-[#ffe7d6] px-2 py-0.5 rounded-[2px]">
+                    Default
+                  </span>
+                )}
+              </div>
+              <p className="text-[13px] leading-5 text-[#5f6c72]">
+                {selected.addressLine1}
+                {selected.addressLine2
+                  ? `, ${selected.addressLine2}`
+                  : ""}, {selected.city}, {selected.province}
+                {selected.country ? `, ${selected.country}` : ""}
+              </p>
+              <p className="text-[13px] leading-5 text-[#5f6c72]">
+                Phone: {selected.phone}
+              </p>
+            </div>
+            <span className="text-[14px] font-semibold text-[#fa8232] flex-none">
+              Change
+            </span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="w-full h-11 border border-dashed border-[#c9cfd2] rounded-[4px] text-[14px] text-[#5f6c72] hover:border-[#fa8232] hover:text-[#fa8232] transition-colors cursor-pointer"
+          >
+            {addressesPending
+              ? "Loading addresses..."
+              : "Select a shipping address"}
+          </button>
+        )}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Select Shipping Address</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto">
+          {addressesPending && (
+            <p className="text-[14px] text-[#5f6c72]">Loading addresses...</p>
+          )}
+          {!addressesPending && (addresses?.length ?? 0) === 0 && (
+            <p className="text-[14px] text-[#5f6c72]">
+              You haven&apos;t added any address yet.
+            </p>
+          )}
+          {addresses?.map((address) => (
+            <AddressOption
+              key={address.id}
+              address={address}
+              selected={address.id === selectedId}
+              onSelect={() => {
+                onSelect(address.id);
+                setOpen(false);
+              }}
+            />
+          ))}
+        </div>
+        <AddressFormDialog
+          trigger={
+            <button
+              type="button"
+              className="flex items-center gap-2 text-[14px] font-semibold text-[#fa8232] hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-0 p-0 self-start"
+            >
+              Add Address
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M4 10h12M12 5l5 5-5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          }
+        />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export default function CheckoutPage() {
   const [placed, setPlaced] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -243,7 +376,7 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     formState: { errors },
   } = useForm<CheckoutFormValues>({
@@ -251,12 +384,17 @@ export default function CheckoutPage() {
     defaultValues,
   });
 
-  const shipDifferent = watch("shipDifferent");
-  const payment = watch("payment");
+  const payment = useWatch({ control, name: "payment" });
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
-  const createAddress = useCreateAddress();
+  const { data: addresses, isPending: addressesPending } = useAddresses();
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
+    null,
+  );
+  const defaultAddressId =
+    (addresses?.find((a) => a.isDefault) ?? addresses?.[0])?.id ?? null;
+  const effectiveAddressId = selectedAddressId ?? defaultAddressId;
 
   const items = (cart?.items ?? []).map(mapCartItem);
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
@@ -265,37 +403,28 @@ export default function CheckoutPage() {
   const tax = Math.round(subtotal * 0.1);
   const total = subtotal + shipping - discount + tax;
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit((values) => {
     setFormError(null);
 
-    try {
-      const savedAddress = await createAddress.mutateAsync({
-        fullName: `${values.firstName} ${values.lastName}`.trim(),
-        phone: values.phone,
-        addressLine1: values.address,
-        city: values.city,
-        province: values.region,
-        country: values.country || undefined,
-        postalCode: values.zip || undefined,
-      });
-
-      createOrder.mutate(
-        {
-          address_id: savedAddress.id,
-          items: (cart?.items ?? []).map((i) => ({
-            variant_id: i.variant_id,
-            quantity: i.quantity,
-          })),
-          notes: values.note || undefined,
-        },
-        {
-          onSuccess: () => setPlaced(true),
-          onError: (err) => setFormError(getErrorMessage(err)),
-        },
-      );
-    } catch (err) {
-      setFormError(getErrorMessage(err));
+    if (!effectiveAddressId) {
+      setFormError("Please select a shipping address.");
+      return;
     }
+
+    createOrder.mutate(
+      {
+        address_id: effectiveAddressId,
+        items: (cart?.items ?? []).map((i) => ({
+          variant_id: i.variant_id,
+          quantity: i.quantity,
+        })),
+        notes: values.note || undefined,
+      },
+      {
+        onSuccess: () => setPlaced(true),
+        onError: (err) => setFormError(getErrorMessage(err)),
+      },
+    );
   });
 
   if (isLoading) {
@@ -464,59 +593,6 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {/* Address */}
-                <div className="flex flex-col gap-2">
-                  <FieldLabel>Address</FieldLabel>
-                  <input className={inputCls} {...register("address")} />
-                  <FieldError message={errors.address?.message} />
-                </div>
-
-                {/* Country / Region / City / Zip */}
-                <div className="flex gap-4">
-                  <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>Country</FieldLabel>
-                    <SelectWrapper>
-                      <select className={selectCls} {...register("country")}>
-                        <option value="">Select...</option>
-                        <option>United States</option>
-                        <option>United Kingdom</option>
-                        <option>Canada</option>
-                        <option>Australia</option>
-                      </select>
-                    </SelectWrapper>
-                  </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>Region/State</FieldLabel>
-                    <SelectWrapper>
-                      <select className={selectCls} {...register("region")}>
-                        <option value="">Select...</option>
-                        <option>California</option>
-                        <option>New York</option>
-                        <option>Texas</option>
-                        <option>Florida</option>
-                      </select>
-                    </SelectWrapper>
-                    <FieldError message={errors.region?.message} />
-                  </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>City</FieldLabel>
-                    <SelectWrapper>
-                      <select className={selectCls} {...register("city")}>
-                        <option value="">Select...</option>
-                        <option>Los Angeles</option>
-                        <option>New York City</option>
-                        <option>Houston</option>
-                        <option>Miami</option>
-                      </select>
-                    </SelectWrapper>
-                    <FieldError message={errors.city?.message} />
-                  </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <FieldLabel>Zip Code</FieldLabel>
-                    <input className={inputCls} {...register("zip")} />
-                  </div>
-                </div>
-
                 {/* Email / Phone */}
                 <div className="flex gap-4">
                   <div className="flex flex-col gap-2 flex-1">
@@ -538,36 +614,20 @@ export default function CheckoutPage() {
                     <FieldError message={errors.phone?.message} />
                   </div>
                 </div>
-
-                {/* Ship to different address */}
-                <button
-                  type="button"
-                  onClick={() => setValue("shipDifferent", !shipDifferent)}
-                  className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0"
-                >
-                  <div
-                    className={`w-5 h-5 rounded-[2px] border flex items-center justify-center flex-none ${shipDifferent ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"}`}
-                  >
-                    {shipDifferent && (
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
-                  </div>
-                  <span className="text-[14px] leading-5 text-gray-700">
-                    Ship into different address
-                  </span>
-                </button>
               </div>
+            </section>
+
+            {/* Shipping Address */}
+            <section className="flex flex-col gap-6">
+              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+                Shipping Address
+              </h2>
+              <AddressSelectDialog
+                addresses={addresses}
+                addressesPending={addressesPending}
+                selectedId={effectiveAddressId}
+                onSelect={setSelectedAddressId}
+              />
             </section>
 
             {/* Payment Option */}
@@ -740,12 +800,12 @@ export default function CheckoutPage() {
                   type="submit"
                   disabled={
                     createOrder.isPending ||
-                    createAddress.isPending ||
-                    items.length === 0
+                    items.length === 0 ||
+                    !effectiveAddressId
                   }
                   className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                 >
-                  {createOrder.isPending || createAddress.isPending ? (
+                  {createOrder.isPending ? (
                     <>
                       <svg
                         className="animate-spin"
