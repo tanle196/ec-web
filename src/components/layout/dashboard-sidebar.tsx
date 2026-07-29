@@ -86,8 +86,23 @@ const NAV_ITEMS = [
     ),
   },
   {
-    href: "/account/cards",
-    label: "Cards & Address",
+    href: "/account/address",
+    label: "Address",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+        <path
+          d="M10 2c-3 0-5.5 2.3-5.5 5.5C4.5 11.5 10 18 10 18s5.5-6.5 5.5-10.5C15.5 4.3 13 2 10 2z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <circle cx="10" cy="7.5" r="2" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
+  },
+  {
+    href: "/account/payment-method",
+    label: "Payment Method",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
         <rect

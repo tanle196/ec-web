@@ -274,7 +274,7 @@ export default function AccountDashboardPage() {
                     </p>
                   )}
                   <Link
-                    href="/account/cards"
+                    href="/account/address"
                     className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 flex items-center text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors no-underline"
                   >
                     Edit Address
@@ -405,7 +405,7 @@ export default function AccountDashboardPage() {
               <SectionHeading
                 title="Payment Option"
                 action="View All"
-                actionHref="/account/cards"
+                actionHref="/account/payment-method"
               />
               <div className="flex gap-6 px-6 py-[22px]">
                 {payments && payments.data.length > 0 ? (
