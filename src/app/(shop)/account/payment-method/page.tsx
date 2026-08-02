@@ -5,16 +5,7 @@ import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { Container } from "@/components/commons/container";
 import { useMyPayments } from "@/queries/payments";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { PaymentResponseDto } from "@/api/main";
-
-const PAYMENT_METHOD_LABEL: Record<PaymentResponseDto["method"], string> = {
-  cod: "Cash on Delivery",
-  vnpay: "VNPay",
-  momo: "MoMo",
-  zalopay: "ZaloPay",
-  stripe: "Stripe",
-  bank_transfer: "Bank Transfer",
-};
+import { PAYMENT_METHOD_LABEL, paymentStatusLabel } from "@/lib/payment-status";
 
 const GRADIENTS = [
   "radial-gradient(circle at 0 0, #1b6392, #124261)",
@@ -90,7 +81,7 @@ export default function PaymentMethodPage() {
                       <span
                         className={`text-white text-[13px] font-bold uppercase tracking-widest`}
                       >
-                        {payment.status}
+                        {paymentStatusLabel(payment.status)}
                       </span>
                     </div>
                     <div className="absolute bottom-6 right-6">

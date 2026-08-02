@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ProductImage } from "@/components/commons/product-image";
 import { useCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/orders";
+import { useCreatePayment } from "@/queries/payments";
 import { useAddresses } from "@/queries/addresses";
 import { AddressFormDialog } from "@/components/account/address-form-dialog";
 import {
@@ -17,13 +18,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  PAYMENT_METHOD_OPTIONS,
+  getPaymentRedirectUrl,
+  type PaymentMethod,
+} from "@/lib/payment-status";
 import type { AddressResponseDto } from "@/api/main";
 import { mapCartItem } from "@/lib/api/mappers";
 import { Container } from "@/components/commons/container";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
-
-const PAYMENT_METHODS = ["cod", "venmo", "paypal", "amazon", "card"] as const;
-type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 const checkoutSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -31,11 +34,14 @@ const checkoutSchema = z.object({
   company: z.string(),
   email: z.union([z.literal(""), z.email("Enter a valid email")]),
   phone: z.string().min(1, "Phone number is required"),
-  payment: z.enum(PAYMENT_METHODS),
-  nameOnCard: z.string(),
-  cardNumber: z.string(),
-  expireDate: z.string(),
-  cvc: z.string(),
+  payment: z.enum([
+    "cod",
+    "vnpay",
+    "momo",
+    "zalopay",
+    "stripe",
+    "bank_transfer",
+  ]),
   note: z.string(),
 });
 
@@ -47,11 +53,7 @@ const defaultValues: CheckoutFormValues = {
   company: "",
   email: "",
   phone: "",
-  payment: "card",
-  nameOnCard: "",
-  cardNumber: "",
-  expireDate: "",
-  cvc: "",
+  payment: "cod",
   note: "",
 };
 
@@ -119,71 +121,75 @@ const PAYMENT_OPTIONS: {
     ),
   },
   {
-    id: "venmo",
-    label: "Venmo",
+    id: "vnpay",
+    label: "VNPay",
     icon: (
       <svg
         width="32"
         height="32"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#3d95ce"
+        stroke="#1a56db"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M5 12h14M12 5l7 7-7 7" />
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <line x1="14" y1="14" x2="21" y2="14" />
+        <line x1="14" y1="21" x2="21" y2="21" />
+        <line x1="17.5" y1="14" x2="17.5" y2="21" />
       </svg>
     ),
   },
   {
-    id: "paypal",
-    label: "Paypal",
+    id: "momo",
+    label: "MoMo",
     icon: (
       <svg
         width="32"
         height="32"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#003087"
+        stroke="#d82d8b"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M7 11l2-7h7a3 3 0 0 1 3 3.5L17 11H7z" />
-        <path d="M5 17l2-7h8l-1 4H6l-1 3H5z" />
+        <path d="M3 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <path d="M15.5 12h2.5" />
       </svg>
     ),
   },
   {
-    id: "amazon",
-    label: "Amazon Pay",
+    id: "zalopay",
+    label: "ZaloPay",
     icon: (
       <svg
         width="32"
         height="32"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#ff9900"
+        stroke="#0068ff"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <rect x="3" y="6" width="18" height="12" rx="2" />
-        <path d="M3 10h18" />
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
       </svg>
     ),
   },
   {
-    id: "card",
-    label: "Debit/Credit Card",
+    id: "stripe",
+    label: "Credit/Debit Card",
     icon: (
       <svg
         width="32"
         height="32"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#191c1f"
+        stroke="#635bff"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -191,6 +197,27 @@ const PAYMENT_OPTIONS: {
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="2" y1="10" x2="22" y2="10" />
         <line x1="6" y1="15" x2="10" y2="15" />
+      </svg>
+    ),
+  },
+  {
+    id: "bank_transfer",
+    label: "Bank Transfer",
+    icon: (
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#5f6c72"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 10l9-6 9 6" />
+        <rect x="4" y="10" width="16" height="9" rx="1" />
+        <line x1="9" y1="13" x2="9" y2="16" />
+        <line x1="15" y1="13" x2="15" y2="16" />
       </svg>
     ),
   },
@@ -372,6 +399,9 @@ function AddressSelectDialog({
 export default function CheckoutPage() {
   const [placed, setPlaced] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
+  const [paymentWarning, setPaymentWarning] = useState<string | null>(null);
+  const [redirecting, setRedirecting] = useState(false);
 
   const {
     register,
@@ -388,6 +418,7 @@ export default function CheckoutPage() {
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
+  const createPayment = useCreatePayment();
   const { data: addresses, isPending: addressesPending } = useAddresses();
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
     null,
@@ -405,6 +436,7 @@ export default function CheckoutPage() {
 
   const onSubmit = handleSubmit((values) => {
     setFormError(null);
+    setPaymentWarning(null);
 
     if (!effectiveAddressId) {
       setFormError("Please select a shipping address.");
@@ -421,7 +453,27 @@ export default function CheckoutPage() {
         notes: values.note || undefined,
       },
       {
-        onSuccess: () => setPlaced(true),
+        onSuccess: (order) => {
+          setPlacedOrderId(order.id);
+          createPayment.mutate(
+            { order_id: order.id, method: values.payment },
+            {
+              onSuccess: (paymentRecord) => {
+                const redirectUrl = getPaymentRedirectUrl(paymentRecord);
+                if (redirectUrl) {
+                  setRedirecting(true);
+                  window.location.href = redirectUrl;
+                  return;
+                }
+                setPlaced(true);
+              },
+              onError: (err) => {
+                setPaymentWarning(getErrorMessage(err));
+                setPlaced(true);
+              },
+            },
+          );
+        },
         onError: (err) => setFormError(getErrorMessage(err)),
       },
     );
@@ -489,6 +541,13 @@ export default function CheckoutPage() {
                 Pellentesque sed lectus nec tortor tristique accumsan quis
                 dictum risus. Donec volutpat mollis nulla non facilisis.
               </p>
+              {paymentWarning && (
+                <p className="text-[13px] leading-5 text-red-600 max-w-[424px]">
+                  We couldn&apos;t process your payment automatically (
+                  {paymentWarning}). You can retry payment from your order
+                  page.
+                </p>
+              )}
             </div>
           </div>
 
@@ -515,7 +574,7 @@ export default function CheckoutPage() {
               Go to Dashboard
             </Link>
             <Link
-              href="/"
+              href={placedOrderId ? `/account/orders/${placedOrderId}` : "/"}
               className="flex items-center gap-2 px-6 h-12 bg-[#fa8232] rounded-[2px] text-white font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:opacity-90 transition-opacity"
             >
               View Order
@@ -660,41 +719,15 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              {/* Card fields — shown when card selected */}
-              {payment === "card" && (
-                <div className="flex flex-col gap-4 px-6 pt-6">
-                  <div className="flex flex-col gap-2">
-                    <FieldLabel>Name on Card</FieldLabel>
-                    <input className={inputCls} {...register("nameOnCard")} />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <FieldLabel>Card Number</FieldLabel>
-                    <input
-                      className={inputCls}
-                      placeholder="•••• •••• •••• ••••"
-                      {...register("cardNumber")}
-                    />
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col gap-2 flex-1">
-                      <FieldLabel>Expire Date</FieldLabel>
-                      <input
-                        className={inputCls}
-                        placeholder="MM/YY"
-                        {...register("expireDate")}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 flex-1">
-                      <FieldLabel>CVC</FieldLabel>
-                      <input
-                        className={inputCls}
-                        placeholder="•••"
-                        {...register("cvc")}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Selected method description */}
+              <div className="px-6 pt-6">
+                <p className="text-[13px] leading-5 text-[#5f6c72]">
+                  {
+                    PAYMENT_METHOD_OPTIONS.find((m) => m.id === payment)
+                      ?.description
+                  }
+                </p>
+              </div>
             </div>
 
             {/* Additional Information */}
@@ -800,12 +833,14 @@ export default function CheckoutPage() {
                   type="submit"
                   disabled={
                     createOrder.isPending ||
+                    createPayment.isPending ||
+                    redirecting ||
                     items.length === 0 ||
                     !effectiveAddressId
                   }
                   className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                 >
-                  {createOrder.isPending ? (
+                  {createOrder.isPending || createPayment.isPending || redirecting ? (
                     <>
                       <svg
                         className="animate-spin"
@@ -819,7 +854,7 @@ export default function CheckoutPage() {
                       >
                         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                       </svg>
-                      Processing...
+                      {redirecting ? "Redirecting to payment..." : "Processing..."}
                     </>
                   ) : (
                     <>

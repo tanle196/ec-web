@@ -17,6 +17,7 @@ const STATUS_STEPS: Record<OrderStatus, number> = {
   delivered: 4,
   cancelled: 0,
   refunded: 0,
+  partially_refunded: 0,
 };
 
 const STEPS = [

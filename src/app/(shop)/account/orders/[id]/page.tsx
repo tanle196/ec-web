@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { Container } from "@/components/commons/container";
+import { OrderPaymentPanel } from "@/components/account/order-payment-panel";
 import { useMyOrder, useOrderHistory, useCancelOrder } from "@/queries/orders";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { AddressResponseDto } from "@/api/main";
@@ -377,6 +378,9 @@ export default function OrderDetailPage() {
                 </div>
               </div>
             </div>
+
+            {/* Payment */}
+            <OrderPaymentPanel order={order} />
 
             {/* Product table */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
