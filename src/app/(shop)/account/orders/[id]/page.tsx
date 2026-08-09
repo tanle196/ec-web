@@ -6,6 +6,7 @@ import { PageBreadcrumb } from "@/components/commons/breadcrumb";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { Container } from "@/components/commons/container";
 import { OrderPaymentPanel } from "@/components/account/order-payment-panel";
+import { OrderRefundPanel } from "@/components/account/order-refund-panel";
 import { useMyOrder, useOrderHistory, useCancelOrder } from "@/queries/orders";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { AddressResponseDto } from "@/api/main";
@@ -381,6 +382,9 @@ export default function OrderDetailPage() {
 
             {/* Payment */}
             <OrderPaymentPanel order={order} />
+
+            {/* Refund */}
+            <OrderRefundPanel order={order} />
 
             {/* Product table */}
             <div className="bg-white border border-gray-100 rounded-[4px]">
