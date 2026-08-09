@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,10 +23,11 @@ import {
   getPaymentRedirectUrl,
   type PaymentMethod,
 } from "@/lib/payment-status";
-import type { AddressResponseDto } from "@/api/main";
+import type { AddressResponseDto, UserProfileDto } from "@/api/main";
 import { mapCartItem } from "@/lib/api/mappers";
 import { Container } from "@/components/commons/container";
 import { PageBreadcrumb } from "@/components/commons/breadcrumb";
+import { useGetProfile } from "@/queries/auth";
 
 const checkoutSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -56,6 +57,16 @@ const defaultValues: CheckoutFormValues = {
   payment: "cod",
   note: "",
 };
+
+function profileDefaultValues(
+  profile: UserProfileDto,
+): Pick<CheckoutFormValues, "firstName" | "lastName" | "email"> {
+  // `name` is typed as required but the API can return null for users
+  // who haven't set a display name yet.
+  const trimmedName = (profile.name ?? "").trim();
+  const [firstName = "", ...rest] = trimmedName ? trimmedName.split(/\s+/) : [];
+  return { firstName, lastName: rest.join(" "), email: profile.email };
+}
 
 function getErrorMessage(err: unknown): string {
   const body = (err as { error?: { message?: string | string[] } })?.error;
@@ -408,6 +419,7 @@ export default function CheckoutPage() {
     handleSubmit,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -415,6 +427,15 @@ export default function CheckoutPage() {
   });
 
   const payment = useWatch({ control, name: "payment" });
+
+  const { data: profile } = useGetProfile();
+  useEffect(() => {
+    if (!profile) return;
+    reset(
+      (current) => ({ ...current, ...profileDefaultValues(profile) }),
+      { keepDirtyValues: true },
+    );
+  }, [profile, reset]);
 
   const { data: cart, isLoading } = useCart();
   const createOrder = useCreateOrder();
@@ -544,8 +565,7 @@ export default function CheckoutPage() {
               {paymentWarning && (
                 <p className="text-[13px] leading-5 text-red-600 max-w-[424px]">
                   We couldn&apos;t process your payment automatically (
-                  {paymentWarning}). You can retry payment from your order
-                  page.
+                  {paymentWarning}). You can retry payment from your order page.
                 </p>
               )}
             </div>
@@ -840,7 +860,9 @@ export default function CheckoutPage() {
                   }
                   className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                 >
-                  {createOrder.isPending || createPayment.isPending || redirecting ? (
+                  {createOrder.isPending ||
+                  createPayment.isPending ||
+                  redirecting ? (
                     <>
                       <svg
                         className="animate-spin"
@@ -854,7 +876,9 @@ export default function CheckoutPage() {
                       >
                         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                       </svg>
-                      {redirecting ? "Redirecting to payment..." : "Processing..."}
+                      {redirecting
+                        ? "Redirecting to payment..."
+                        : "Processing..."}
                     </>
                   ) : (
                     <>
