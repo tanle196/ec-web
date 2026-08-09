@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +19,7 @@ import {
   refundRequestStatusLabel,
 } from "@/lib/refund-status";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { OrderResponseDto, RefundItemInputDto } from "@/api/main";
+import type { OrderResponseDto } from "@/api/main";
 
 const REFUNDABLE_PAYMENT_STATUSES = new Set(["completed", "partially_refunded"]);
 
@@ -26,6 +29,25 @@ function getErrorMessage(err: unknown): string {
   if (Array.isArray(message)) return message.join(", ");
   if (typeof message === "string") return message;
   return "Something went wrong. Please try again.";
+}
+
+const refundSchema = z
+  .object({
+    items: z.array(
+      z.object({ orderItemId: z.string(), quantity: z.number().min(0) }),
+    ),
+    reason: z.string().min(1, "Please tell us why you're requesting a refund"),
+  })
+  .refine((data) => data.items.some((i) => i.quantity > 0), {
+    message: "Select at least one item to refund",
+    path: ["items"],
+  });
+
+type RefundFormValues = z.infer<typeof refundSchema>;
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="text-[12px] text-danger-500">{message}</p>;
 }
 
 function QuantityStepper({
@@ -60,6 +82,13 @@ function QuantityStepper({
   );
 }
 
+function defaultRefundValues(order: OrderResponseDto): RefundFormValues {
+  return {
+    items: order.items.map((item) => ({ orderItemId: item.id, quantity: 0 })),
+    reason: "",
+  };
+}
+
 function RequestRefundDialog({
   order,
   paymentId,
@@ -68,42 +97,44 @@ function RequestRefundDialog({
   paymentId: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [reason, setReason] = useState("");
   const [error, setError] = useState<string | null>(null);
   const createRefundRequest = useCreateRefundRequest();
 
-  const selectedItems: RefundItemInputDto[] = useMemo(
-    () =>
-      Object.entries(quantities)
-        .filter(([, quantity]) => quantity > 0)
-        .map(([order_item_id, quantity]) => ({ order_item_id, quantity })),
-    [quantities],
-  );
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<RefundFormValues>({
+    resolver: zodResolver(refundSchema),
+    defaultValues: defaultRefundValues(order),
+  });
 
-  const canSubmit = selectedItems.length > 0 && reason.trim().length > 0;
+  const items = useWatch({ control, name: "items" });
 
   function handleOpenChange(next: boolean) {
     if (createRefundRequest.isPending) return;
     setError(null);
-    if (!next) {
-      setQuantities({});
-      setReason("");
-    }
+    if (!next) reset(defaultRefundValues(order));
     setOpen(next);
   }
 
-  function handleSubmit() {
-    if (!canSubmit) return;
+  const onSubmit = handleSubmit((values) => {
     setError(null);
+    const items = values.items
+      .filter((i) => i.quantity > 0)
+      .map((i) => ({ order_item_id: i.orderItemId, quantity: i.quantity }));
+
     createRefundRequest.mutate(
-      { payment_id: paymentId, items: selectedItems, reason: reason.trim() },
+      { payment_id: paymentId, items, reason: values.reason.trim() },
       {
         onSuccess: () => handleOpenChange(false),
         onError: (err) => setError(getErrorMessage(err)),
       },
     );
-  }
+  });
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -119,13 +150,13 @@ function RequestRefundDialog({
         <DialogHeader>
           <DialogTitle>Request Refund for Order {order.orderNumber}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
+        <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[13px] font-medium text-gray-700">
               Select items to refund
             </p>
             <div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
-              {order.items.map((item) => (
+              {order.items.map((item, index) => (
                 <div
                   key={item.id}
                   className="flex items-center justify-between gap-4 border border-gray-100 rounded-[4px] px-4 py-3"
@@ -139,15 +170,18 @@ function RequestRefundDialog({
                     </span>
                   </div>
                   <QuantityStepper
-                    value={quantities[item.id] ?? 0}
+                    value={items?.[index]?.quantity ?? 0}
                     max={item.quantity}
                     onChange={(value) =>
-                      setQuantities((prev) => ({ ...prev, [item.id]: value }))
+                      setValue(`items.${index}.quantity`, value, {
+                        shouldValidate: true,
+                      })
                     }
                   />
                 </div>
               ))}
             </div>
+            <FieldError message={errors.items?.message} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -159,24 +193,23 @@ function RequestRefundDialog({
             </label>
             <Textarea
               id="refund-reason"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
               placeholder="Tell us why you're requesting a refund"
               rows={3}
+              {...register("reason")}
             />
+            <FieldError message={errors.reason?.message} />
           </div>
 
           {error && <p className="text-[13px] text-danger-500">{error}</p>}
 
           <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!canSubmit || createRefundRequest.isPending}
+            type="submit"
+            disabled={createRefundRequest.isPending}
             className="h-11 px-8 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-start"
           >
             {createRefundRequest.isPending ? "Submitting..." : "Submit Request"}
           </button>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
