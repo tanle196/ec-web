@@ -431,10 +431,9 @@ export default function CheckoutPage() {
   const { data: profile } = useGetProfile();
   useEffect(() => {
     if (!profile) return;
-    reset(
-      (current) => ({ ...current, ...profileDefaultValues(profile) }),
-      { keepDirtyValues: true },
-    );
+    reset((current) => ({ ...current, ...profileDefaultValues(profile) }), {
+      keepDirtyValues: true,
+    });
   }, [profile, reset]);
 
   const { data: cart, isLoading } = useCart();
