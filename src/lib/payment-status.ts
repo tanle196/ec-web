@@ -87,6 +87,8 @@ export function paymentStatusColor(status: PaymentStatus) {
 export function getPaymentRedirectUrl(
   payment: PaymentResponseDto,
 ): string | null {
-  const url = payment.metadata?.checkoutUrl;
+  // The generated OpenAPI type wrongly declares checkoutUrl as an object;
+  // at runtime it is a string, so narrow from unknown.
+  const url: unknown = payment.metadata?.checkoutUrl;
   return typeof url === "string" && url.length > 0 ? url : null;
 }
