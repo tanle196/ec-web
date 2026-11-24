@@ -82,7 +82,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Sign In" }]}
@@ -92,13 +92,13 @@ export default function ResetPasswordPage() {
 
       {/* Form card */}
       <div className="flex justify-center py-25">
-        <div className="bg-white border border-[#e4e7e9] rounded-[4px] shadow-[0px_8px_20px_0px_rgba(0,0,0,0.12)] w-[424px] p-8 flex flex-col gap-6">
+        <div className="flex w-[424px] flex-col gap-6 rounded-[4px] border border-[#e4e7e9] bg-white p-8 shadow-[0px_8px_20px_0px_rgba(0,0,0,0.12)]">
           {/* Heading */}
           <div className="flex flex-col gap-3">
-            <h1 className="text-[20px] font-semibold leading-7 text-[#191c1f] m-0">
+            <h1 className="m-0 text-[20px] leading-7 font-semibold text-[#191c1f]">
               Reset Password
             </h1>
-            <p className="text-[14px] leading-5 text-[#5f6c72] m-0">
+            <p className="m-0 text-[14px] leading-5 text-[#5f6c72]">
               Enter a new password for your account. Make sure it&apos;s at
               least 8 characters.
             </p>
@@ -128,7 +128,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#77878f] hover:text-[#191c1f] transition-colors border-0 bg-transparent cursor-pointer p-0"
+                  className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer border-0 bg-transparent p-0 text-[#77878f] transition-colors hover:text-[#191c1f]"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   <EyeIcon open={showPassword} />
@@ -158,7 +158,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setShowConfirm((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#77878f] hover:text-[#191c1f] transition-colors border-0 bg-transparent cursor-pointer p-0"
+                  className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer border-0 bg-transparent p-0 text-[#77878f] transition-colors hover:text-[#191c1f]"
                   aria-label={showConfirm ? "Hide password" : "Show password"}
                 >
                   <EyeIcon open={showConfirm} />
@@ -166,12 +166,12 @@ export default function ResetPasswordPage() {
               </div>
             </div>
 
-            {error && <p className="text-[13px] text-[#fa4232] m-0">{error}</p>}
+            {error && <p className="m-0 text-[13px] text-[#fa4232]">{error}</p>}
 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full h-12 rounded-xs bg-[#fa8232] text-white text-[14px] font-bold tracking-[0.012em] uppercase border-0 cursor-pointer hover:opacity-90 transition-opacity duration-150 flex items-center justify-center gap-2 mt-2"
+              className="mt-2 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xs border-0 bg-[#fa8232] text-[14px] font-bold tracking-[0.012em] text-white uppercase transition-opacity duration-150 hover:opacity-90"
             >
               Reset Password
               <ArrowRightIcon />

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export function NewsletterForm() {
   return (
-    <form className="flex w-full lg:w-auto gap-0">
+    <form className="flex w-full gap-0 lg:w-auto">
       <label htmlFor="newsletter-email" className="sr-only">
         Email address
       </label>
@@ -13,11 +13,11 @@ export function NewsletterForm() {
         type="email"
         name="email"
         placeholder="Enter your email address"
-        className="flex-1 lg:w-85 bg-white text-body-sm text-gray-900 placeholder:text-gray-400 px-5 py-3.5 outline-none rounded-l-sm border-0"
+        className="flex-1 rounded-l-sm border-0 bg-white px-5 py-3.5 text-body-sm text-gray-900 outline-none placeholder:text-gray-400 lg:w-85"
       />
       <button
         type="submit"
-        className="bg-primary-500 hover:bg-primary-600 transition-colors text-white font-bold text-body-sm uppercase tracking-[0.168px] px-6 h-12 flex items-center gap-2 rounded-r-sm shrink-0"
+        className="flex h-12 shrink-0 items-center gap-2 rounded-r-sm bg-primary-500 px-6 text-body-sm font-bold tracking-[0.168px] text-white uppercase transition-colors hover:bg-primary-600"
       >
         Subscribe
         <ArrowRight size={18} strokeWidth={2} aria-hidden />

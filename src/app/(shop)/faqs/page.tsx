@@ -58,18 +58,20 @@ export default function FaqsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
-          <PageBreadcrumb items={[{ label: "Home", href: "/" }, { label: "FAQs" }]} />
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "FAQs" }]}
+          />
         </Container>
       </div>
 
       {/* Main content */}
       <Container className="py-18">
-        <div className="flex gap-17 items-start">
+        <div className="flex items-start gap-17">
           {/* FAQ accordion */}
-          <div className="flex flex-col gap-10 flex-1 min-w-0">
-            <h1 className="text-[32px] font-semibold leading-10 text-[#191c1f]">
+          <div className="flex min-w-0 flex-1 flex-col gap-10">
+            <h1 className="text-[32px] leading-10 font-semibold text-[#191c1f]">
               Frequently Asked Questions
             </h1>
 
@@ -81,16 +83,16 @@ export default function FaqsPage() {
                 return (
                   <div
                     key={faq.id}
-                    className={`border border-[#e4e7e9] rounded-[4px] overflow-hidden mb-0 ${isOpen ? "shadow-[0px_8px_20px_rgba(0,0,0,0.12)]" : ""}`}
+                    className={`mb-0 overflow-hidden rounded-[4px] border border-[#e4e7e9] ${isOpen ? "shadow-[0px_8px_20px_rgba(0,0,0,0.12)]" : ""}`}
                   >
                     <button
                       onClick={() => setOpenId(isOpen ? null : faq.id)}
-                      className={`w-full flex items-center justify-between gap-9 px-6 py-5 text-left cursor-pointer border-0 outline-none transition-colors ${
+                      className={`flex w-full cursor-pointer items-center justify-between gap-9 border-0 px-6 py-5 text-left transition-colors outline-none ${
                         isOpen ? "bg-[#fa8232]" : "bg-white hover:bg-[#fafafa]"
                       }`}
                     >
                       <span
-                        className={`text-[18px] leading-6 flex-1 ${
+                        className={`flex-1 text-[18px] leading-6 ${
                           isOpen
                             ? "font-semibold text-white"
                             : "font-medium text-[#191c1f]"
@@ -99,7 +101,7 @@ export default function FaqsPage() {
                         {faq.question}
                       </span>
                       <span
-                        className={`flex-none w-5 h-5 flex items-center justify-center ${isOpen ? "text-white" : "text-[#191c1f]"}`}
+                        className={`flex h-5 w-5 flex-none items-center justify-center ${isOpen ? "text-white" : "text-[#191c1f]"}`}
                       >
                         {isOpen ? (
                           <svg
@@ -133,10 +135,10 @@ export default function FaqsPage() {
                     </button>
 
                     {isOpen && hasContent && (
-                      <div className="px-6 pb-6 pt-0 flex flex-col gap-4 text-[14px] leading-5 text-[#475156]">
+                      <div className="flex flex-col gap-4 px-6 pt-0 pb-6 text-[14px] leading-5 text-[#475156]">
                         {faq.answer && <p>{faq.answer}</p>}
                         {faq.bullets.length > 0 && (
-                          <ul className="flex flex-col gap-2 pl-5 list-disc">
+                          <ul className="flex list-disc flex-col gap-2 pl-5">
                             {faq.bullets.map((bullet, i) => (
                               <li key={i}>{bullet}</li>
                             ))}
@@ -151,12 +153,12 @@ export default function FaqsPage() {
           </div>
 
           {/* Support form */}
-          <div className="bg-[#fbf4ce] rounded-[4px] p-8 flex flex-col gap-6 w-[424px] flex-none">
+          <div className="flex w-[424px] flex-none flex-col gap-6 rounded-[4px] bg-[#fbf4ce] p-8">
             <div className="flex flex-col gap-3">
-              <p className="text-[18px] font-medium leading-6 text-[#191c1f] w-[360px]">
+              <p className="w-[360px] text-[18px] leading-6 font-medium text-[#191c1f]">
                 Don&apos;t find your answer, Ask for support.
               </p>
-              <p className="text-[14px] font-normal leading-5 text-[#475156] w-[360px]">
+              <p className="w-[360px] text-[14px] leading-5 font-normal text-[#475156]">
                 Interdum et malesuada fames ac ante ipsum primis in faucibus.
                 Sed molestie accumsan dui, non iaculis primis in faucibu raesent
                 eget sem purus.
@@ -169,26 +171,26 @@ export default function FaqsPage() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white border border-[#f7e99e] rounded-[2px] h-11 px-[15px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors"
+                className="h-11 w-full rounded-[2px] border border-[#f7e99e] bg-white px-[15px] text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
               />
               <input
                 type="text"
                 placeholder="Subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full bg-white border border-[#f7e99e] rounded-[2px] h-11 px-[15px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors"
+                className="h-11 w-full rounded-[2px] border border-[#f7e99e] bg-white px-[15px] text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
               />
               <textarea
                 placeholder="Message (Optional)"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
-                className="w-full bg-white border border-[#f7e99e] rounded-[2px] px-[15px] py-[11px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors resize-none"
+                className="w-full resize-none rounded-[2px] border border-[#f7e99e] bg-white px-[15px] py-[11px] text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
               />
 
               <button
                 type="submit"
-                className="self-start inline-flex items-center gap-2 px-6 h-12 rounded-[2px] bg-[#fa8232] text-white text-[14px] font-bold tracking-[0.012em] uppercase border-0 cursor-pointer hover:opacity-90 transition-opacity duration-150"
+                className="inline-flex h-12 cursor-pointer items-center gap-2 self-start rounded-[2px] border-0 bg-[#fa8232] px-6 text-[14px] font-bold tracking-[0.012em] text-white uppercase transition-opacity duration-150 hover:opacity-90"
               >
                 Send Message
                 <svg

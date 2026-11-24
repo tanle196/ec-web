@@ -61,7 +61,6 @@ export function useCancelOrder() {
   return useMutation({
     mutationFn: (id: string) =>
       mainService.request(ordersControllerCancel)({ path: { id } }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: orderKeys.all }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: orderKeys.all }),
   });
 }

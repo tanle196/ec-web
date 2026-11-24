@@ -107,16 +107,16 @@ function ClIconLogo() {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2 flex-none no-underline"
+      className="flex flex-none items-center gap-2 no-underline"
       aria-label="Clicon home"
     >
       <span
-        className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-none"
+        className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-white"
         aria-hidden
       >
-        <span className="w-6 h-6 rounded-full border-[3px] border-secondary-700 block" />
+        <span className="block h-6 w-6 rounded-full border-[3px] border-secondary-700" />
       </span>
-      <span className="text-white font-bold text-[32px] tracking-[-0.64px] leading-none">
+      <span className="text-[32px] leading-none font-bold tracking-[-0.64px] text-white">
         CLICON
       </span>
     </Link>
@@ -135,55 +135,55 @@ export function Header() {
         {/* TopBar */}
         <div className="border-b border-white/20">
           <Container>
-            <div className="flex items-center justify-between h-11 gap-4">
-              <p className="text-white text-body-sm hidden lg:block whitespace-nowrap">
+            <div className="flex h-11 items-center justify-between gap-4">
+              <p className="hidden text-body-sm whitespace-nowrap text-white lg:block">
                 Welcome to Clicon online eCommerce store.
               </p>
 
-              <div className="flex items-center gap-5 ml-auto">
+              <div className="ml-auto flex items-center gap-5">
                 {/* Social links */}
-                <div className="hidden lg:flex items-center gap-3">
-                  <span className="text-white text-body-sm">Follow us:</span>
+                <div className="hidden items-center gap-3 lg:flex">
+                  <span className="text-body-sm text-white">Follow us:</span>
                   <div className="flex items-center gap-3 text-white/80">
                     <a
                       href="#"
                       aria-label="Twitter"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <TwitterIcon />
                     </a>
                     <a
                       href="#"
                       aria-label="Facebook"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <FacebookIcon />
                     </a>
                     <a
                       href="#"
                       aria-label="Pinterest"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <PinterestIcon />
                     </a>
                     <a
                       href="#"
                       aria-label="Reddit"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <RedditIcon />
                     </a>
                     <a
                       href="#"
                       aria-label="YouTube"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <YouTubeIcon />
                     </a>
                     <a
                       href="#"
                       aria-label="Instagram"
-                      className="hover:text-white transition-colors"
+                      className="transition-colors hover:text-white"
                     >
                       <InstagramIcon />
                     </a>
@@ -191,15 +191,15 @@ export function Header() {
                 </div>
 
                 <div
-                  className="hidden lg:block h-7 w-px bg-white/30"
+                  className="hidden h-7 w-px bg-white/30 lg:block"
                   aria-hidden
                 />
 
-                <button className="flex items-center gap-1.5 text-white text-body-sm hover:text-white/80 transition-colors">
+                <button className="flex items-center gap-1.5 text-body-sm text-white transition-colors hover:text-white/80">
                   Eng{" "}
                   <ChevronDown size={12} className="opacity-50" aria-hidden />
                 </button>
-                <button className="flex items-center gap-1.5 text-white text-body-sm hover:text-white/80 transition-colors">
+                <button className="flex items-center gap-1.5 text-body-sm text-white transition-colors hover:text-white/80">
                   USD{" "}
                   <ChevronDown size={12} className="opacity-50" aria-hidden />
                 </button>
@@ -216,26 +216,26 @@ export function Header() {
             <form
               action="/search"
               method="GET"
-              className="flex-1 flex items-center gap-4 bg-white rounded-sm px-5 py-3.5 shadow-[0_8px_16px_rgba(0,0,0,0.08)]"
+              className="flex flex-1 items-center gap-4 rounded-sm bg-white px-5 py-3.5 shadow-[0_8px_16px_rgba(0,0,0,0.08)]"
               role="search"
             >
               <input
                 type="search"
                 name="q"
                 placeholder="Search for anything..."
-                className="flex-1 text-body-sm text-gray-900 placeholder:text-gray-500 outline-none border-0 bg-transparent"
+                className="flex-1 border-0 bg-transparent text-body-sm text-gray-900 outline-none placeholder:text-gray-500"
                 aria-label="Search products"
               />
               <button
                 type="submit"
                 aria-label="Submit search"
-                className="flex-none text-gray-500 hover:text-gray-700 transition-colors"
+                className="flex-none text-gray-500 transition-colors hover:text-gray-700"
               >
                 <Search size={20} />
               </button>
             </form>
 
-            <div className="flex items-center gap-5 flex-none">
+            <div className="flex flex-none items-center gap-5">
               <CartBadge />
               <Link href="/wishlist" aria-label="Wishlist">
                 <Heart size={30} className="text-white" strokeWidth={1.5} />
@@ -249,46 +249,46 @@ export function Header() {
       </div>
 
       {/* BottomBar */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="border-b border-gray-100 bg-white">
         <Container>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
               <CategoryMenu />
 
               <nav
-                className="hidden lg:flex items-center gap-6"
+                className="hidden items-center gap-6 lg:flex"
                 aria-label="Quick links"
               >
                 <Link
                   href="/track-order"
-                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline hover:text-gray-900 transition-colors"
+                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline transition-colors hover:text-gray-900"
                 >
                   <MapPin size={22} strokeWidth={1.5} aria-hidden /> Track Order
                 </Link>
                 <Link
                   href="/compare"
-                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline hover:text-gray-900 transition-colors"
+                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline transition-colors hover:text-gray-900"
                 >
                   <ArrowLeftRight size={22} strokeWidth={1.5} aria-hidden />{" "}
                   Compare
                 </Link>
                 <Link
                   href="/support"
-                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline hover:text-gray-900 transition-colors"
+                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline transition-colors hover:text-gray-900"
                 >
                   <Headphones size={22} strokeWidth={1.5} aria-hidden />{" "}
                   Customer Support
                 </Link>
                 <Link
                   href="/help"
-                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline hover:text-gray-900 transition-colors"
+                  className="flex items-center gap-1.5 text-body-sm text-gray-600 no-underline transition-colors hover:text-gray-900"
                 >
                   <Info size={22} strokeWidth={1.5} aria-hidden /> Need Help
                 </Link>
               </nav>
             </div>
 
-            <address className="hidden lg:flex items-center gap-2 not-italic">
+            <address className="hidden items-center gap-2 not-italic lg:flex">
               <Phone
                 size={26}
                 strokeWidth={1.5}
@@ -297,7 +297,7 @@ export function Header() {
               />
               <a
                 href="tel:+12025550104"
-                className="text-body-lg text-gray-900 no-underline hover:text-primary transition-colors"
+                className="text-body-lg text-gray-900 no-underline transition-colors hover:text-primary"
               >
                 +1-202-555-0104
               </a>

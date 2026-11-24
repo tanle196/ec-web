@@ -117,7 +117,7 @@ const STATUS_MESSAGE: Record<string, string> = {
 function ProgressDot({ done, active }: { done: boolean; active: boolean }) {
   if (done || active) {
     return (
-      <div className="w-6 h-6 rounded-full bg-primary-500 border-2 border-primary-500 flex items-center justify-center flex-none">
+      <div className="flex h-6 w-6 flex-none items-center justify-center rounded-full border-2 border-primary-500 bg-primary-500">
         {done && (
           <svg
             width="12"
@@ -137,7 +137,7 @@ function ProgressDot({ done, active }: { done: boolean; active: boolean }) {
     );
   }
   return (
-    <div className="w-6 h-6 rounded-full border-2 border-gray-100 bg-white flex-none" />
+    <div className="h-6 w-6 flex-none rounded-full border-2 border-gray-100 bg-white" />
   );
 }
 
@@ -200,16 +200,16 @@ export default function OrderDetailPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             {/* Page header */}
             <div className="flex items-center justify-between">
               <Link
                 href="/account/orders"
-                className="flex items-center gap-2 text-[14px] font-medium text-gray-900 hover:text-primary-500 transition-colors no-underline"
+                className="flex items-center gap-2 text-[14px] font-medium text-gray-900 no-underline transition-colors hover:text-primary-500"
               >
                 <svg
                   width="20"
@@ -232,7 +232,7 @@ export default function OrderDetailPage() {
                 <button
                   onClick={() => cancelOrder.mutate(order.id)}
                   disabled={cancelOrder.isPending}
-                  className="flex items-center gap-2 text-[14px] font-semibold text-danger-500 hover:text-danger-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-danger-500 transition-colors hover:text-danger-600 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {cancelOrder.isPending ? "Cancelling..." : "Cancel Order"}
                 </button>
@@ -240,10 +240,10 @@ export default function OrderDetailPage() {
             </div>
 
             {/* Order card + progress + activity */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
-              <div className="p-6 flex flex-col gap-6">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
+              <div className="flex flex-col gap-6 p-6">
                 {/* Order summary */}
-                <div className="bg-[#fdfae7] border border-[#f7e99e] rounded-[4px] px-6 py-5 flex items-center justify-between">
+                <div className="flex items-center justify-between rounded-[4px] border border-[#f7e99e] bg-[#fdfae7] px-6 py-5">
                   <div className="flex flex-col gap-1">
                     <p className="text-[20px] leading-7 font-normal text-gray-900">
                       {order.orderNumber}
@@ -254,7 +254,7 @@ export default function OrderDetailPage() {
                       Order Placed on {formatDate(order.createdAt)}
                     </p>
                   </div>
-                  <p className="text-[28px] font-semibold leading-8 text-secondary-500">
+                  <p className="text-[28px] leading-8 font-semibold text-secondary-500">
                     {formatCurrency(order.total)}
                   </p>
                 </div>
@@ -272,9 +272,9 @@ export default function OrderDetailPage() {
                         className="relative flex items-center"
                         style={{ height: 24 }}
                       >
-                        <div className="absolute left-3 right-3 h-2 bg-primary-100 rounded-full" />
+                        <div className="absolute right-3 left-3 h-2 rounded-full bg-primary-100" />
                         <div
-                          className="absolute left-3 h-2 bg-primary-500 rounded-full transition-all duration-500"
+                          className="absolute left-3 h-2 rounded-full bg-primary-500 transition-all duration-500"
                           style={{
                             width: `calc(${progressPct}% * (100% - 24px) / 100)`,
                           }}
@@ -307,7 +307,7 @@ export default function OrderDetailPage() {
                           return (
                             <div
                               key={i}
-                              className={`flex flex-col items-center gap-3 flex-1 ${!isActive ? "opacity-40" : ""}`}
+                              className={`flex flex-1 flex-col items-center gap-3 ${!isActive ? "opacity-40" : ""}`}
                             >
                               <span
                                 className={
@@ -318,7 +318,7 @@ export default function OrderDetailPage() {
                               >
                                 {step.icon}
                               </span>
-                              <p className="text-[14px] font-medium text-gray-900 text-center">
+                              <p className="text-center text-[14px] font-medium text-gray-900">
                                 {step.label}
                               </p>
                             </div>
@@ -331,7 +331,7 @@ export default function OrderDetailPage() {
               </div>
 
               {/* Order Activity */}
-              <div className="border-t border-gray-100 p-6 flex flex-col gap-5">
+              <div className="flex flex-col gap-5 border-t border-gray-100 p-6">
                 <p className="text-[18px] font-medium text-gray-900">
                   Order Activity
                 </p>
@@ -349,7 +349,7 @@ export default function OrderDetailPage() {
                       )
                       .map((item) => (
                         <div key={item.id} className="flex items-start gap-4">
-                          <div className="flex-none p-3 rounded-xs border bg-secondary-50 border-secondary-100">
+                          <div className="flex-none rounded-xs border border-secondary-100 bg-secondary-50 p-3">
                             <svg
                               width="20"
                               height="20"
@@ -387,14 +387,14 @@ export default function OrderDetailPage() {
             <OrderRefundPanel order={order} />
 
             {/* Product table */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
-              <div className="px-6 h-13 flex items-center border-b border-gray-100">
-                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
+              <div className="flex h-13 items-center border-b border-gray-100 px-6">
+                <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Product ({order.items.length.toString().padStart(2, "0")})
                 </span>
               </div>
               {/* Column headers */}
-              <div className="grid grid-cols-[1fr_100px_100px_100px] gap-4 px-6 py-[10px] bg-gray-50 border-b border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+              <div className="grid grid-cols-[1fr_100px_100px_100px] gap-4 border-b border-gray-100 bg-gray-50 px-6 py-[10px] text-[12px] font-medium text-gray-700 uppercase">
                 <span>Products</span>
                 <span>Price</span>
                 <span>Quantity</span>
@@ -403,12 +403,12 @@ export default function OrderDetailPage() {
               {order.items.map((item) => (
                 <div
                   key={item.id}
-                  className="grid grid-cols-[1fr_100px_100px_100px] gap-4 px-6 py-4 border-b border-gray-100 last:border-b-0 items-center"
+                  className="grid grid-cols-[1fr_100px_100px_100px] items-center gap-4 border-b border-gray-100 px-6 py-4 last:border-b-0"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 flex-none rounded-[4px] bg-gray-50 border border-gray-100" />
+                    <div className="h-14 w-14 flex-none rounded-[4px] border border-gray-100 bg-gray-50" />
                     <div className="flex flex-col gap-1">
-                      <p className="text-[14px] text-gray-900 leading-5 line-clamp-2">
+                      <p className="line-clamp-2 text-[14px] leading-5 text-gray-900">
                         {item.productName}
                       </p>
                     </div>
@@ -424,7 +424,7 @@ export default function OrderDetailPage() {
                   </span>
                 </div>
               ))}
-              <div className="flex flex-col gap-2 px-6 py-4 items-end text-[14px]">
+              <div className="flex flex-col items-end gap-2 px-6 py-4 text-[14px]">
                 <div className="flex gap-8">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="w-24 text-right text-gray-900">
@@ -457,8 +457,8 @@ export default function OrderDetailPage() {
             {/* Address / Notes */}
             <div className="grid grid-cols-2 gap-6">
               {/* Delivery Address */}
-              <div className="bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-3">
-                <p className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+              <div className="flex flex-col gap-3 rounded-[4px] border border-gray-100 bg-white p-6">
+                <p className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Delivery Address
                 </p>
                 {address ? (
@@ -468,8 +468,10 @@ export default function OrderDetailPage() {
                     </p>
                     <p>
                       {address.addressLine1}
-                      {address.addressLine2 ? `, ${address.addressLine2}` : ""},{" "}
-                      {address.city}, {address.province}, {address.country}
+                      {address.addressLine2
+                        ? `, ${address.addressLine2}`
+                        : ""}, {address.city}, {address.province},{" "}
+                      {address.country}
                     </p>
                     <p>Phone Number: {address.phone}</p>
                   </div>
@@ -481,8 +483,8 @@ export default function OrderDetailPage() {
               </div>
 
               {/* Order Notes */}
-              <div className="bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-3">
-                <p className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+              <div className="flex flex-col gap-3 rounded-[4px] border border-gray-100 bg-white p-6">
+                <p className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Order Notes
                 </p>
                 <p className="text-[14px] leading-5 text-gray-700">

@@ -356,7 +356,7 @@ export default function BlogDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[
@@ -372,7 +372,7 @@ export default function BlogDetailPage() {
       <Container className="py-18">
         <div className="flex flex-col gap-12">
           {/* Hero image */}
-          <div className="relative w-full aspect-[1320/740] rounded-[3px] overflow-hidden">
+          <div className="relative aspect-[1320/740] w-full overflow-hidden rounded-[3px]">
             <Image
               src={IMG_HERO}
               alt="Blog hero"
@@ -383,13 +383,13 @@ export default function BlogDetailPage() {
           </div>
 
           {/* Content + Sidebar */}
-          <div className="flex gap-12 items-start">
+          <div className="flex items-start gap-12">
             {/* ── Main content ── */}
-            <article className="flex-1 min-w-0 flex flex-col gap-8">
+            <article className="flex min-w-0 flex-1 flex-col gap-8">
               {/* Heading */}
               <div className="flex flex-col gap-6">
                 {/* Meta row */}
-                <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex flex-wrap items-center gap-4">
                   <div className="flex items-center gap-1.5">
                     <StackIcon />
                     <span className="text-[14px] leading-5 text-[#475156]">
@@ -417,7 +417,7 @@ export default function BlogDetailPage() {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-[32px] font-semibold leading-[40px] text-[#191c1f]">
+                <h1 className="text-[32px] leading-[40px] font-semibold text-[#191c1f]">
                   How artist collective Meow Wolf&apos;s website complements
                   their immersive venues
                 </h1>
@@ -425,7 +425,7 @@ export default function BlogDetailPage() {
                 {/* Author + Share */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
                       <Image
                         src={IMG_AUTHOR_AVATAR}
                         alt="Cameron Williamson"
@@ -433,7 +433,7 @@ export default function BlogDetailPage() {
                         className="object-cover"
                       />
                     </div>
-                    <span className="text-[16px] font-medium leading-6 text-[#191c1f]">
+                    <span className="text-[16px] leading-6 font-medium text-[#191c1f]">
                       Cameron Williamson
                     </span>
                   </div>
@@ -441,42 +441,42 @@ export default function BlogDetailPage() {
                     <button
                       type="button"
                       aria-label="Share on WhatsApp"
-                      className="bg-[#25d366] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#25d366] p-3 transition-opacity hover:opacity-90"
                     >
                       <WhatsAppIcon />
                     </button>
                     <button
                       type="button"
                       aria-label="Share on Facebook"
-                      className="bg-[#3b5998] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#3b5998] p-3 transition-opacity hover:opacity-90"
                     >
                       <FacebookIcon />
                     </button>
                     <button
                       type="button"
                       aria-label="Share on Twitter"
-                      className="bg-[#1da1f2] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#1da1f2] p-3 transition-opacity hover:opacity-90"
                     >
                       <TwitterIcon />
                     </button>
                     <button
                       type="button"
                       aria-label="Share on LinkedIn"
-                      className="bg-[#0077b5] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#0077b5] p-3 transition-opacity hover:opacity-90"
                     >
                       <LinkedInIcon />
                     </button>
                     <button
                       type="button"
                       aria-label="Share on Pinterest"
-                      className="bg-[#e60023] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#e60023] p-3 transition-opacity hover:opacity-90"
                     >
                       <PinterestIcon />
                     </button>
                     <button
                       type="button"
                       aria-label="Copy link"
-                      className="bg-[#475156] p-3 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="flex cursor-pointer items-center justify-center rounded-full bg-[#475156] p-3 transition-opacity hover:opacity-90"
                     >
                       <CopyLinkIcon />
                     </button>
@@ -506,7 +506,7 @@ export default function BlogDetailPage() {
 
                 {/* Inline images */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="relative aspect-[424/280] rounded-[3px] overflow-hidden">
+                  <div className="relative aspect-[424/280] overflow-hidden rounded-[3px]">
                     <Image
                       src={IMG_BODY_1}
                       alt=""
@@ -514,7 +514,7 @@ export default function BlogDetailPage() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="relative aspect-[424/280] rounded-[3px] overflow-hidden">
+                  <div className="relative aspect-[424/280] overflow-hidden rounded-[3px]">
                     <Image
                       src={IMG_BODY_2}
                       alt=""
@@ -533,8 +533,8 @@ export default function BlogDetailPage() {
                 </p>
 
                 {/* Blockquote */}
-                <blockquote className="relative bg-[#f2f4f5] rounded-[3px] px-8 py-6 flex gap-5 items-start my-2">
-                  <div className="shrink-0 mt-1">
+                <blockquote className="relative my-2 flex items-start gap-5 rounded-[3px] bg-[#f2f4f5] px-8 py-6">
+                  <div className="mt-1 shrink-0">
                     <svg
                       width="40"
                       height="32"
@@ -545,7 +545,7 @@ export default function BlogDetailPage() {
                       <path d="M0 32V19.2C0 8.96 6.4 2.24 19.2 0l2.24 3.84C15.36 5.44 11.84 8 10.56 12H18V32H0zm22 0V19.2C22 8.96 28.4 2.24 41.2 0l2.24 3.84C37.36 5.44 33.84 8 32.56 12H40V32H22z" />
                     </svg>
                   </div>
-                  <p className="text-[18px] font-medium leading-7 text-[#191c1f] italic">
+                  <p className="text-[18px] leading-7 font-medium text-[#191c1f] italic">
                     &quot;Neque porro quisquam est, qui dolorem ipsum quia dolor
                     sit amet, consectetur, adipisci velit, sed quia non numquam
                     eius modi tempora incidunt ut labore et dolore magnam
@@ -562,7 +562,7 @@ export default function BlogDetailPage() {
                 </p>
 
                 {/* Third body image */}
-                <div className="relative w-full aspect-[872/480] rounded-[3px] overflow-hidden">
+                <div className="relative aspect-[872/480] w-full overflow-hidden rounded-[3px]">
                   <Image
                     src={IMG_BODY_3}
                     alt=""
@@ -583,9 +583,9 @@ export default function BlogDetailPage() {
               <div className="h-px bg-[#e4e7e9]" />
 
               {/* Tags + Share */}
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[14px] font-medium leading-5 text-[#191c1f]">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[14px] leading-5 font-medium text-[#191c1f]">
                     Tags:
                   </span>
                   {ARTICLE_TAGS.map((tag) => (
@@ -593,34 +593,34 @@ export default function BlogDetailPage() {
                       key={tag}
                       type="button"
                       onClick={() => setActiveTag(tag)}
-                      className="px-3 py-1.5 rounded-[2px] border border-[#e4e7e9] text-[14px] font-medium leading-5 text-[#191c1f] cursor-pointer hover:border-[#fa8232] hover:text-[#fa8232] transition-colors"
+                      className="cursor-pointer rounded-[2px] border border-[#e4e7e9] px-3 py-1.5 text-[14px] leading-5 font-medium text-[#191c1f] transition-colors hover:border-[#fa8232] hover:text-[#fa8232]"
                     >
                       {tag}
                     </button>
                   ))}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[14px] font-medium leading-5 text-[#191c1f]">
+                  <span className="text-[14px] leading-5 font-medium text-[#191c1f]">
                     Share:
                   </span>
                   <button
                     type="button"
                     aria-label="Share on Facebook"
-                    className="bg-[#3b5998] p-2.5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                    className="flex cursor-pointer items-center justify-center rounded-full bg-[#3b5998] p-2.5 transition-opacity hover:opacity-90"
                   >
                     <FacebookIcon />
                   </button>
                   <button
                     type="button"
                     aria-label="Share on Twitter"
-                    className="bg-[#1da1f2] p-2.5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                    className="flex cursor-pointer items-center justify-center rounded-full bg-[#1da1f2] p-2.5 transition-opacity hover:opacity-90"
                   >
                     <TwitterIcon />
                   </button>
                   <button
                     type="button"
                     aria-label="Share on Pinterest"
-                    className="bg-[#e60023] p-2.5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                    className="flex cursor-pointer items-center justify-center rounded-full bg-[#e60023] p-2.5 transition-opacity hover:opacity-90"
                   >
                     <PinterestIcon />
                   </button>
@@ -633,14 +633,14 @@ export default function BlogDetailPage() {
               <div className="grid grid-cols-2 gap-4">
                 <Link
                   href="/blog"
-                  className="flex items-center gap-4 p-5 border border-[#e4e7e9] rounded-[4px] no-underline group hover:border-[#fa8232] transition-colors"
+                  className="group flex items-center gap-4 rounded-[4px] border border-[#e4e7e9] p-5 no-underline transition-colors hover:border-[#fa8232]"
                 >
                   <ArrowLeftIcon />
                   <div className="flex flex-col gap-1">
-                    <span className="text-[12px] leading-4 text-[#77878f] uppercase tracking-wide">
+                    <span className="text-[12px] leading-4 tracking-wide text-[#77878f] uppercase">
                       Previous post
                     </span>
-                    <span className="text-[14px] font-medium leading-5 text-[#191c1f] group-hover:text-[#fa8232] transition-colors line-clamp-2">
+                    <span className="line-clamp-2 text-[14px] leading-5 font-medium text-[#191c1f] transition-colors group-hover:text-[#fa8232]">
                       Curabitur pulvinar aliquam lectus, non blandit erat mattis
                       vitae.
                     </span>
@@ -648,13 +648,13 @@ export default function BlogDetailPage() {
                 </Link>
                 <Link
                   href="/blog"
-                  className="flex items-center justify-end gap-4 p-5 border border-[#e4e7e9] rounded-[4px] no-underline group hover:border-[#fa8232] transition-colors text-right"
+                  className="group flex items-center justify-end gap-4 rounded-[4px] border border-[#e4e7e9] p-5 text-right no-underline transition-colors hover:border-[#fa8232]"
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="text-[12px] leading-4 text-[#77878f] uppercase tracking-wide">
+                    <span className="text-[12px] leading-4 tracking-wide text-[#77878f] uppercase">
                       Next post
                     </span>
-                    <span className="text-[14px] font-medium leading-5 text-[#191c1f] group-hover:text-[#fa8232] transition-colors line-clamp-2">
+                    <span className="line-clamp-2 text-[14px] leading-5 font-medium text-[#191c1f] transition-colors group-hover:text-[#fa8232]">
                       Curabitur pulvinar aliquam lectus, non blandit erat mattis
                       vitae.
                     </span>
@@ -667,7 +667,7 @@ export default function BlogDetailPage() {
 
               {/* Comments */}
               <div className="flex flex-col gap-6">
-                <h3 className="text-[20px] font-semibold leading-7 text-[#191c1f]">
+                <h3 className="text-[20px] leading-7 font-semibold text-[#191c1f]">
                   {COMMENTS.length} Comments
                 </h3>
                 <div className="flex flex-col gap-6">
@@ -676,7 +676,7 @@ export default function BlogDetailPage() {
                       key={comment.id}
                       className={`flex gap-4 ${comment.isReply ? "ml-14" : ""}`}
                     >
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
                         <Image
                           src={comment.avatar}
                           alt={comment.name}
@@ -684,10 +684,10 @@ export default function BlogDetailPage() {
                           className="object-cover"
                         />
                       </div>
-                      <div className="flex-1 flex flex-col gap-3 p-5 bg-[#f8f9fa] rounded-[4px]">
+                      <div className="flex flex-1 flex-col gap-3 rounded-[4px] bg-[#f8f9fa] p-5">
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col gap-0.5">
-                            <span className="text-[16px] font-semibold leading-6 text-[#191c1f]">
+                            <span className="text-[16px] leading-6 font-semibold text-[#191c1f]">
                               {comment.name}
                             </span>
                             <span className="text-[13px] leading-5 text-[#77878f]">
@@ -696,7 +696,7 @@ export default function BlogDetailPage() {
                           </div>
                           <button
                             type="button"
-                            className="flex items-center gap-1.5 text-[14px] font-medium leading-5 text-[#fa8232] cursor-pointer hover:opacity-80 transition-opacity"
+                            className="flex cursor-pointer items-center gap-1.5 text-[14px] leading-5 font-medium text-[#fa8232] transition-opacity hover:opacity-80"
                           >
                             <ReplyIcon />
                             Reply
@@ -715,7 +715,7 @@ export default function BlogDetailPage() {
 
               {/* Leave a comment */}
               <div className="flex flex-col gap-6">
-                <h3 className="text-[20px] font-semibold leading-7 text-[#191c1f]">
+                <h3 className="text-[20px] leading-7 font-semibold text-[#191c1f]">
                   Leave a Comment
                 </h3>
                 <p className="text-[14px] leading-5 text-[#77878f]">
@@ -730,7 +730,7 @@ export default function BlogDetailPage() {
                     <div className="flex flex-col gap-1.5">
                       <label
                         htmlFor="comment-name"
-                        className="text-[14px] font-medium leading-5 text-[#191c1f]"
+                        className="text-[14px] leading-5 font-medium text-[#191c1f]"
                       >
                         Your name <span className="text-[#fa8232]">*</span>
                       </label>
@@ -745,13 +745,13 @@ export default function BlogDetailPage() {
                             name: e.target.value,
                           }))
                         }
-                        className="h-11 px-4 border border-[#e4e7e9] rounded-[2px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors"
+                        className="h-11 rounded-[2px] border border-[#e4e7e9] px-4 text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label
                         htmlFor="comment-email"
-                        className="text-[14px] font-medium leading-5 text-[#191c1f]"
+                        className="text-[14px] leading-5 font-medium text-[#191c1f]"
                       >
                         Email address <span className="text-[#fa8232]">*</span>
                       </label>
@@ -766,14 +766,14 @@ export default function BlogDetailPage() {
                             email: e.target.value,
                           }))
                         }
-                        className="h-11 px-4 border border-[#e4e7e9] rounded-[2px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors"
+                        className="h-11 rounded-[2px] border border-[#e4e7e9] px-4 text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
                       />
                     </div>
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <label
                       htmlFor="comment-message"
-                      className="text-[14px] font-medium leading-5 text-[#191c1f]"
+                      className="text-[14px] leading-5 font-medium text-[#191c1f]"
                     >
                       Your message <span className="text-[#fa8232]">*</span>
                     </label>
@@ -788,12 +788,12 @@ export default function BlogDetailPage() {
                           message: e.target.value,
                         }))
                       }
-                      className="px-4 py-3 border border-[#e4e7e9] rounded-[2px] text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#fa8232] transition-colors resize-none"
+                      className="resize-none rounded-[2px] border border-[#e4e7e9] px-4 py-3 text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#fa8232]"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="self-start bg-[#fa8232] text-white text-[14px] font-bold leading-5 uppercase tracking-[0.168px] px-8 py-3.5 rounded-[2px] cursor-pointer hover:bg-[#e6721f] transition-colors"
+                    className="cursor-pointer self-start rounded-[2px] bg-[#fa8232] px-8 py-3.5 text-[14px] leading-5 font-bold tracking-[0.168px] text-white uppercase transition-colors hover:bg-[#e6721f]"
                   >
                     Submit Comment
                   </button>
@@ -802,22 +802,22 @@ export default function BlogDetailPage() {
             </article>
 
             {/* ── Sidebar ── */}
-            <aside className="w-[400px] shrink-0 flex flex-col gap-6">
+            <aside className="flex w-[400px] shrink-0 flex-col gap-6">
               {/* Search */}
-              <div className="flex items-center gap-2 bg-white border border-[#e4e7e9] rounded-[2px] px-4 py-3">
+              <div className="flex items-center gap-2 rounded-[2px] border border-[#e4e7e9] bg-white px-4 py-3">
                 <input
                   type="text"
                   placeholder="Search..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="flex-1 text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none border-0 bg-transparent"
+                  className="flex-1 border-0 bg-transparent text-[14px] leading-5 text-[#191c1f] outline-none placeholder:text-[#77878f]"
                 />
                 <SearchIcon />
               </div>
 
               {/* Category */}
-              <div className="bg-white border border-[#e4e7e9] rounded-[4px] p-6 flex flex-col gap-4">
-                <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+              <div className="flex flex-col gap-4 rounded-[4px] border border-[#e4e7e9] bg-white p-6">
+                <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                   Category
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -828,17 +828,17 @@ export default function BlogDetailPage() {
                         key={cat}
                         type="button"
                         onClick={() => setActiveCategory(cat)}
-                        className="flex items-center gap-2 cursor-pointer"
+                        className="flex cursor-pointer items-center gap-2"
                       >
                         <div
-                          className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
                             isActive
-                              ? "bg-[#fa8232] border-[#fa8232]"
-                              : "bg-white border-[#c9cfd2]"
+                              ? "border-[#fa8232] bg-[#fa8232]"
+                              : "border-[#c9cfd2] bg-white"
                           }`}
                         >
                           {isActive && (
-                            <div className="w-2 h-2 rounded-full bg-white" />
+                            <div className="h-2 w-2 rounded-full bg-white" />
                           )}
                         </div>
                         <span
@@ -857,17 +857,17 @@ export default function BlogDetailPage() {
               </div>
 
               {/* Latest Blog */}
-              <div className="bg-white border border-[#e4e7e9] rounded-[6px] p-6 flex flex-col gap-6">
-                <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+              <div className="flex flex-col gap-6 rounded-[6px] border border-[#e4e7e9] bg-white p-6">
+                <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                   Latest Blog
                 </h3>
                 {LATEST_POSTS.map((post) => (
                   <Link
                     key={post.id}
                     href="#"
-                    className="flex gap-4 items-center no-underline group"
+                    className="group flex items-center gap-4 no-underline"
                   >
-                    <div className="relative w-[104px] h-20 rounded-[2px] overflow-hidden shrink-0">
+                    <div className="relative h-20 w-[104px] shrink-0 overflow-hidden rounded-[2px]">
                       <Image
                         src={IMG_LATEST_BLOG}
                         alt={post.title}
@@ -876,10 +876,10 @@ export default function BlogDetailPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <p className="text-[14px] font-medium leading-5 text-[#191c1f] line-clamp-2 group-hover:text-[#fa8232] transition-colors">
+                      <p className="line-clamp-2 text-[14px] leading-5 font-medium text-[#191c1f] transition-colors group-hover:text-[#fa8232]">
                         {post.title}
                       </p>
-                      <p className="text-[14px] font-normal leading-5 text-[#77878f]">
+                      <p className="text-[14px] leading-5 font-normal text-[#77878f]">
                         {post.date}
                       </p>
                     </div>
@@ -888,8 +888,8 @@ export default function BlogDetailPage() {
               </div>
 
               {/* Gallery */}
-              <div className="bg-white border border-[#e4e7e9] rounded-[6px] p-6 flex flex-col gap-6">
-                <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+              <div className="flex flex-col gap-6 rounded-[6px] border border-[#e4e7e9] bg-white p-6">
+                <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                   Gallery
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -902,7 +902,7 @@ export default function BlogDetailPage() {
                         {row.map((src, i) => (
                           <div
                             key={i}
-                            className="relative w-20 h-20 rounded-[2px] overflow-hidden"
+                            className="relative h-20 w-20 overflow-hidden rounded-[2px]"
                           >
                             <Image
                               src={src}
@@ -920,7 +920,7 @@ export default function BlogDetailPage() {
 
               {/* Popular Tags */}
               <div className="flex flex-col gap-[18px]">
-                <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+                <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                   Popular Tag
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -931,10 +931,10 @@ export default function BlogDetailPage() {
                         key={tag}
                         type="button"
                         onClick={() => setActiveTag(tag)}
-                        className={`px-3 py-1.5 rounded-[2px] border text-[14px] font-medium leading-5 cursor-pointer transition-colors ${
+                        className={`cursor-pointer rounded-[2px] border px-3 py-1.5 text-[14px] leading-5 font-medium transition-colors ${
                           isActive
-                            ? "bg-[#fff3eb] border-[#fa8232] text-[#fa8232]"
-                            : "bg-white border-[#e4e7e9] text-[#191c1f] hover:border-[#fa8232] hover:text-[#fa8232]"
+                            ? "border-[#fa8232] bg-[#fff3eb] text-[#fa8232]"
+                            : "border-[#e4e7e9] bg-white text-[#191c1f] hover:border-[#fa8232] hover:text-[#fa8232]"
                         }`}
                       >
                         {tag}

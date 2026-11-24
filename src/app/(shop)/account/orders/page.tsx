@@ -64,21 +64,21 @@ export default function OrderHistoryPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0">
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+          <div className="min-w-0 flex-1">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               {/* Table heading */}
-              <div className="px-6 h-13 flex items-center border-b border-gray-100">
-                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+              <div className="flex h-13 items-center border-b border-gray-100 px-6">
+                <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Order History
                 </span>
               </div>
 
               {/* Column headers */}
-              <div className="flex items-center gap-6 px-6 py-[10px] bg-gray-50 border-b border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+              <div className="flex items-center gap-6 border-b border-gray-100 bg-gray-50 px-6 py-[10px] text-[12px] font-medium text-gray-700 uppercase">
                 <span className="w-[124px] flex-none">Order ID</span>
                 <span className="w-[152px] flex-none">Status</span>
                 <span className="w-[200px] flex-none">Date</span>
@@ -102,7 +102,7 @@ export default function OrderHistoryPage() {
               {orders?.data.map((order) => (
                 <div
                   key={order.id}
-                  className="relative flex items-center gap-6 px-6 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors group"
+                  className="group relative flex items-center gap-6 border-b border-gray-100 px-6 py-3 transition-colors last:border-b-0 hover:bg-gray-50"
                   onMouseEnter={() => setHoveredOrder(order)}
                   onMouseLeave={() => setHoveredOrder(null)}
                 >
@@ -122,7 +122,7 @@ export default function OrderHistoryPage() {
                   </span>
                   <Link
                     href={`/account/orders/${order.id}`}
-                    className="w-[116px] flex-none flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors no-underline"
+                    className="flex w-[116px] flex-none items-center gap-2 text-[14px] font-semibold text-secondary-500 no-underline transition-colors hover:text-secondary-600"
                   >
                     View Details
                     <svg
@@ -145,11 +145,11 @@ export default function OrderHistoryPage() {
               ))}
 
               {/* Pagination */}
-              <div className="flex items-center justify-center gap-2 py-5 border-t border-gray-100">
+              <div className="flex items-center justify-center gap-2 border-t border-gray-100 py-5">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-600 hover:border-primary-500 hover:text-primary-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-100 text-gray-600 transition-colors hover:border-primary-500 hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ArrowIcon dir="left" />
                 </button>
@@ -159,7 +159,7 @@ export default function OrderHistoryPage() {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-full text-[14px] font-medium transition-colors cursor-pointer ${
+                      className={`h-10 w-10 cursor-pointer rounded-full text-[14px] font-medium transition-colors ${
                         page === currentPage
                           ? "bg-primary-500 text-white"
                           : "border border-gray-100 text-gray-600 hover:border-primary-500 hover:text-primary-500"
@@ -175,7 +175,7 @@ export default function OrderHistoryPage() {
                     setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-600 hover:border-primary-500 hover:text-primary-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-100 text-gray-600 transition-colors hover:border-primary-500 hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ArrowIcon dir="right" />
                 </button>
@@ -184,7 +184,7 @@ export default function OrderHistoryPage() {
 
             {/* Hover preview card */}
             {hoveredOrder && (
-              <div className="mt-4 inline-flex items-center gap-4 bg-white border border-gray-100 rounded-[4px] shadow-[0px_8px_20px_rgba(0,0,0,0.08)] px-5 py-4">
+              <div className="mt-4 inline-flex items-center gap-4 rounded-[4px] border border-gray-100 bg-white px-5 py-4 shadow-[0px_8px_20px_rgba(0,0,0,0.08)]">
                 <div className="flex flex-col gap-1">
                   <span
                     className={`text-[12px] font-semibold ${orderStatusColor(hoveredOrder.status)}`}
@@ -203,7 +203,7 @@ export default function OrderHistoryPage() {
                 </div>
                 <Link
                   href={`/account/orders/${hoveredOrder.id}`}
-                  className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white hover:bg-primary-600 transition-colors cursor-pointer flex-none"
+                  className="flex h-10 w-10 flex-none cursor-pointer items-center justify-center rounded-full bg-primary-500 text-white transition-colors hover:bg-primary-600"
                 >
                   <ArrowIcon dir="right" />
                 </Link>

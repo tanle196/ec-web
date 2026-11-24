@@ -37,13 +37,13 @@ function getErrorMessage(err: unknown): string {
 function RadioDot({ checked }: { checked: boolean }) {
   return (
     <div
-      className={`w-5 h-5 rounded-full border flex items-center justify-center flex-none transition-colors ${
+      className={`flex h-5 w-5 flex-none items-center justify-center rounded-full border transition-colors ${
         checked
-          ? "bg-primary-500 border-primary-500"
-          : "bg-white border-gray-200"
+          ? "border-primary-500 bg-primary-500"
+          : "border-gray-200 bg-white"
       }`}
     >
-      {checked && <div className="w-2 h-2 rounded-full bg-white" />}
+      {checked && <div className="h-2 w-2 rounded-full bg-white" />}
     </div>
   );
 }
@@ -91,7 +91,7 @@ function PayNowDialog({
       <DialogTrigger asChild>
         <button
           type="button"
-          className="h-11 px-6 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer self-start"
+          className="h-11 cursor-pointer self-start rounded-[2px] bg-primary-500 px-6 text-[14px] font-bold tracking-[0.04em] text-white uppercase transition-colors hover:bg-primary-600"
         >
           {label}
         </button>
@@ -101,7 +101,7 @@ function PayNowDialog({
           <DialogTitle>Pay for Order {order.orderNumber}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between text-[14px] pb-4 border-b border-gray-100">
+          <div className="flex items-center justify-between border-b border-gray-100 pb-4 text-[14px]">
             <span className="text-gray-600">Amount due</span>
             <span className="font-semibold text-gray-900">
               {formatCurrency(order.total)}
@@ -114,7 +114,7 @@ function PayNowDialog({
                 key={opt.id}
                 type="button"
                 onClick={() => setMethod(opt.id)}
-                className={`w-full flex items-start gap-3 text-left border rounded-[4px] px-4 py-3 transition-colors cursor-pointer ${
+                className={`flex w-full cursor-pointer items-start gap-3 rounded-[4px] border px-4 py-3 text-left transition-colors ${
                   method === opt.id
                     ? "border-primary-500 bg-primary-50"
                     : "border-gray-100 hover:border-gray-200"
@@ -141,7 +141,7 @@ function PayNowDialog({
             type="button"
             onClick={handleConfirm}
             disabled={createPayment.isPending || redirecting}
-            className="h-11 px-8 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-start"
+            className="h-11 cursor-pointer self-start rounded-[2px] bg-primary-500 px-8 text-[14px] font-bold tracking-[0.04em] text-white uppercase transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {redirecting
               ? "Redirecting to payment provider..."
@@ -173,9 +173,9 @@ export function OrderPaymentPanel({ order }: { order: OrderResponseDto }) {
     latestPayment?.status !== "pending";
 
   return (
-    <div className="bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-4">
+    <div className="flex flex-col gap-4 rounded-[4px] border border-gray-100 bg-white p-6">
       <div className="flex items-center justify-between">
-        <p className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+        <p className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
           Payment
         </p>
         {latestPayment && (
@@ -230,16 +230,20 @@ export function OrderPaymentPanel({ order }: { order: OrderResponseDto }) {
         </div>
       )}
 
-      {!isPending && !latestPayment && !NOT_PAYABLE_STATUSES.has(order.status) && (
-        <p className="text-[14px] text-gray-600">
-          This order hasn&apos;t been paid yet.
-        </p>
-      )}
+      {!isPending &&
+        !latestPayment &&
+        !NOT_PAYABLE_STATUSES.has(order.status) && (
+          <p className="text-[14px] text-gray-600">
+            This order hasn&apos;t been paid yet.
+          </p>
+        )}
 
       {!isPending && canPay && (
         <PayNowDialog
           order={order}
-          label={latestPayment?.status === "failed" ? "Retry Payment" : "Pay Now"}
+          label={
+            latestPayment?.status === "failed" ? "Retry Payment" : "Pay Now"
+          }
         />
       )}
     </div>

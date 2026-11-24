@@ -20,7 +20,7 @@ export default async function SearchPage({
 }) {
   const { q = "" } = await searchParams;
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="bg-cream min-h-screen">
       <SearchResults query={q} />
     </div>
   );

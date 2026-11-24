@@ -30,15 +30,15 @@ function SubMenu({
   const products = data?.data ?? [];
 
   return (
-    <div className="flex gap-5 p-5 border-l border-gray-100">
+    <div className="flex gap-5 border-l border-gray-100 p-5">
       {/* Sub-category list */}
-      <ul className="w-41 flex flex-col shrink-0">
+      <ul className="flex w-41 shrink-0 flex-col">
         {cat.children!.map((child) => (
           <li key={child.id}>
             <Link
               href={`/categories/${child.slug}`}
               onClick={onNavigate}
-              className="h-9 flex items-center px-4 text-body-sm text-gray-600 rounded-sm hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              className="flex h-9 items-center rounded-sm px-4 text-body-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
             >
               {child.name}
             </Link>
@@ -47,8 +47,8 @@ function SubMenu({
       </ul>
 
       {/* Featured products */}
-      <div className="flex flex-col gap-4 shrink-0 w-78">
-        <h3 className="text-body-md font-semibold text-gray-900 uppercase tracking-wide">
+      <div className="flex w-78 shrink-0 flex-col gap-4">
+        <h3 className="text-body-md font-semibold tracking-wide text-gray-900 uppercase">
           Featured Products
         </h3>
         <div className="flex flex-col gap-3">
@@ -56,12 +56,12 @@ function SubMenu({
             ? Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
-                  className="border border-gray-100 rounded-sm p-3 flex gap-3 items-center"
+                  className="flex items-center gap-3 rounded-sm border border-gray-100 p-3"
                 >
-                  <div className="w-20 h-20 shrink-0 bg-gray-100 rounded-sm animate-pulse" />
-                  <div className="flex flex-col gap-2 flex-1">
-                    <div className="h-3 bg-gray-100 rounded animate-pulse w-full" />
-                    <div className="h-3 bg-gray-100 rounded animate-pulse w-1/2" />
+                  <div className="h-20 w-20 shrink-0 animate-pulse rounded-sm bg-gray-100" />
+                  <div className="flex flex-1 flex-col gap-2">
+                    <div className="h-3 w-full animate-pulse rounded bg-gray-100" />
+                    <div className="h-3 w-1/2 animate-pulse rounded bg-gray-100" />
                   </div>
                 </div>
               ))
@@ -70,9 +70,9 @@ function SubMenu({
                   key={product.id}
                   href={`/products/${product.slug}`}
                   onClick={onNavigate}
-                  className="border border-gray-100 rounded-sm p-3 flex gap-3 items-center hover:border-gray-200 transition-colors"
+                  className="flex items-center gap-3 rounded-sm border border-gray-100 p-3 transition-colors hover:border-gray-200"
                 >
-                  <div className="relative w-20 h-20 shrink-0 bg-gray-50 rounded-sm overflow-hidden">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-sm bg-gray-50">
                     <Image
                       src="/no-image.svg"
                       alt={product.name}
@@ -81,7 +81,7 @@ function SubMenu({
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p className="text-body-sm text-gray-900 leading-5 line-clamp-2">
+                    <p className="line-clamp-2 text-body-sm leading-5 text-gray-900">
                       {product.name}
                     </p>
                     <span className="text-body-sm font-semibold text-secondary-500">
@@ -97,9 +97,9 @@ function SubMenu({
       </div>
 
       {/* Promo banner */}
-      <div className="bg-warning-200 rounded-sm p-8 flex flex-col gap-6 items-center justify-center shrink-0 w-78">
-        <div className="flex flex-col gap-3 items-center text-center">
-          <div className="relative w-62 h-24">
+      <div className="flex w-78 shrink-0 flex-col items-center justify-center gap-6 rounded-sm bg-warning-200 p-8">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="relative h-24 w-62">
             <Image
               src="/images/promo/earbuds.png"
               alt="Xiaomi Earbuds"
@@ -107,12 +107,12 @@ function SubMenu({
               className="object-contain"
             />
           </div>
-          <div className="flex flex-col gap-4 items-center">
+          <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col gap-2">
-              <p className="font-semibold text-[28px] leading-8 text-gray-900">
+              <p className="text-[28px] leading-8 font-semibold text-gray-900">
                 21% Discount
               </p>
-              <p className="text-body-md text-gray-700 w-62">
+              <p className="w-62 text-body-md text-gray-700">
                 Escape the noise, It&apos;s time to hear the magic with Xiaomi
                 Earbuds.
               </p>
@@ -121,7 +121,7 @@ function SubMenu({
               <span className="text-body-sm text-gray-700">
                 Starting price:
               </span>
-              <span className="bg-white px-3 py-1.5 rounded-sm text-body-md font-semibold text-gray-900">
+              <span className="rounded-sm bg-white px-3 py-1.5 text-body-md font-semibold text-gray-900">
                 $99 USD
               </span>
             </div>
@@ -130,7 +130,7 @@ function SubMenu({
         <Link
           href={`/category/${cat.slug}`}
           onClick={onNavigate}
-          className="bg-primary-500 hover:bg-primary-600 transition-colors w-62 flex items-center justify-center gap-2 py-3 rounded-sm text-white text-body-sm font-bold uppercase tracking-wide"
+          className="flex w-62 items-center justify-center gap-2 rounded-sm bg-primary-500 py-3 text-body-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-primary-600"
         >
           Shop now
           <ChevronRight size={16} aria-hidden />
@@ -162,7 +162,7 @@ export function CategoryMenu() {
       }}
     >
       <button
-        className="bg-primary-500 flex items-center gap-2 px-6 py-3.5 rounded-sm text-body-sm font-medium text-white whitespace-nowrap hover:bg-primary-600 transition-colors"
+        className="flex items-center gap-2 rounded-sm bg-primary-500 px-6 py-3.5 text-body-sm font-medium whitespace-nowrap text-white transition-colors hover:bg-primary-600"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
@@ -178,14 +178,14 @@ export function CategoryMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 pt-1">
-          <div className="bg-white border border-gray-100 shadow-[0_8px_40px_rgba(0,0,0,0.12)] flex">
+        <div className="absolute top-full left-0 z-50 pt-1">
+          <div className="flex border border-gray-100 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.12)]">
             {/* Left panel: categories */}
-            <ul className="w-60 py-3 shrink-0" role="menu">
+            <ul className="w-60 shrink-0 py-3" role="menu">
               {isLoading
                 ? Array.from({ length: 8 }).map((_, i) => (
-                    <li key={i} className="h-9 px-4 flex items-center">
-                      <div className="h-3 bg-gray-100 rounded animate-pulse w-3/4" />
+                    <li key={i} className="flex h-9 items-center px-4">
+                      <div className="h-3 w-3/4 animate-pulse rounded bg-gray-100" />
                     </li>
                   ))
                 : categories.map((cat) => {
@@ -200,7 +200,7 @@ export function CategoryMenu() {
                             setActiveCat(hasChildren ? cat : null)
                           }
                           className={cn(
-                            "flex items-center justify-between h-9 px-4 text-body-sm transition-colors",
+                            "flex h-9 items-center justify-between px-4 text-body-sm transition-colors",
                             activeCat?.id === cat.id
                               ? "bg-gray-50 font-medium text-gray-900"
                               : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",

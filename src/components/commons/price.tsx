@@ -27,14 +27,14 @@ export function Price({
   return (
     <span className="inline-flex items-baseline gap-2">
       <span
-        className={`font-mono-marlo font-medium tabular-nums text-foreground ${textSizes[size]}`}
+        className={`font-mono-marlo font-medium text-foreground tabular-nums ${textSizes[size]}`}
         style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {fmt(amount)}
       </span>
       {was && (
         <span
-          className={`font-mono-marlo tabular-nums text-text-tertiary line-through ${strikeSizes[size]}`}
+          className={`font-mono-marlo text-text-tertiary tabular-nums line-through ${strikeSizes[size]}`}
         >
           {fmt(was)}
         </span>

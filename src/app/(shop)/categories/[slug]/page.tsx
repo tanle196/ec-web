@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { categoriesControllerFindBySlug, productsControllerFindAll } from "@/api/main";
+import {
+  categoriesControllerFindBySlug,
+  productsControllerFindAll,
+} from "@/api/main";
 import { mainService } from "@/lib/api/client";
 import { mapProductListItem } from "@/lib/api/mappers";
 import { CategoryHero } from "../_sections/category-hero";
@@ -28,7 +31,9 @@ export async function generateMetadata({
   if (!category) return {};
   return {
     title: `${category.name} | Marlo`,
-    description: category.description ? String(category.description) : undefined,
+    description: category.description
+      ? String(category.description)
+      : undefined,
     alternates: { canonical: `/categories/${category.slug}` },
   };
 }
@@ -46,7 +51,7 @@ export default async function CategoryPage({
   const items = products.data.map(mapProductListItem);
 
   return (
-    <div className="min-h-screen bg-cream pb-20">
+    <div className="bg-cream min-h-screen pb-20">
       <CategoryHero category={category} />
 
       {items.length > 0 && (

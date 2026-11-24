@@ -75,7 +75,7 @@ function SpecCell({
     case "price": {
       const price = product.variants[0]?.price ?? product.basePrice;
       return (
-        <span className="font-semibold text-[#2da5f3] text-[16px]">
+        <span className="text-[16px] font-semibold text-[#2da5f3]">
           {(price / 100).toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
@@ -97,7 +97,7 @@ function SpecCell({
       const inStock = getStockInfo(product);
       return (
         <span
-          className={`font-semibold text-[13px] uppercase tracking-wide ${
+          className={`text-[13px] font-semibold tracking-wide uppercase ${
             inStock ? "text-[#2db224]" : "text-[#ee5858]"
           }`}
         >
@@ -130,10 +130,10 @@ function AddToCartButton({ product }: { product: ProductResponseDto }) {
           addToCart.mutate({ variant_id: firstVariant.id, quantity: 1 });
         }
       }}
-      className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-[2px] text-[13px] font-bold uppercase tracking-wide text-white transition-opacity duration-150 ${
+      className={`flex h-12 flex-1 items-center justify-center gap-2 rounded-[2px] text-[13px] font-bold tracking-wide text-white uppercase transition-opacity duration-150 ${
         inStock
-          ? "bg-[#fa8232] hover:opacity-90 cursor-pointer"
-          : "bg-[#adb7bc] cursor-not-allowed"
+          ? "cursor-pointer bg-[#fa8232] hover:opacity-90"
+          : "cursor-not-allowed bg-[#adb7bc]"
       }`}
     >
       <svg
@@ -157,7 +157,7 @@ function AddToCartButton({ product }: { product: ProductResponseDto }) {
 
 function EmptySlot() {
   return (
-    <div className="flex flex-col items-center justify-center h-full min-h-60 gap-4 text-[#77878f]">
+    <div className="flex h-full min-h-60 flex-col items-center justify-center gap-4 text-[#77878f]">
       <svg
         width="40"
         height="40"
@@ -174,7 +174,7 @@ function EmptySlot() {
       </svg>
       <Link
         href="/search"
-        className="text-[14px] font-medium text-[#2da5f3] hover:underline no-underline"
+        className="text-[14px] font-medium text-[#2da5f3] no-underline hover:underline"
       >
         Add a product
       </Link>
@@ -207,7 +207,7 @@ export default function ComparePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Compare" }]}
@@ -218,11 +218,11 @@ export default function ComparePage() {
       {/* Main content */}
       <Container className="py-10 pb-24">
         {isLoading ? (
-          <div className="flex items-center justify-center h-80">
-            <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
+          <div className="flex h-80 items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#fa8232] border-t-transparent" />
           </div>
         ) : productIds.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-80 gap-5 text-center">
+          <div className="flex h-80 flex-col items-center justify-center gap-5 text-center">
             <svg
               width="56"
               height="56"
@@ -238,22 +238,22 @@ export default function ComparePage() {
               <path d="M3 21 21 3" />
             </svg>
             <div>
-              <h2 className="text-[20px] font-semibold text-[#191c1f] mb-2">
+              <h2 className="mb-2 text-[20px] font-semibold text-[#191c1f]">
                 No products to compare
               </h2>
-              <p className="text-[14px] text-[#77878f] mb-5">
+              <p className="mb-5 text-[14px] text-[#77878f]">
                 Browse products and add up to 3 items to compare side by side.
               </p>
               <Link
                 href="/search"
-                className="inline-flex items-center gap-2 px-6 h-11 rounded-[2px] bg-[#fa8232] text-white text-[14px] font-bold uppercase tracking-wide no-underline hover:opacity-90 transition-opacity"
+                className="inline-flex h-11 items-center gap-2 rounded-[2px] bg-[#fa8232] px-6 text-[14px] font-bold tracking-wide text-white uppercase no-underline transition-opacity hover:opacity-90"
               >
                 Browse Products
               </Link>
             </div>
           </div>
         ) : (
-          <div className="border border-[#e4e7e9] rounded-sm overflow-hidden">
+          <div className="overflow-hidden rounded-sm border border-[#e4e7e9]">
             {/* Product header grid */}
             <div
               className="grid divide-x divide-[#e4e7e9]"
@@ -268,14 +268,14 @@ export default function ComparePage() {
                 return (
                   <div
                     key={i}
-                    className="p-6 flex flex-col items-center gap-4 border-b border-[#e4e7e9]"
+                    className="flex flex-col items-center gap-4 border-b border-[#e4e7e9] p-6"
                   >
                     {product ? (
                       <>
                         {/* Remove button */}
                         <button
                           onClick={() => removeProduct(product.id)}
-                          className="self-end w-7 h-7 rounded-full flex items-center justify-center text-[#77878f] hover:text-[#ee5858] hover:bg-[#f2f4f5] transition-colors border-0 bg-transparent cursor-pointer"
+                          className="flex h-7 w-7 cursor-pointer items-center justify-center self-end rounded-full border-0 bg-transparent text-[#77878f] transition-colors hover:bg-[#f2f4f5] hover:text-[#ee5858]"
                           aria-label="Remove from compare"
                         >
                           <svg
@@ -295,7 +295,7 @@ export default function ComparePage() {
                         </button>
 
                         {/* Product image */}
-                        <div className="w-48 h-48 flex items-center justify-center">
+                        <div className="flex h-48 w-48 items-center justify-center">
                           <ProductImage
                             src={
                               product.images.find((img) => img.isPrimary)
@@ -306,19 +306,19 @@ export default function ComparePage() {
                             alt={product.name}
                             width={180}
                             height={180}
-                            className="w-full h-full object-contain"
+                            className="h-full w-full object-contain"
                           />
                         </div>
 
                         {/* Product name */}
-                        <p className="text-[14px] leading-5 text-[#191c1f] text-center line-clamp-3 w-full">
+                        <p className="line-clamp-3 w-full text-center text-[14px] leading-5 text-[#191c1f]">
                           {product.name}
                         </p>
 
                         {/* Action buttons */}
-                        <div className="flex gap-2 w-full">
+                        <div className="flex w-full gap-2">
                           <AddToCartButton product={product} />
-                          <button className="flex-none flex items-center justify-center w-12 h-12 border-[1.5px] border-[#ffe7d6] rounded-[2px] bg-transparent cursor-pointer hover:bg-[#fff5ef] transition-colors">
+                          <button className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-[2px] border-[1.5px] border-[#ffe7d6] bg-transparent transition-colors hover:bg-[#fff5ef]">
                             <svg
                               width="20"
                               height="20"
@@ -351,7 +351,7 @@ export default function ComparePage() {
               >
                 {/* Label */}
                 <div
-                  className={`px-6 py-3 flex items-center text-[14px] text-[#475156] ${
+                  className={`flex items-center px-6 py-3 text-[14px] text-[#475156] ${
                     rowIdx % 2 === 0 ? "bg-[#f2f4f5]" : "bg-white"
                   }`}
                 >
@@ -362,7 +362,7 @@ export default function ComparePage() {
                 {SLOTS.map((i) => (
                   <div
                     key={i}
-                    className={`px-6 py-3 flex items-center text-[14px] text-[#191c1f] ${
+                    className={`flex items-center px-6 py-3 text-[14px] text-[#191c1f] ${
                       rowIdx % 2 === 0 ? "bg-[#f2f4f5]" : "bg-white"
                     }`}
                   >

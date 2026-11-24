@@ -13,33 +13,33 @@ export function CategoryHero({ category }: { category: CategoryResponseDto }) {
   return (
     <Container>
       <div
-        className="relative rounded-[24px] overflow-hidden bg-foreground"
+        className="relative overflow-hidden rounded-[24px] bg-foreground"
         style={{ minHeight: 420 }}
       >
         {/* Warm radial glow */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0"
           style={{
             background:
               "radial-gradient(ellipse 60% 80% at 70% 50%, color-mix(in srgb, var(--color-cta) 12%, transparent) 0%, transparent 70%)",
           }}
         />
 
-        <div className="relative grid grid-cols-2 gap-12 items-center px-14 py-16 h-full">
+        <div className="relative grid h-full grid-cols-2 items-center gap-12 px-14 py-16">
           {/* Left: Text */}
           <div className="flex flex-col gap-0">
             <Badge kind="persimmon">Danh mục</Badge>
-            <h1 className="text-[clamp(40px,4.5vw,64px)] font-bold leading-[0.96] tracking-[-0.035em] text-muted mt-5 mb-4">
+            <h1 className="mt-5 mb-4 text-[clamp(40px,4.5vw,64px)] leading-[0.96] font-bold tracking-[-0.035em] text-muted">
               {category.name}
             </h1>
             {description && (
-              <p className="text-[18px] leading-relaxed text-text-tertiary max-w-110 mb-7">
+              <p className="mb-7 max-w-110 text-[18px] leading-relaxed text-text-tertiary">
                 {description}
               </p>
             )}
             <Link
               href={`/search?category=${category.slug}`}
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] bg-persimmon text-white font-semibold text-[16px] leading-none no-underline hover:bg-persimmon-hover transition-colors duration-150 w-fit"
+              className="bg-persimmon hover:bg-persimmon-hover inline-flex w-fit items-center gap-2 rounded-[8px] px-7 py-4 text-[16px] leading-none font-semibold text-white no-underline transition-colors duration-150"
             >
               Mua ngay
             </Link>

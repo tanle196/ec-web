@@ -102,7 +102,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Sign In" }]}
@@ -112,15 +112,15 @@ export default function LoginPage() {
 
       {/* Form card */}
       <div className="flex justify-center py-25">
-        <div className="bg-white border border-[#e4e7e9] rounded-[4px] shadow-[0px_8px_40px_0px_rgba(0,0,0,0.12)] w-106 overflow-hidden">
+        <div className="w-106 overflow-hidden rounded-[4px] border border-[#e4e7e9] bg-white shadow-[0px_8px_40px_0px_rgba(0,0,0,0.12)]">
           {/* Tabs */}
           <div className="flex border-b border-[#e4e7e9]">
-            <div className="flex-1 py-4 text-center text-[20px] font-semibold leading-7 text-[#191c1f] shadow-[inset_0px_-3px_0px_0px_#fa8232]">
+            <div className="flex-1 py-4 text-center text-[20px] leading-7 font-semibold text-[#191c1f] shadow-[inset_0px_-3px_0px_0px_#fa8232]">
               Sign In
             </div>
             <Link
               href="/register"
-              className="flex-1 py-4 text-center text-[20px] font-semibold leading-7 text-[#77878f] no-underline hover:text-[#191c1f] transition-colors border-l border-[#e4e7e9]"
+              className="flex-1 border-l border-[#e4e7e9] py-4 text-center text-[20px] leading-7 font-semibold text-[#77878f] no-underline transition-colors hover:text-[#191c1f]"
             >
               Sign Up
             </Link>
@@ -171,7 +171,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#77878f] hover:text-[#191c1f] transition-colors border-0 bg-transparent cursor-pointer p-0"
+                  className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer border-0 bg-transparent p-0 text-[#77878f] transition-colors hover:text-[#191c1f]"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   <EyeIcon open={showPassword} />
@@ -189,7 +189,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={login.isPending}
-              className="w-full h-12 rounded-xs bg-[#fa8232] text-white text-[14px] font-bold tracking-[0.012em] uppercase border-0 cursor-pointer hover:opacity-90 transition-opacity duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+              className="mt-2 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xs border-0 bg-[#fa8232] text-[14px] font-bold tracking-[0.012em] text-white uppercase transition-opacity duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {login.isPending ? (
                 <>
@@ -228,24 +228,24 @@ export default function LoginPage() {
             </button>
 
             {/* Divider */}
-            <div className="flex items-center gap-3 my-1">
-              <div className="flex-1 h-px bg-[#e4e7e9]" />
+            <div className="my-1 flex items-center gap-3">
+              <div className="h-px flex-1 bg-[#e4e7e9]" />
               <span className="text-[14px] leading-5 text-[#77878f]">or</span>
-              <div className="flex-1 h-px bg-[#e4e7e9]" />
+              <div className="h-px flex-1 bg-[#e4e7e9]" />
             </div>
 
             {/* Social login */}
             <div className="flex flex-col gap-3">
               <button
                 type="button"
-                className="w-full h-11 rounded-xs border border-[#e4e7e9] bg-white text-[14px] text-gray-700 flex items-center justify-center gap-2 cursor-pointer hover:border-[#191c1f] transition-colors"
+                className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xs border border-[#e4e7e9] bg-white text-[14px] text-gray-700 transition-colors hover:border-[#191c1f]"
               >
                 <GoogleIcon />
                 Login with Google
               </button>
               <button
                 type="button"
-                className="w-full h-11 rounded-xs border border-[#e4e7e9] bg-white text-[14px] text-gray-700 flex items-center justify-center gap-2 cursor-pointer hover:border-[#191c1f] transition-colors"
+                className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xs border border-[#e4e7e9] bg-white text-[14px] text-gray-700 transition-colors hover:border-[#191c1f]"
               >
                 <AppleIcon />
                 Login with Apple

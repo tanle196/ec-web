@@ -30,22 +30,22 @@ export default function PaymentMethodPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             {/* Payment History */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               {/* Section header */}
-              <div className="flex items-center justify-between px-6 h-13 border-b border-gray-100">
-                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+              <div className="flex h-13 items-center justify-between border-b border-gray-100 px-6">
+                <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Payment History
                 </span>
               </div>
 
               {/* Cards */}
-              <div className="flex gap-6 px-6 py-6 flex-wrap">
+              <div className="flex flex-wrap gap-6 px-6 py-6">
                 {paymentsPending && (
                   <p className="text-[14px] text-gray-600">
                     Loading payments...
@@ -59,33 +59,33 @@ export default function PaymentMethodPage() {
                 {payments?.data.map((payment, i) => (
                   <div
                     key={payment.id}
-                    className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
+                    className="relative h-[196px] w-[296px] flex-none overflow-hidden rounded-[4px]"
                     style={{ background: GRADIENTS[i % GRADIENTS.length] }}
                   >
                     <div className="absolute top-6 left-6">
-                      <p className="text-white text-[16px] leading-6">
+                      <p className="text-[16px] leading-6 text-white">
                         <span className="font-semibold">
                           {formatCurrency(payment.amount)}
                         </span>
                       </p>
                     </div>
                     <div className="absolute top-[72px] left-6 flex flex-col gap-2">
-                      <p className="text-white text-[11px] font-medium uppercase opacity-70 tracking-widest">
+                      <p className="text-[11px] font-medium tracking-widest text-white uppercase opacity-70">
                         Method
                       </p>
-                      <p className="text-white text-[18px] font-normal tracking-wide">
+                      <p className="text-[18px] font-normal tracking-wide text-white">
                         {PAYMENT_METHOD_LABEL[payment.method]}
                       </p>
                     </div>
                     <div className="absolute bottom-6 left-6">
                       <span
-                        className={`text-white text-[13px] font-bold uppercase tracking-widest`}
+                        className={`text-[13px] font-bold tracking-widest text-white uppercase`}
                       >
                         {paymentStatusLabel(payment.status)}
                       </span>
                     </div>
-                    <div className="absolute bottom-6 right-6">
-                      <p className="text-white text-[12px] opacity-80">
+                    <div className="absolute right-6 bottom-6">
+                      <p className="text-[12px] text-white opacity-80">
                         {formatDate(payment.createdAt)}
                       </p>
                     </div>

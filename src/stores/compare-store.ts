@@ -16,7 +16,10 @@ export const useCompareStore = create<CompareStore>()(
       productIds: [],
       addProduct: (id) =>
         set((state) => {
-          if (state.productIds.includes(id) || state.productIds.length >= MAX_COMPARE) {
+          if (
+            state.productIds.includes(id) ||
+            state.productIds.length >= MAX_COMPARE
+          ) {
             return state;
           }
           return { productIds: [...state.productIds, id] };
@@ -27,6 +30,6 @@ export const useCompareStore = create<CompareStore>()(
         })),
       clearCompare: () => set({ productIds: [] }),
     }),
-    { name: "compare" }
-  )
+    { name: "compare" },
+  ),
 );

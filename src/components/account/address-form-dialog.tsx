@@ -17,7 +17,7 @@ import type { AddressResponseDto, CreateAddressDto } from "@/api/main";
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className="block text-[13px] text-gray-600 mb-1.5">{label}</label>
+      <label className="mb-1.5 block text-[13px] text-gray-600">{label}</label>
       {children}
     </div>
   );
@@ -153,14 +153,14 @@ export function AddressFormDialog({
               <input className={inputClass} {...register("postalCode")} />
             </Field>
           </div>
-          <label className="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer">
+          <label className="flex cursor-pointer items-center gap-2 text-[14px] text-gray-700">
             <input type="checkbox" {...register("isDefault")} />
             Set as default address
           </label>
           <button
             type="submit"
             disabled={isSaving}
-            className="h-11 px-8 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-start"
+            className="h-11 cursor-pointer self-start rounded-[2px] bg-primary-500 px-8 text-[14px] font-bold tracking-[0.04em] text-white uppercase transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSaving ? "Saving..." : "Save Address"}
           </button>

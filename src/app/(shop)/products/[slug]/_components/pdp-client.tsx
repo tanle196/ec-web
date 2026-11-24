@@ -18,7 +18,7 @@ const PLACEHOLDER_IMG = "/no-image.svg";
 
 function StarRow({ rating, count }: { rating: number; count: number }) {
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((i) => (
           <svg
@@ -75,10 +75,10 @@ function QtyStepper({
   onChange: (v: number) => void;
 }) {
   return (
-    <div className="inline-flex items-center border border-border rounded h-12">
+    <div className="inline-flex h-12 items-center rounded border border-border">
       <button
         onClick={() => onChange(Math.max(1, value - 1))}
-        className="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-muted transition-colors cursor-pointer"
+        className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-600 transition-colors hover:bg-muted"
       >
         <svg
           width="14"
@@ -92,12 +92,12 @@ function QtyStepper({
           <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
       </button>
-      <span className="min-w-14 text-center text-[15px] font-semibold border-x border-border h-full flex items-center justify-center">
+      <span className="flex h-full min-w-14 items-center justify-center border-x border-border text-center text-[15px] font-semibold">
         {value}
       </span>
       <button
         onClick={() => onChange(value + 1)}
-        className="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-muted transition-colors cursor-pointer"
+        className="flex h-12 w-12 cursor-pointer items-center justify-center text-gray-600 transition-colors hover:bg-muted"
       >
         <svg
           width="14"
@@ -125,7 +125,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
   return (
     <div className="flex flex-col gap-3">
       {/* Main image */}
-      <div className="relative aspect-square bg-gray-50 border border-border rounded-lg overflow-hidden group">
+      <div className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-gray-50">
         <ProductImage
           src={srcs[active]}
           alt={mainAlt}
@@ -139,7 +139,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
                 setActive((a) => (a - 1 + srcs.length) % srcs.length)
               }
               aria-label="Previous"
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer border border-border"
+              className="absolute top-1/2 left-3 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-white opacity-0 shadow transition-opacity group-hover:opacity-100"
             >
               <svg
                 width="14"
@@ -157,7 +157,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
             <button
               onClick={() => setActive((a) => (a + 1) % srcs.length)}
               aria-label="Next"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer border border-border"
+              className="absolute top-1/2 right-3 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-white opacity-0 shadow transition-opacity group-hover:opacity-100"
             >
               <svg
                 width="14"
@@ -182,7 +182,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`flex-none w-18 h-18 rounded border-2 p-1.5 bg-gray-50 cursor-pointer transition-all ${
+            className={`h-18 w-18 flex-none cursor-pointer rounded border-2 bg-gray-50 p-1.5 transition-all ${
               active === i
                 ? "border-primary"
                 : "border-border hover:border-gray-400"
@@ -193,7 +193,7 @@ function Gallery({ images, mainAlt }: { images: string[]; mainAlt: string }) {
               alt=""
               width={52}
               height={52}
-              className="w-full h-full object-contain"
+              className="h-full w-full object-contain"
             />
           </button>
         ))}
@@ -218,22 +218,22 @@ function HorizontalProductCard({
   return (
     <Link
       href={`/products/${slug}`}
-      className="flex gap-3 items-center group no-underline py-2"
+      className="group flex items-center gap-3 py-2 no-underline"
     >
-      <div className="w-16 h-16 flex-none rounded bg-gray-50 border border-border overflow-hidden p-1">
+      <div className="h-16 w-16 flex-none overflow-hidden rounded border border-border bg-gray-50 p-1">
         <ProductImage
           src={img}
           alt={name}
           width={56}
           height={56}
-          className="w-full h-full object-contain"
+          className="h-full w-full object-contain"
         />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-[13px] text-gray-800 font-medium leading-snug line-clamp-2 group-hover:text-primary transition-colors m-0">
+        <p className="m-0 line-clamp-2 text-[13px] leading-snug font-medium text-gray-800 transition-colors group-hover:text-primary">
           {name}
         </p>
-        <p className="text-[13px] font-bold text-primary mt-0.5 m-0">
+        <p className="m-0 mt-0.5 text-[13px] font-bold text-primary">
           {price.toLocaleString("vi-VN")}₫
         </p>
       </div>
@@ -318,42 +318,42 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
   return (
     <>
       {/* ── Product section ─────────────────────────────────────────────── */}
-      <div className="bg-white border border-border rounded-sm flex gap-8 items-start p-6">
+      <div className="flex items-start gap-8 rounded-sm border border-border bg-white p-6">
         {/* Gallery */}
         <div className="w-105 flex-none">
           <Gallery images={galleryImages} mainAlt={product.name} />
         </div>
 
         {/* Info */}
-        <div className="flex-1 min-w-0 pt-1">
+        <div className="min-w-0 flex-1 pt-1">
           <StarRow rating={avgRating} count={reviews.length} />
 
-          <h1 className="text-[22px] font-semibold text-gray-900 leading-snug mt-3 mb-3">
+          <h1 className="mt-3 mb-3 text-[22px] leading-snug font-semibold text-gray-900">
             {product.name}
           </h1>
 
           {/* SKU / Availability / Brand / Category */}
-          <div className="flex items-center gap-0 text-[13px] text-gray-500 mb-4 flex-wrap divide-x divide-border">
+          <div className="mb-4 flex flex-wrap items-center gap-0 divide-x divide-border text-[13px] text-gray-500">
             <span className="pr-3">
               SKU:{" "}
-              <span className="text-gray-800 font-medium">{product.sku}</span>
+              <span className="font-medium text-gray-800">{product.sku}</span>
             </span>
-            <span className="px-3 flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 px-3">
               Availability:{" "}
-              <span className="text-green-600 font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+              <span className="flex items-center gap-1 font-semibold text-green-600">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
                 In Stock
               </span>
             </span>
             <span className="px-3">
               Brand:{" "}
-              <span className="text-secondary-500 font-medium">Official</span>
+              <span className="font-medium text-secondary-500">Official</span>
             </span>
           </div>
 
           {/* Price */}
-          <div className="flex items-center gap-3 mb-5">
-            <span className="text-[30px] font-bold text-primary leading-none">
+          <div className="mb-5 flex items-center gap-3">
+            <span className="text-[30px] leading-none font-bold text-primary">
               {displayPrice.toLocaleString("vi-VN")}₫
             </span>
             {/* Show strikethrough if multiple variants with different prices */}
@@ -368,10 +368,10 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                   );
                   return (
                     <>
-                      <span className="text-[18px] text-gray-400 line-through leading-none">
+                      <span className="text-[18px] leading-none text-gray-400 line-through">
                         {maxPrice.toLocaleString("vi-VN")}₫
                       </span>
-                      <span className="bg-primary text-white text-[12px] font-bold px-2 py-1 rounded">
+                      <span className="rounded bg-primary px-2 py-1 text-[12px] font-bold text-white">
                         {pct}% OFF
                       </span>
                     </>
@@ -381,13 +381,13 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
               })()}
           </div>
 
-          <div className="border-t border-border mb-5" />
+          <div className="mb-5 border-t border-border" />
 
           {/* Variant selector */}
           {product.variants.length > 0 && (
-            <div className="flex items-start gap-6 mb-5 flex-wrap">
+            <div className="mb-5 flex flex-wrap items-start gap-6">
               <div>
-                <div className="text-[13px] text-gray-500 mb-2">
+                <div className="mb-2 text-[13px] text-gray-500">
                   Variant:{" "}
                   <span className="font-semibold text-gray-800">
                     {selectedVariant?.name}
@@ -402,14 +402,14 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                     if (found) setSelectedVariant(found);
                   }}
                   spacing={1}
-                  className="gap-2 flex-wrap"
+                  className="flex-wrap gap-2"
                 >
                   {product.variants.map((vr) => (
                     <ToggleGroupItem
                       key={vr.id}
                       value={vr.id}
                       disabled={vr.stock === 0}
-                      className="h-auto px-4 py-2 rounded border border-border bg-white text-[13px] font-medium text-gray-700 data-[state=on]:border-primary data-[state=on]:text-primary data-[state=on]:bg-orange-50 disabled:opacity-40 disabled:line-through hover:border-gray-400 transition-colors"
+                      className="h-auto rounded border border-border bg-white px-4 py-2 text-[13px] font-medium text-gray-700 transition-colors hover:border-gray-400 disabled:line-through disabled:opacity-40 data-[state=on]:border-primary data-[state=on]:bg-orange-50 data-[state=on]:text-primary"
                     >
                       {vr.name}
                     </ToggleGroupItem>
@@ -420,12 +420,12 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
           )}
 
           {/* Qty + Add to Cart + Buy Now */}
-          <div className="flex items-center gap-3 mb-4">
+          <div className="mb-4 flex items-center gap-3">
             <QtyStepper value={qty} onChange={setQty} />
             <button
               onClick={handleAddToCart}
               disabled={addToCart.isPending || !selectedVariant}
-              className="flex-1 h-12 rounded bg-secondary-500 text-white font-semibold text-[14px] cursor-pointer hover:bg-secondary-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded bg-secondary-500 text-[14px] font-semibold text-white transition-colors hover:bg-secondary-600 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <svg
                 width="18"
@@ -447,14 +447,14 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                   ? "Adding..."
                   : "ADD TO CART"}
             </button>
-            <button className="flex-1 h-12 rounded bg-primary text-white font-semibold text-[14px] cursor-pointer hover:bg-primary-hover transition-colors">
+            <button className="h-12 flex-1 cursor-pointer rounded bg-primary text-[14px] font-semibold text-white transition-colors hover:bg-primary-hover">
               BUY NOW
             </button>
           </div>
 
           {/* Wishlist / Compare / Share */}
-          <div className="flex items-center gap-5 text-[13px] text-gray-500 mb-5">
-            <button className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer">
+          <div className="mb-5 flex items-center gap-5 text-[13px] text-gray-500">
+            <button className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-primary">
               <svg
                 width="15"
                 height="15"
@@ -469,7 +469,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
               </svg>
               Add to Wishlist
             </button>
-            <button className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer">
+            <button className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-primary">
               <svg
                 width="15"
                 height="15"
@@ -493,7 +493,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
             ].map((d, idx) => (
               <button
                 key={idx}
-                className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-colors cursor-pointer"
+                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-primary hover:text-white"
               >
                 <svg
                   width="13"
@@ -508,7 +508,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
           </div>
 
           {/* 100% Satisfy Checkout */}
-          <div className="border border-border rounded p-3 flex items-center gap-3">
+          <div className="flex items-center gap-3 rounded border border-border p-3">
             <svg
               width="20"
               height="20"
@@ -528,7 +528,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
               {["Visa", "MC", "AmEx", "PayPal"].map((name) => (
                 <div
                   key={name}
-                  className="h-6 px-2 bg-gray-100 rounded text-[10px] font-bold text-gray-600 flex items-center"
+                  className="flex h-6 items-center rounded bg-gray-100 px-2 text-[10px] font-bold text-gray-600"
                 >
                   {name}
                 </div>
@@ -539,11 +539,11 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
       </div>
 
       {/* ── Tabs ─────────────────────────────────────────────────────────── */}
-      <div className="mt-5 bg-white border border-border rounded-sm overflow-hidden">
+      <div className="mt-5 overflow-hidden rounded-sm border border-border bg-white">
         <Tabs defaultValue="description" className="flex flex-col gap-0">
           <TabsList
             variant="line"
-            className="w-full justify-start rounded-none bg-transparent border-b border-border pb-0 gap-0 h-auto"
+            className="h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent pb-0"
           >
             {(
               [
@@ -557,7 +557,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                 key={value}
                 value={value}
                 id={value === "reviews" ? "reviews" : undefined}
-                className="flex-none h-auto rounded-none px-6 py-4 text-[13px] font-semibold tracking-wide"
+                className="h-auto flex-none rounded-none px-6 py-4 text-[13px] font-semibold tracking-wide"
               >
                 {label}
               </TabsTrigger>
@@ -568,7 +568,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
           <TabsContent value="description" className="p-8">
             <div className="grid grid-cols-3 gap-10">
               <div>
-                <h3 className="text-[15px] font-semibold text-gray-900 mb-3">
+                <h3 className="mb-3 text-[15px] font-semibold text-gray-900">
                   Description
                 </h3>
                 <p className="text-[14px] leading-relaxed text-gray-600">
@@ -578,7 +578,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                 </p>
               </div>
               <div>
-                <h3 className="text-[15px] font-semibold text-gray-900 mb-3">
+                <h3 className="mb-3 text-[15px] font-semibold text-gray-900">
                   Features
                 </h3>
                 <ul className="space-y-2.5">
@@ -611,7 +611,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                 </ul>
               </div>
               <div>
-                <h3 className="text-[15px] font-semibold text-gray-900 mb-3">
+                <h3 className="mb-3 text-[15px] font-semibold text-gray-900">
                   Shipping Information
                 </h3>
                 <div className="space-y-2 text-[14px]">
@@ -624,7 +624,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                     ] as [string, string][]
                   ).map(([k, v]) => (
                     <div key={k} className="flex gap-2">
-                      <span className="text-gray-500 shrink-0 w-36">{k}</span>
+                      <span className="w-36 shrink-0 text-gray-500">{k}</span>
                       <span className="text-gray-700">{v}</span>
                     </div>
                   ))}
@@ -635,7 +635,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
 
           {/* Additional Info */}
           <TabsContent value="additional" className="p-8">
-            <table className="w-full text-[14px] border-collapse">
+            <table className="w-full border-collapse text-[14px]">
               <tbody>
                 {(
                   [
@@ -651,7 +651,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                   ] as [string, string][]
                 ).map(([k, v]) => (
                   <tr key={k} className="border-b border-border">
-                    <td className="py-3 pr-8 text-gray-500 w-44 font-medium">
+                    <td className="w-44 py-3 pr-8 font-medium text-gray-500">
                       {k}
                     </td>
                     <td className="py-3 text-gray-900 capitalize">{v}</td>
@@ -664,11 +664,11 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
           {/* Specification */}
           <TabsContent value="specification" className="p-8">
             {product.variants.length > 0 ? (
-              <table className="w-full text-[14px] border-collapse">
+              <table className="w-full border-collapse text-[14px]">
                 <tbody>
                   {product.variants.map((vr) => (
                     <tr key={vr.id} className="border-b border-border">
-                      <td className="py-3 pr-8 text-gray-500 w-48 font-medium">
+                      <td className="w-48 py-3 pr-8 font-medium text-gray-500">
                         {vr.name}
                       </td>
                       <td className="py-3 text-gray-900">
@@ -679,7 +679,7 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                 </tbody>
               </table>
             ) : (
-              <p className="text-gray-500 text-[14px]">
+              <p className="text-[14px] text-gray-500">
                 No specifications available.
               </p>
             )}
@@ -690,20 +690,20 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
             <div className="grid grid-cols-[1fr_260px] gap-10">
               <div>
                 {reviews.length === 0 ? (
-                  <p className="text-gray-500 text-[14px]">No reviews yet.</p>
+                  <p className="text-[14px] text-gray-500">No reviews yet.</p>
                 ) : (
                   reviews.map((r) => (
-                    <div key={r.id} className="py-5 border-b border-border">
-                      <div className="flex items-center gap-3 mb-2">
+                    <div key={r.id} className="border-b border-border py-5">
+                      <div className="mb-2 flex items-center gap-3">
                         <MiniStars rating={r.rating} />
                         <span className="text-[14px] font-semibold text-gray-900">
-                          {r.user.fullName
+                          {r.user?.fullName
                             ? String(r.user.fullName)
                             : "Anonymous"}
                         </span>
                       </div>
                       {r.content && (
-                        <p className="text-[14px] leading-relaxed text-gray-500 m-0">
+                        <p className="m-0 text-[14px] leading-relaxed text-gray-500">
                           {String(r.content)}
                         </p>
                       )}
@@ -711,11 +711,11 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
                   ))
                 )}
               </div>
-              <aside className="bg-muted rounded p-6 self-start text-center">
-                <div className="text-[52px] font-bold text-gray-900 leading-none mb-2">
+              <aside className="self-start rounded bg-muted p-6 text-center">
+                <div className="mb-2 text-[52px] leading-none font-bold text-gray-900">
                   {avgRating.toFixed(1)}
                 </div>
-                <div className="flex justify-center gap-0.5 mb-2">
+                <div className="mb-2 flex justify-center gap-0.5">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <svg
                       key={i}
@@ -745,9 +745,9 @@ export function PdpClient({ product }: { product: ProductResponseDto }) {
           {sections.map(({ title, items }) => (
             <div
               key={title}
-              className="bg-white border border-border rounded-sm p-4"
+              className="rounded-sm border border-border bg-white p-4"
             >
-              <h3 className="text-[13px] font-bold text-gray-900 tracking-wide mb-3 pb-2 border-b border-border">
+              <h3 className="mb-3 border-b border-border pb-2 text-[13px] font-bold tracking-wide text-gray-900">
                 {title}
               </h3>
               <div className="divide-y divide-border">

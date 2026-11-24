@@ -14,7 +14,13 @@ const IMG_XIAOMI =
 
 type ButtonSize = "lg" | "sm";
 
-function ShopNowButton({ href = "#", size = "sm" }: { href?: string; size?: ButtonSize }) {
+function ShopNowButton({
+  href = "#",
+  size = "sm",
+}: {
+  href?: string;
+  size?: ButtonSize;
+}) {
   const cls =
     size === "lg"
       ? "px-8 h-14 gap-3 text-body-md tracking-[0.192px]"
@@ -23,7 +29,7 @@ function ShopNowButton({ href = "#", size = "sm" }: { href?: string; size?: Butt
   return (
     <Link
       href={href}
-      className={`bg-primary-500 hover:bg-primary-600 transition-colors text-white font-bold uppercase rounded-sm inline-flex items-center no-underline shrink-0 ${cls}`}
+      className={`inline-flex shrink-0 items-center rounded-sm bg-primary-500 font-bold text-white uppercase no-underline transition-colors hover:bg-primary-600 ${cls}`}
     >
       Shop Now
       <ArrowRight size={size === "lg" ? 22 : 18} strokeWidth={2} aria-hidden />
@@ -35,29 +41,30 @@ function ShopNowButton({ href = "#", size = "sm" }: { href?: string; size?: Butt
 
 function HeroSlide() {
   return (
-    <article className="relative bg-gray-50 rounded-md overflow-hidden h-64 lg:h-[520px] flex-1 min-w-0">
-
+    <article className="relative h-64 min-w-0 flex-1 overflow-hidden rounded-md bg-gray-50 lg:h-[520px]">
       {/* Grid: left content | right image */}
-      <div className="grid grid-cols-2 h-full">
-
+      <div className="grid h-full grid-cols-2">
         {/* Left: text + CTA */}
-        <div className="flex flex-col justify-center gap-4 lg:gap-6 pl-8 lg:pl-14 py-8 pr-4">
+        <div className="flex flex-col justify-center gap-4 py-8 pr-4 pl-8 lg:gap-6 lg:pl-14">
           {/* Caption */}
           <div className="flex items-center gap-2">
-            <span className="block w-6 h-0.5 bg-secondary-600 shrink-0" aria-hidden />
-            <span className="text-secondary-600 text-body-sm font-semibold uppercase whitespace-nowrap">
+            <span
+              className="block h-0.5 w-6 shrink-0 bg-secondary-600"
+              aria-hidden
+            />
+            <span className="text-body-sm font-semibold whitespace-nowrap text-secondary-600 uppercase">
               The best place to play
             </span>
           </div>
 
           {/* Heading + body */}
           <div className="flex flex-col gap-3 lg:gap-4">
-            <h2 className="text-[clamp(28px,4vw,48px)] font-semibold text-gray-900 leading-tight">
+            <h2 className="text-[clamp(28px,4vw,48px)] leading-tight font-semibold text-gray-900">
               Xbox Consoles
             </h2>
-            <p className="text-body-sm lg:text-body-lg text-gray-700 max-w-[356px] hidden lg:block">
-              Save up to 50% on select Xbox games. Get 3 months of PC Game
-              Pass for $2 USD.
+            <p className="hidden max-w-[356px] text-body-sm text-gray-700 lg:block lg:text-body-lg">
+              Save up to 50% on select Xbox games. Get 3 months of PC Game Pass
+              for $2 USD.
             </p>
           </div>
 
@@ -70,24 +77,24 @@ function HeroSlide() {
           <img
             src={IMG_XBOX}
             alt="Xbox Console"
-            className="absolute inset-0 w-full h-full object-contain p-6 lg:p-8"
+            className="absolute inset-0 h-full w-full object-contain p-6 lg:p-8"
           />
         </div>
       </div>
 
       {/* Price badge */}
       <div
-        className="absolute top-10 right-10 bg-secondary-500 border-4 border-white rounded-full w-[72px] h-[72px] lg:w-[88px] lg:h-[88px] flex items-center justify-center"
+        className="absolute top-10 right-10 flex h-[72px] w-[72px] items-center justify-center rounded-full border-4 border-white bg-secondary-500 lg:h-[88px] lg:w-[88px]"
         aria-label="Price: $299"
       >
-        <span className="text-white font-semibold text-[18px] lg:text-[22px] leading-none">
+        <span className="text-[18px] leading-none font-semibold text-white lg:text-[22px]">
           $299
         </span>
       </div>
 
       {/* Slide indicators */}
       <div
-        className="absolute bottom-10 left-8 lg:left-14 flex items-center gap-2"
+        className="absolute bottom-10 left-8 flex items-center gap-2 lg:left-14"
         role="tablist"
         aria-label="Slides"
       >
@@ -95,19 +102,19 @@ function HeroSlide() {
           role="tab"
           aria-selected="true"
           aria-label="Slide 1"
-          className="w-2.5 h-2.5 rounded-full bg-primary-500"
+          className="h-2.5 w-2.5 rounded-full bg-primary-500"
         />
         <button
           role="tab"
           aria-selected="false"
           aria-label="Slide 2"
-          className="w-2.5 h-2.5 rounded-full bg-gray-300"
+          className="h-2.5 w-2.5 rounded-full bg-gray-300"
         />
         <button
           role="tab"
           aria-selected="false"
           aria-label="Slide 3"
-          className="w-2.5 h-2.5 rounded-full bg-gray-300"
+          className="h-2.5 w-2.5 rounded-full bg-gray-300"
         />
       </div>
     </article>
@@ -118,13 +125,9 @@ function HeroSlide() {
 
 function DarkWidget() {
   return (
-    <article className="relative bg-gray-900 rounded-md overflow-hidden h-[248px]">
-
+    <article className="relative h-[248px] overflow-hidden rounded-md bg-gray-900">
       {/* Product image — bleeds from right side */}
-      <div
-        className="absolute right-0 inset-y-0 w-[60%]"
-        aria-hidden
-      >
+      <div className="absolute inset-y-0 right-0 w-[60%]" aria-hidden>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={IMG_PIXEL}
@@ -134,17 +137,17 @@ function DarkWidget() {
       </div>
 
       {/* Discount badge */}
-      <div className="absolute top-6 right-6 bg-warning-400 text-gray-900 font-semibold text-body-md px-4 py-2 rounded-sm z-10">
+      <div className="absolute top-6 right-6 z-10 rounded-sm bg-warning-400 px-4 py-2 text-body-md font-semibold text-gray-900">
         29% OFF
       </div>
 
       {/* Content */}
-      <div className="absolute left-10 top-[46px] flex flex-col gap-4 z-10">
+      <div className="absolute top-[46px] left-10 z-10 flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <span className="text-warning-500 text-body-sm font-medium uppercase">
+          <span className="text-body-sm font-medium text-warning-500 uppercase">
             Summer Sales
           </span>
-          <h3 className="text-heading-3 font-semibold text-white leading-tight w-40">
+          <h3 className="w-40 text-heading-3 leading-tight font-semibold text-white">
             New Google Pixel 6 Pro
           </h3>
         </div>
@@ -158,22 +161,21 @@ function DarkWidget() {
 
 function LightWidget() {
   return (
-    <article className="bg-gray-50 rounded-md overflow-hidden flex items-center gap-5 pl-8 pr-10 py-10">
-
+    <article className="flex items-center gap-5 overflow-hidden rounded-md bg-gray-50 py-10 pr-10 pl-8">
       {/* Product image */}
-      <div className="shrink-0 w-40 h-40">
+      <div className="h-40 w-40 shrink-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={IMG_XIAOMI}
           alt="Xiaomi FlipBuds Pro"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
 
       {/* Content */}
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
-          <h3 className="text-heading-3 font-semibold text-gray-900 leading-tight w-[172px]">
+          <h3 className="w-[172px] text-heading-3 leading-tight font-semibold text-gray-900">
             Xiaomi FlipBuds Pro
           </h3>
           <p className="text-body-lg font-semibold text-secondary-500">
@@ -192,9 +194,9 @@ export function HeroWidgets() {
   return (
     <section aria-label="Featured products">
       <Container className="py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col gap-6 lg:flex-row">
           <HeroSlide />
-          <div className="flex flex-col gap-6 lg:w-[424px] shrink-0">
+          <div className="flex shrink-0 flex-col gap-6 lg:w-[424px]">
             <DarkWidget />
             <LightWidget />
           </div>

@@ -34,6 +34,6 @@ export const useWishlistStore = create<WishlistStore>()(
       hasProduct: (id) => get().productIds.includes(id),
       clearWishlist: () => set({ productIds: [] }),
     }),
-    { name: "wishlist" }
-  )
+    { name: "wishlist" },
+  ),
 );

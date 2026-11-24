@@ -36,10 +36,10 @@ function AddToCartBtn({ product }: { product: ProductResponseDto }) {
           addToCart.mutate({ variant_id: firstVariant.id, quantity: 1 });
         }
       }}
-      className={`flex items-center gap-2 px-6 h-12 rounded-xs text-[13px] font-bold uppercase tracking-wide text-white transition-opacity ${
+      className={`flex h-12 items-center gap-2 rounded-xs px-6 text-[13px] font-bold tracking-wide text-white uppercase transition-opacity ${
         inStock
-          ? "bg-[#fa8232] hover:opacity-90 cursor-pointer"
-          : "bg-[#adb7bc] cursor-not-allowed"
+          ? "cursor-pointer bg-[#fa8232] hover:opacity-90"
+          : "cursor-not-allowed bg-[#adb7bc]"
       }`}
     >
       <svg
@@ -65,7 +65,7 @@ function RemoveBtn({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="w-6 h-6 flex items-center justify-center text-[#adb7bc] hover:text-[#ee5858] transition-colors bg-transparent border-0 cursor-pointer"
+      className="flex h-6 w-6 cursor-pointer items-center justify-center border-0 bg-transparent text-[#adb7bc] transition-colors hover:text-[#ee5858]"
       aria-label="Remove from wishlist"
     >
       <svg
@@ -103,25 +103,25 @@ function WishlistRow({
   const price = firstVariant?.price ?? product.basePrice;
 
   return (
-    <div className="flex items-center gap-6 py-4 border-b border-[#e4e7e9] last:border-b-0">
+    <div className="flex items-center gap-6 border-b border-[#e4e7e9] py-4 last:border-b-0">
       {/* Product: image + name */}
-      <div className="flex items-center gap-4 flex-1 min-w-0 pr-4">
-        <div className="w-18 h-18 flex-none rounded-xs overflow-hidden bg-[#f2f4f5]">
+      <div className="flex min-w-0 flex-1 items-center gap-4 pr-4">
+        <div className="h-18 w-18 flex-none overflow-hidden rounded-xs bg-[#f2f4f5]">
           <ProductImage
             src={primaryImg}
             alt={product.name}
             width={72}
             height={72}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
-        <p className="text-[14px] leading-5 text-gray-700 line-clamp-3">
+        <p className="line-clamp-3 text-[14px] leading-5 text-gray-700">
           {product.name}
         </p>
       </div>
 
       {/* Price */}
-      <div className="w-48 flex-none flex items-center gap-2.5">
+      <div className="flex w-48 flex-none items-center gap-2.5">
         <span className="text-[14px] font-medium text-[#191c1f]">
           {formatPrice(price)}
         </span>
@@ -139,7 +139,7 @@ function WishlistRow({
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-6 flex-none">
+      <div className="flex flex-none items-center gap-6">
         <AddToCartBtn product={product} />
         <RemoveBtn onClick={onRemove} />
       </div>
@@ -166,7 +166,7 @@ export default function WishlistPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
@@ -177,11 +177,11 @@ export default function WishlistPage() {
       {/* Main content */}
       <Container className="py-10 pb-24">
         {isLoading ? (
-          <div className="flex items-center justify-center h-80">
-            <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
+          <div className="flex h-80 items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#fa8232] border-t-transparent" />
           </div>
         ) : productIds.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-80 gap-5 text-center">
+          <div className="flex h-80 flex-col items-center justify-center gap-5 text-center">
             <svg
               width="56"
               height="56"
@@ -195,42 +195,42 @@ export default function WishlistPage() {
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
             </svg>
             <div>
-              <h2 className="text-[20px] font-semibold text-[#191c1f] mb-2">
+              <h2 className="mb-2 text-[20px] font-semibold text-[#191c1f]">
                 Your wishlist is empty
               </h2>
-              <p className="text-[14px] text-[#77878f] mb-5">
+              <p className="mb-5 text-[14px] text-[#77878f]">
                 Save products you love and come back to them later.
               </p>
               <Link
                 href="/search"
-                className="inline-flex items-center gap-2 px-6 h-11 rounded-xs bg-[#fa8232] text-white text-[14px] font-bold uppercase tracking-wide no-underline hover:opacity-90 transition-opacity"
+                className="inline-flex h-11 items-center gap-2 rounded-xs bg-[#fa8232] px-6 text-[14px] font-bold tracking-wide text-white uppercase no-underline transition-opacity hover:opacity-90"
               >
                 Browse Products
               </Link>
             </div>
           </div>
         ) : (
-          <div className="border border-[#e4e7e9] rounded-[4px] overflow-hidden">
+          <div className="overflow-hidden rounded-[4px] border border-[#e4e7e9]">
             {/* Heading */}
-            <div className="px-6 py-5 border-b border-[#e4e7e9]">
-              <h1 className="text-[18px] font-medium text-[#191c1f] leading-6">
+            <div className="border-b border-[#e4e7e9] px-6 py-5">
+              <h1 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                 Wishlist
               </h1>
             </div>
 
             {/* Column headers */}
-            <div className="flex items-center gap-6 bg-[#f2f4f5] border-b border-[#e4e7e9] px-6 py-2.5">
-              <p className="flex-1 text-[12px] font-medium text-gray-700 uppercase tracking-wide">
+            <div className="flex items-center gap-6 border-b border-[#e4e7e9] bg-[#f2f4f5] px-6 py-2.5">
+              <p className="flex-1 text-[12px] font-medium tracking-wide text-gray-700 uppercase">
                 Products
               </p>
-              <p className="w-48 flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide">
+              <p className="w-48 flex-none text-[12px] font-medium tracking-wide text-gray-700 uppercase">
                 Price
               </p>
-              <p className="w-44 flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide">
+              <p className="w-44 flex-none text-[12px] font-medium tracking-wide text-gray-700 uppercase">
                 Stock Status
               </p>
               <p
-                className="flex-none text-[12px] font-medium text-gray-700 uppercase tracking-wide"
+                className="flex-none text-[12px] font-medium tracking-wide text-gray-700 uppercase"
                 style={{ width: "calc(148px + 24px + 24px)" }}
               >
                 Actions

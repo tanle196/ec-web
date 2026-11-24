@@ -174,7 +174,7 @@ function ActivityIcon({ kind }: { kind: ActivityEntry["icon"] }) {
   const isGreen = kind === "check" || kind === "circle-check";
   return (
     <div
-      className={`flex-none p-3 rounded-[2px] border ${isGreen ? "bg-[#eaf7e9] border-[#d5f0d3]" : "bg-[#eaf6fe] border-[#d5edfd]"}`}
+      className={`flex-none rounded-[2px] border p-3 ${isGreen ? "border-[#d5f0d3] bg-[#eaf7e9]" : "border-[#d5edfd] bg-[#eaf6fe]"}`}
     >
       {kind === "check" && (
         <svg
@@ -287,7 +287,7 @@ function fmtDate(d: Date) {
 function ProgressDot({ done, active }: { done: boolean; active: boolean }) {
   if (done || active) {
     return (
-      <div className="w-6 h-6 rounded-full bg-[#fa8232] border-2 border-[#fa8232] flex items-center justify-center flex-none">
+      <div className="flex h-6 w-6 flex-none items-center justify-center rounded-full border-2 border-[#fa8232] bg-[#fa8232]">
         {done && (
           <svg
             width="12"
@@ -306,7 +306,7 @@ function ProgressDot({ done, active }: { done: boolean; active: boolean }) {
     );
   }
   return (
-    <div className="w-6 h-6 rounded-full border-2 border-[#e4e7e9] bg-white flex-none" />
+    <div className="h-6 w-6 flex-none rounded-full border-2 border-[#e4e7e9] bg-white" />
   );
 }
 
@@ -319,7 +319,7 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[
@@ -333,11 +333,11 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
 
       {/* Content */}
       <Container className="py-18">
-        <div className="border border-[#e4e7e9] rounded-[4px] overflow-hidden">
+        <div className="overflow-hidden rounded-[4px] border border-[#e4e7e9]">
           {/* Product Tracking */}
-          <div className="p-6 flex flex-col gap-6">
+          <div className="flex flex-col gap-6 p-6">
             {/* Order header */}
-            <div className="bg-[#fdfae7] border border-[#f7e99e] rounded-[4px] p-6 flex items-center justify-between">
+            <div className="flex items-center justify-between rounded-[4px] border border-[#f7e99e] bg-[#fdfae7] p-6">
               <div className="flex flex-col gap-2">
                 <p className="text-[20px] leading-7 font-normal text-[#191c1f]">
                   #{order.orderNumber}
@@ -351,7 +351,7 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
                   <span>Order Placed on {fmtDate(order.createdAt)}</span>
                 </div>
               </div>
-              <p className="text-[28px] font-semibold leading-8 text-[#2da5f3]">
+              <p className="text-[28px] leading-8 font-semibold text-[#2da5f3]">
                 {fmt(order.total)}
               </p>
             </div>
@@ -376,10 +376,10 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
                 style={{ height: "24px" }}
               >
                 {/* Track */}
-                <div className="absolute left-3 right-3 h-2 bg-[#ffe7d6] rounded-full" />
+                <div className="absolute right-3 left-3 h-2 rounded-full bg-[#ffe7d6]" />
                 {/* Fill */}
                 <div
-                  className="absolute left-3 h-2 bg-[#fa8232] rounded-full transition-all duration-500"
+                  className="absolute left-3 h-2 rounded-full bg-[#fa8232] transition-all duration-500"
                   style={{
                     width: `calc(${progressPct}% * (100% - 24px) / 100)`,
                   }}
@@ -413,14 +413,14 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
                   return (
                     <div
                       key={i}
-                      className={`flex flex-col items-center gap-3 flex-1 ${!isActive ? "opacity-50" : ""}`}
+                      className={`flex flex-1 flex-col items-center gap-3 ${!isActive ? "opacity-50" : ""}`}
                     >
                       <div
                         className={`${isActive ? "text-[#fa8232]" : "text-[#77878f]"}`}
                       >
                         {step.icon}
                       </div>
-                      <p className="text-[14px] font-medium leading-5 text-[#191c1f] text-center">
+                      <p className="text-center text-[14px] leading-5 font-medium text-[#191c1f]">
                         {step.label}
                       </p>
                     </div>
@@ -431,8 +431,8 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
           </div>
 
           {/* Order Activity */}
-          <div className="border-t border-[#e4e7e9] p-6 flex flex-col gap-6">
-            <p className="text-[18px] font-medium leading-6 text-[#191c1f]">
+          <div className="flex flex-col gap-6 border-t border-[#e4e7e9] p-6">
+            <p className="text-[18px] leading-6 font-medium text-[#191c1f]">
               Order Activity
             </p>
             <div className="flex flex-col gap-4">
@@ -456,12 +456,12 @@ function TrackOrderDetailContent({ order }: { order: OrderResponseDto }) {
 function LoadingState() {
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#f2f4f5] h-18" />
+      <div className="h-18 bg-[#f2f4f5]" />
       <Container className="py-18">
-        <div className="border border-[#e4e7e9] rounded-[4px] p-6 flex flex-col gap-6 animate-pulse">
-          <div className="bg-[#f2f4f5] rounded-[4px] h-20" />
-          <div className="h-5 bg-[#f2f4f5] rounded w-56" />
-          <div className="h-8 bg-[#f2f4f5] rounded" />
+        <div className="flex animate-pulse flex-col gap-6 rounded-[4px] border border-[#e4e7e9] p-6">
+          <div className="h-20 rounded-[4px] bg-[#f2f4f5]" />
+          <div className="h-5 w-56 rounded bg-[#f2f4f5]" />
+          <div className="h-8 rounded bg-[#f2f4f5]" />
         </div>
       </Container>
     </div>
@@ -470,14 +470,14 @@ function LoadingState() {
 
 function NotFoundState() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="text-center flex flex-col gap-4">
-        <p className="text-[18px] text-[#191c1f] font-medium">
+    <div className="flex min-h-screen items-center justify-center bg-white">
+      <div className="flex flex-col gap-4 text-center">
+        <p className="text-[18px] font-medium text-[#191c1f]">
           Order not found
         </p>
         <Link
           href="/track-order"
-          className="text-[#2da5f3] text-[14px] no-underline hover:underline"
+          className="text-[14px] text-[#2da5f3] no-underline hover:underline"
         >
           ← Back to Track Order
         </Link>

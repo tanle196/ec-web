@@ -21,15 +21,15 @@ function FilterGroup({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-b border-marlo-border py-5">
+    <div className="border-marlo-border border-b py-5">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between bg-transparent border-0 cursor-pointer p-0 text-[14px] font-semibold text-ink"
+        className="text-ink flex w-full cursor-pointer items-center justify-between border-0 bg-transparent p-0 text-[14px] font-semibold"
       >
         <span>{title}</span>
         <ChevronDown
           size={16}
-          className="transition-transform duration-150 flex-none"
+          className="flex-none transition-transform duration-150"
           style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
         />
       </button>
@@ -52,10 +52,10 @@ function CheckItem({
   onChange: () => void;
 }) {
   return (
-    <label className="flex items-center gap-2.5 cursor-pointer py-1.5 text-[14px] text-ink select-none">
+    <label className="text-ink flex cursor-pointer items-center gap-2.5 py-1.5 text-[14px] select-none">
       <span
         onClick={onChange}
-        className="w-4.5 h-4.5 flex-none rounded-[4px] border border-marlo-border-strong flex items-center justify-center transition-colors duration-100"
+        className="border-marlo-border-strong flex h-4.5 w-4.5 flex-none items-center justify-center rounded-[4px] border transition-colors duration-100"
         style={{ background: checked ? "var(--foreground)" : "white" }}
       >
         {checked && (
@@ -109,11 +109,11 @@ function FilterSidebar({
 }) {
   return (
     <aside className="w-60 flex-none">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-[16px] font-semibold text-ink m-0">Bộ lọc</h3>
+      <div className="mb-2 flex items-center justify-between">
+        <h3 className="text-ink m-0 text-[16px] font-semibold">Bộ lọc</h3>
         <button
           onClick={onClear}
-          className="bg-transparent border-0 text-[13px] text-text-secondary cursor-pointer underline underline-offset-2 p-0"
+          className="cursor-pointer border-0 bg-transparent p-0 text-[13px] text-text-secondary underline underline-offset-2"
         >
           Xóa tất cả
         </button>
@@ -130,22 +130,22 @@ function FilterSidebar({
 
       {/* Price */}
       <FilterGroup title="Khoảng giá">
-        <div className="flex items-center gap-2 mt-1">
+        <div className="mt-1 flex items-center gap-2">
           <input
             placeholder="0đ"
             value={filters.priceMin}
             onChange={(e) => onChange("priceMin", e.target.value)}
-            className="font-mono-marlo flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
+            className="font-mono-marlo border-marlo-border w-0 flex-1 rounded-[8px] border bg-white px-2.5 py-2 text-[13px] outline-none"
           />
-          <span className="text-text-tertiary flex-none">–</span>
+          <span className="flex-none text-text-tertiary">–</span>
           <input
             placeholder="∞"
             value={filters.priceMax}
             onChange={(e) => onChange("priceMax", e.target.value)}
-            className="font-mono-marlo flex-1 bg-white border border-marlo-border rounded-[8px] px-2.5 py-2 text-[13px] outline-none w-0"
+            className="font-mono-marlo border-marlo-border w-0 flex-1 rounded-[8px] border bg-white px-2.5 py-2 text-[13px] outline-none"
           />
         </div>
-        <div className="flex gap-1.5 mt-3 flex-wrap">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {PRICE_PRESETS.map((preset) => {
             const active =
               filters.priceMin === preset.min &&
@@ -162,7 +162,7 @@ function FilterSidebar({
                     onChange("priceMax", preset.max);
                   }
                 }}
-                className="rounded-full px-2.5 py-1 text-[12px] cursor-pointer transition-colors border"
+                className="cursor-pointer rounded-full border px-2.5 py-1 text-[12px] transition-colors"
                 style={{
                   background: active ? "var(--foreground)" : "white",
                   color: active ? "white" : "var(--foreground)",
@@ -267,10 +267,10 @@ export function SearchResults({ query }: { query: string }) {
   return (
     <Container className="py-8 pb-20">
       {/* Breadcrumb */}
-      <nav className="text-[13px] text-text-secondary mb-4">
+      <nav className="mb-4 text-[13px] text-text-secondary">
         <Link
           href="/"
-          className="text-text-secondary hover:text-ink transition-colors no-underline"
+          className="hover:text-ink text-text-secondary no-underline transition-colors"
         >
           Trang chủ
         </Link>
@@ -279,7 +279,7 @@ export function SearchResults({ query }: { query: string }) {
       </nav>
 
       {/* Title */}
-      <h1 className="text-[clamp(32px,3.5vw,44px)] font-semibold leading-[1.02] tracking-[-0.02em] text-ink mb-8">
+      <h1 className="text-ink mb-8 text-[clamp(32px,3.5vw,44px)] leading-[1.02] font-semibold tracking-[-0.02em]">
         {query ? (
           <>
             Kết quả cho{" "}
@@ -297,9 +297,9 @@ export function SearchResults({ query }: { query: string }) {
           onClear={clearAll}
         />
 
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           {/* Sort bar */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6 flex items-center justify-between">
             <span className="text-[14px] text-text-secondary">
               <span className="text-ink font-semibold">{filtered.length}</span>{" "}
               kết quả
@@ -321,7 +321,7 @@ export function SearchResults({ query }: { query: string }) {
                   setSort(e.target.value);
                   setPage(1);
                 }}
-                className="bg-white border border-marlo-border rounded-[8px] px-3 py-2 text-[14px] text-ink cursor-pointer outline-none"
+                className="border-marlo-border text-ink cursor-pointer rounded-[8px] border bg-white px-3 py-2 text-[14px] outline-none"
               >
                 <option value="featured">Nổi bật</option>
                 <option value="price-asc">Giá: thấp đến cao</option>
@@ -332,12 +332,12 @@ export function SearchResults({ query }: { query: string }) {
 
           {/* Active chips */}
           {chips.length > 0 && (
-            <div className="flex items-center gap-2 flex-wrap mb-5">
+            <div className="mb-5 flex flex-wrap items-center gap-2">
               {chips.map((chip) => (
                 <button
                   key={chip.id}
                   onClick={() => removeChip(chip.id)}
-                  className="inline-flex items-center gap-1.5 bg-ink text-white rounded-full px-3 py-1.5 text-[13px] font-medium cursor-pointer border-0 hover:opacity-80 transition-opacity"
+                  className="bg-ink inline-flex cursor-pointer items-center gap-1.5 rounded-full border-0 px-3 py-1.5 text-[13px] font-medium text-white transition-opacity hover:opacity-80"
                 >
                   {chip.label}
                   <X size={12} strokeWidth={2} />
@@ -365,7 +365,7 @@ export function SearchResults({ query }: { query: string }) {
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
               </svg>
-              <p className="text-[18px] font-semibold text-ink mb-2">
+              <p className="text-ink mb-2 text-[18px] font-semibold">
                 Không tìm thấy sản phẩm
               </p>
               <p className="text-[14px] text-text-secondary">
@@ -380,7 +380,7 @@ export function SearchResults({ query }: { query: string }) {
               {Array.from({ length: 8 }).map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white border border-marlo-border rounded-[12px] p-2 aspect-3/4 animate-pulse"
+                  className="border-marlo-border aspect-3/4 animate-pulse rounded-[12px] border bg-white p-2"
                 />
               ))}
             </div>
@@ -388,11 +388,11 @@ export function SearchResults({ query }: { query: string }) {
 
           {/* Load more */}
           {hasMore && (
-            <div className="flex justify-center mt-10">
+            <div className="mt-10 flex justify-center">
               <button
                 onClick={() => setPage((p) => p + 1)}
                 disabled={isLoading}
-                className="border border-marlo-border rounded-full px-8 py-3 text-[14px] font-semibold text-ink bg-white hover:bg-cream-2 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="border-marlo-border text-ink hover:bg-cream-2 cursor-pointer rounded-full border bg-white px-8 py-3 text-[14px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading
                   ? "Đang tải..."

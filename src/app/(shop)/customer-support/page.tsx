@@ -416,18 +416,21 @@ export default function CustomerSupportPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
-            items={[{ label: "Home", href: "/" }, { label: "Customer Support" }]}
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Customer Support" },
+            ]}
           />
         </Container>
       </div>
 
       {/* Hero / Search */}
-      <section className="relative overflow-hidden bg-white shadow-[inset_0px_-1px_0px_0px_#e4e7e9] h-[332px]">
+      <section className="relative h-[332px] overflow-hidden bg-white shadow-[inset_0px_-1px_0px_0px_#e4e7e9]">
         {/* Customer support agent image */}
-        <div className="absolute top-0 right-0 h-full w-[42%] pointer-events-none overflow-hidden">
+        <div className="pointer-events-none absolute top-0 right-0 h-full w-[42%] overflow-hidden">
           <Image
             src="https://www.figma.com/api/mcp/asset/248b72bd-8a6c-4655-b10b-9bdf56f072c8"
             alt=""
@@ -436,20 +439,20 @@ export default function CustomerSupportPage() {
           />
         </div>
 
-        <Container className="relative h-full flex items-center">
-          <div className="flex flex-col gap-6 max-w-[536px]">
+        <Container className="relative flex h-full items-center">
+          <div className="flex max-w-[536px] flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <span className="inline-flex items-center self-start bg-[#efd33d] text-[#191c1f] text-[14px] font-semibold px-4 py-2 rounded-[2px]">
+              <span className="inline-flex items-center self-start rounded-[2px] bg-[#efd33d] px-4 py-2 text-[14px] font-semibold text-[#191c1f]">
                 HELP CENTER
               </span>
-              <h1 className="text-[32px] font-semibold leading-[40px] text-[#191c1f]">
+              <h1 className="text-[32px] leading-[40px] font-semibold text-[#191c1f]">
                 How we can help you!
               </h1>
             </div>
 
             {/* Search bar */}
-            <div className="flex items-center gap-3 bg-white border border-[#e4e7e9] rounded-[4px] p-3">
-              <div className="flex items-center gap-3 flex-1 bg-white h-12 rounded-[2px] px-3">
+            <div className="flex items-center gap-3 rounded-[4px] border border-[#e4e7e9] bg-white p-3">
+              <div className="flex h-12 flex-1 items-center gap-3 rounded-[2px] bg-white px-3">
                 <svg
                   width="20"
                   height="20"
@@ -469,12 +472,12 @@ export default function CustomerSupportPage() {
                   placeholder="Enter your question or keyword"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="flex-1 text-[16px] leading-6 text-[#191c1f] placeholder:text-[#77878f] outline-none border-0 bg-transparent"
+                  className="flex-1 border-0 bg-transparent text-[16px] leading-6 text-[#191c1f] outline-none placeholder:text-[#77878f]"
                 />
               </div>
               <button
                 type="button"
-                className="bg-[#fa8232] text-white text-[14px] font-bold uppercase tracking-[0.168px] h-12 px-6 rounded-[2px] hover:opacity-90 transition-opacity cursor-pointer whitespace-nowrap"
+                className="h-12 cursor-pointer rounded-[2px] bg-[#fa8232] px-6 text-[14px] font-bold tracking-[0.168px] whitespace-nowrap text-white uppercase transition-opacity hover:opacity-90"
               >
                 Search
               </button>
@@ -486,7 +489,7 @@ export default function CustomerSupportPage() {
       {/* Category Buttons */}
       <section className="py-18">
         <Container className="flex flex-col gap-10">
-          <h2 className="text-[32px] font-semibold leading-10 text-[#191c1f] text-center">
+          <h2 className="text-center text-[32px] leading-10 font-semibold text-[#191c1f]">
             What can we assist you with today?
           </h2>
 
@@ -500,14 +503,14 @@ export default function CustomerSupportPage() {
                     key={cat.id}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`flex gap-4 items-center justify-center p-6 rounded-[4px] border-2 transition-all cursor-pointer text-left ${
+                    className={`flex cursor-pointer items-center justify-center gap-4 rounded-[4px] border-2 p-6 text-left transition-all ${
                       isActive
                         ? "border-[#fa8232] shadow-[0px_8px_20px_rgba(250,130,50,0.12)]"
                         : "border-[#ffe7d6] hover:border-[#fa8232]/50"
                     }`}
                   >
                     {cat.icon}
-                    <span className="text-[16px] font-medium leading-6 text-[#191c1f] flex-1">
+                    <span className="flex-1 text-[16px] leading-6 font-medium text-[#191c1f]">
                       {cat.label}
                     </span>
                   </button>
@@ -523,14 +526,14 @@ export default function CustomerSupportPage() {
                     key={cat.id}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`flex gap-4 items-center justify-center p-6 rounded-[4px] border-2 transition-all cursor-pointer text-left ${
+                    className={`flex cursor-pointer items-center justify-center gap-4 rounded-[4px] border-2 p-6 text-left transition-all ${
                       isActive
                         ? "border-[#fa8232] shadow-[0px_8px_20px_rgba(250,130,50,0.12)]"
                         : "border-[#ffe7d6] hover:border-[#fa8232]/50"
                     }`}
                   >
                     {cat.icon}
-                    <span className="text-[16px] font-medium leading-6 text-[#191c1f] flex-1">
+                    <span className="flex-1 text-[16px] leading-6 font-medium text-[#191c1f]">
                       {cat.label}
                     </span>
                   </button>
@@ -546,14 +549,14 @@ export default function CustomerSupportPage() {
                     key={cat.id}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`flex gap-4 items-center justify-center p-6 rounded-[4px] border-2 transition-all cursor-pointer text-left ${
+                    className={`flex cursor-pointer items-center justify-center gap-4 rounded-[4px] border-2 p-6 text-left transition-all ${
                       isActive
                         ? "border-[#fa8232] shadow-[0px_8px_20px_rgba(250,130,50,0.12)]"
                         : "border-[#ffe7d6] hover:border-[#fa8232]/50"
                     }`}
                   >
                     {cat.icon}
-                    <span className="text-[16px] font-medium leading-6 text-[#191c1f] flex-1">
+                    <span className="flex-1 text-[16px] leading-6 font-medium text-[#191c1f]">
                       {cat.label}
                     </span>
                   </button>
@@ -565,9 +568,9 @@ export default function CustomerSupportPage() {
       </section>
 
       {/* Popular Topics */}
-      <section className="py-18 border-t border-[#e4e7e9]">
+      <section className="border-t border-[#e4e7e9] py-18">
         <Container className="flex flex-col gap-10">
-          <h2 className="text-[24px] font-semibold leading-8 text-[#191c1f] text-center">
+          <h2 className="text-center text-[24px] leading-8 font-semibold text-[#191c1f]">
             Popular Topics
           </h2>
 
@@ -578,13 +581,13 @@ export default function CustomerSupportPage() {
                   <li key={itemIdx}>
                     <Link
                       href="#"
-                      className={`flex items-start gap-2 text-[16px] leading-6 no-underline list-disc ${
+                      className={`flex list-disc items-start gap-2 text-[16px] leading-6 no-underline ${
                         item.active
-                          ? "text-[#fa8232] font-semibold"
-                          : "text-[#191c1f] font-normal hover:text-[#fa8232]"
+                          ? "font-semibold text-[#fa8232]"
+                          : "font-normal text-[#191c1f] hover:text-[#fa8232]"
                       } transition-colors`}
                     >
-                      <span className="mt-2 w-2 h-2 rounded-full shrink-0 bg-current" />
+                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-current" />
                       {item.text}
                     </Link>
                   </li>
@@ -597,13 +600,13 @@ export default function CustomerSupportPage() {
 
       {/* Contact Us */}
       <section className="bg-[#f2f4f5] py-18">
-        <Container className="flex flex-col gap-10 items-center">
+        <Container className="flex flex-col items-center gap-10">
           {/* Heading */}
-          <div className="flex flex-col gap-4 items-center">
-            <span className="inline-flex items-center self-center bg-[#2da5f3] text-white text-[14px] font-semibold px-4 py-2 rounded-[2px]">
+          <div className="flex flex-col items-center gap-4">
+            <span className="inline-flex items-center self-center rounded-[2px] bg-[#2da5f3] px-4 py-2 text-[14px] font-semibold text-white">
               CONTACT US
             </span>
-            <h2 className="text-[32px] font-semibold leading-10 text-[#191c1f] text-center">
+            <h2 className="text-center text-[32px] leading-10 font-semibold text-[#191c1f]">
               Don&apos;t find your answer.
               <br />
               Contact with us
@@ -611,22 +614,22 @@ export default function CustomerSupportPage() {
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-3 gap-6 w-full">
+          <div className="grid w-full grid-cols-3 gap-6">
             {CONTACT_CARDS.map((card) => (
               <div
                 key={card.id}
-                className="bg-white rounded-[4px] shadow-[0px_24px_16px_rgba(25,28,31,0.08)] p-8 flex gap-6 items-start"
+                className="flex items-start gap-6 rounded-[4px] bg-white p-8 shadow-[0px_24px_16px_rgba(25,28,31,0.08)]"
               >
                 {/* Icon */}
-                <div className={`${card.iconBg} p-6 rounded-[4px] shrink-0`}>
+                <div className={`${card.iconBg} shrink-0 rounded-[4px] p-6`}>
                   {card.icon}
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-6 flex-1 min-w-0">
+                <div className="flex min-w-0 flex-1 flex-col gap-6">
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                      <p className="text-[18px] font-semibold leading-6 text-[#191c1f]">
+                      <p className="text-[18px] leading-6 font-semibold text-[#191c1f]">
                         {card.title}
                       </p>
                       <p className="text-[14px] leading-5 text-[#5f6c72]">
@@ -640,7 +643,7 @@ export default function CustomerSupportPage() {
 
                   <button
                     type="button"
-                    className={`inline-flex items-center gap-2 self-start ${card.buttonColor} text-white text-[14px] font-bold uppercase tracking-[0.168px] h-12 px-6 rounded-[2px] hover:opacity-90 transition-opacity cursor-pointer`}
+                    className={`inline-flex items-center gap-2 self-start ${card.buttonColor} h-12 cursor-pointer rounded-[2px] px-6 text-[14px] font-bold tracking-[0.168px] text-white uppercase transition-opacity hover:opacity-90`}
                   >
                     {card.buttonLabel}
                     <ArrowRightIcon />

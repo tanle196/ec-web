@@ -12,7 +12,7 @@ function ProductRowSkeleton() {
       {Array.from({ length: 5 }).map((_, i) => (
         <div
           key={i}
-          className="bg-white border border-border-light rounded-[12px] p-2 aspect-3/4 animate-pulse"
+          className="aspect-3/4 animate-pulse rounded-[12px] border border-border-light bg-white p-2"
         />
       ))}
     </div>
@@ -44,7 +44,7 @@ export function FeaturedProducts() {
         ) : featuredProducts.length > 0 ? (
           <ProductGrid products={featuredProducts} />
         ) : (
-          <p className="text-text-secondary text-[14px] py-8">
+          <p className="py-8 text-[14px] text-text-secondary">
             Chưa có sản phẩm nổi bật.
           </p>
         )}
@@ -62,7 +62,7 @@ export function FeaturedProducts() {
         ) : latestProducts.length > 0 ? (
           <ProductGrid products={latestProducts} />
         ) : (
-          <p className="text-text-secondary text-[14px] py-8">
+          <p className="py-8 text-[14px] text-text-secondary">
             Chưa có sản phẩm nào.
           </p>
         )}

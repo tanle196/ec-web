@@ -216,17 +216,17 @@ function StarRating({ rating, reviews }: { rating: number; reviews: number }) {
 
 function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="bg-white border border-gray-100 rounded-[4px] p-4 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer">
+    <div className="flex cursor-pointer flex-col gap-3 rounded-[4px] border border-gray-100 bg-white p-4 transition-shadow hover:shadow-md">
       {/* Image */}
       <div className="relative">
         {product.badge && (
           <span
-            className={`absolute top-2 left-2 z-10 px-2 py-0.5 text-[11px] font-bold text-white uppercase rounded-[2px] ${BADGE_STYLE[product.badge]}`}
+            className={`absolute top-2 left-2 z-10 rounded-[2px] px-2 py-0.5 text-[11px] font-bold text-white uppercase ${BADGE_STYLE[product.badge]}`}
           >
             {product.badge}
           </span>
         )}
-        <div className="h-[160px] flex items-center justify-center bg-gray-50 rounded-[2px]">
+        <div className="flex h-[160px] items-center justify-center rounded-[2px] bg-gray-50">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.image}
@@ -240,7 +240,7 @@ function ProductCard({ product }: { product: Product }) {
       <StarRating rating={product.rating} reviews={product.reviews} />
 
       {/* Name */}
-      <p className="text-[14px] font-medium text-gray-900 leading-5 line-clamp-2">
+      <p className="line-clamp-2 text-[14px] leading-5 font-medium text-gray-900">
         {product.name}
       </p>
 
@@ -275,12 +275,12 @@ function HistoryToggle({
         onClick={onToggle}
         role="switch"
         aria-checked={on}
-        className={`relative w-10 h-5 rounded-full transition-colors cursor-pointer flex-none ${
+        className={`relative h-5 w-10 flex-none cursor-pointer rounded-full transition-colors ${
           on ? "bg-primary-500" : "bg-gray-300"
         }`}
       >
         <span
-          className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
             on ? "translate-x-5" : "translate-x-0.5"
           }`}
         />
@@ -303,13 +303,13 @@ export default function BrowsingHistoryPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-1">
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4 flex items-center justify-between">
               <h2 className="text-[20px] font-semibold text-gray-900">
                 Browsing History
               </h2>
@@ -323,7 +323,7 @@ export default function BrowsingHistoryPage() {
             {HISTORY.map((group) => (
               <div key={group.date} className="mb-6">
                 {/* Date label */}
-                <p className="text-[13px] font-medium text-gray-500 uppercase tracking-wide mb-3">
+                <p className="mb-3 text-[13px] font-medium tracking-wide text-gray-500 uppercase">
                   {group.date}
                 </p>
 
@@ -337,8 +337,8 @@ export default function BrowsingHistoryPage() {
             ))}
 
             {/* Load more */}
-            <div className="flex justify-center mt-4">
-              <button className="px-8 h-11 border-2 border-primary-500 text-[14px] font-bold text-primary-500 uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-50 transition-colors cursor-pointer">
+            <div className="mt-4 flex justify-center">
+              <button className="h-11 cursor-pointer rounded-[2px] border-2 border-primary-500 px-8 text-[14px] font-bold tracking-[0.04em] text-primary-500 uppercase transition-colors hover:bg-primary-50">
                 Load More
               </button>
             </div>

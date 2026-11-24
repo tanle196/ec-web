@@ -70,7 +70,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb strip */}
-      <div className="bg-gray-50 h-18 flex items-center">
+      <div className="flex h-18 items-center bg-gray-50">
         <Container>
           <PageBreadcrumb
             items={[{ label: "Home", href: "/" }, { label: "About Us" }]}
@@ -83,17 +83,17 @@ export default function AboutPage() {
         <Container>
           <div className="flex items-center gap-[136px]">
             {/* Content */}
-            <div className="flex flex-col gap-8 flex-1 min-w-0">
+            <div className="flex min-w-0 flex-1 flex-col gap-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
-                  <span className="inline-flex items-center justify-center self-start bg-secondary-500 text-white text-body-sm font-semibold px-4 py-2 rounded-sm">
+                  <span className="inline-flex items-center justify-center self-start rounded-sm bg-secondary-500 px-4 py-2 text-body-sm font-semibold text-white">
                     WHO WE ARE
                   </span>
-                  <h1 className="text-display-4 font-semibold text-gray-900 leading-[48px]">
+                  <h1 className="text-display-4 leading-[48px] font-semibold text-gray-900">
                     Kinbo - largest electronics retail shop in the world.
                   </h1>
                 </div>
-                <p className="text-body-md text-gray-700 leading-6">
+                <p className="text-body-md leading-6 text-gray-700">
                   Pellentesque ultrices, dui vel hendrerit iaculis, ipsum velit
                   vestibulum risus, ac tincidunt diam lectus id magna. Praesent
                   maximus lobortis neque sit amet rhoncus. Nullam tempus lectus
@@ -106,7 +106,7 @@ export default function AboutPage() {
                 {FEATURES.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <CheckIcon />
-                    <span className="text-body-md text-gray-900 leading-6">
+                    <span className="text-body-md leading-6 text-gray-900">
                       {feature}
                     </span>
                   </li>
@@ -115,12 +115,12 @@ export default function AboutPage() {
             </div>
 
             {/* Hero image */}
-            <div className="w-[648px] h-[536px] shrink-0 rounded-[4px] overflow-hidden">
+            <div className="h-[536px] w-[648px] shrink-0 overflow-hidden rounded-[4px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={IMG_HERO}
                 alt="Team working together"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
             </div>
           </div>
@@ -128,9 +128,9 @@ export default function AboutPage() {
       </section>
 
       {/* Team member section */}
-      <section className="py-18 border-t border-gray-100">
+      <section className="border-t border-gray-100 py-18">
         <Container className="flex flex-col gap-10">
-          <h2 className="text-heading-1 font-semibold text-gray-900 text-center">
+          <h2 className="text-center text-heading-1 font-semibold text-gray-900">
             Our core team member
           </h2>
 
@@ -140,19 +140,19 @@ export default function AboutPage() {
               {TEAM_MEMBERS.slice(0, 4).map((member) => (
                 <div
                   key={member.role}
-                  className="bg-white border border-gray-100 rounded-sm flex items-center gap-4 p-6"
+                  className="flex items-center gap-4 rounded-sm border border-gray-100 bg-white p-6"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={member.img}
                     alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover shrink-0"
+                    className="h-16 w-16 shrink-0 rounded-full object-cover"
                   />
-                  <div className="flex flex-col gap-1.5 min-w-0">
-                    <p className="text-body-md font-semibold text-gray-900 truncate">
+                  <div className="flex min-w-0 flex-col gap-1.5">
+                    <p className="truncate text-body-md font-semibold text-gray-900">
                       {member.name}
                     </p>
-                    <p className="text-body-sm text-gray-700 truncate">
+                    <p className="truncate text-body-sm text-gray-700">
                       {member.role}
                     </p>
                   </div>
@@ -164,19 +164,19 @@ export default function AboutPage() {
               {TEAM_MEMBERS.slice(4).map((member) => (
                 <div
                   key={member.role}
-                  className="bg-white border border-gray-100 rounded-sm flex items-center gap-4 p-6"
+                  className="flex items-center gap-4 rounded-sm border border-gray-100 bg-white p-6"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={member.img}
                     alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover shrink-0"
+                    className="h-16 w-16 shrink-0 rounded-full object-cover"
                   />
-                  <div className="flex flex-col gap-1.5 min-w-0">
-                    <p className="text-body-md font-semibold text-gray-900 truncate">
+                  <div className="flex min-w-0 flex-col gap-1.5">
+                    <p className="truncate text-body-md font-semibold text-gray-900">
                       {member.name}
                     </p>
-                    <p className="text-body-sm text-gray-700 truncate">
+                    <p className="truncate text-body-sm text-gray-700">
                       {member.role}
                     </p>
                   </div>
@@ -195,17 +195,17 @@ export default function AboutPage() {
           src={IMG_BANNER}
           alt=""
           aria-hidden
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/30 to-transparent pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/60 via-white/30 to-transparent" />
 
-        <Container className="relative py-22 flex items-center gap-8">
-          <div className="flex flex-col gap-4 max-w-[500px]">
-            <h2 className="text-heading-1 font-semibold text-gray-900 leading-10">
+        <Container className="relative flex items-center gap-8 py-22">
+          <div className="flex max-w-[500px] flex-col gap-4">
+            <h2 className="text-heading-1 leading-10 font-semibold text-gray-900">
               Your trusted and reliable retail shop
             </h2>
-            <p className="text-body-lg text-gray-900 leading-6 max-w-[423px]">
+            <p className="max-w-[423px] text-body-lg leading-6 text-gray-900">
               Praesent sed semper metus. Nunc aliquet dolor mauris, et fringilla
               elit gravida eget. Nunc consequat auctor urna a placerat.
             </p>
@@ -215,7 +215,7 @@ export default function AboutPage() {
           <button
             type="button"
             aria-label="Watch video"
-            className="w-18 h-18 rounded-full bg-primary-500 hover:bg-primary-600 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+            className="flex h-18 w-18 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary-500 transition-colors hover:bg-primary-600"
           >
             <svg
               width="24"

@@ -107,14 +107,14 @@ function SectionHeading({
   actionHref?: string;
 }) {
   return (
-    <div className="flex items-center justify-between px-6 h-13 border-b border-gray-100">
-      <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+    <div className="flex h-13 items-center justify-between border-b border-gray-100 px-6">
+      <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
         {title}
       </span>
       {action && (
         <Link
           href={actionHref ?? "#"}
-          className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors no-underline"
+          className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 no-underline transition-colors hover:text-primary-600"
         >
           {action}
           <svg
@@ -167,17 +167,17 @@ export default function AccountDashboardPage() {
           items={[{ label: "Home", href: "/" }, { label: "Account" }]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             {/* Welcome heading */}
             <div>
-              <h1 className="text-[24px] font-semibold text-gray-900 leading-7">
+              <h1 className="text-[24px] leading-7 font-semibold text-gray-900">
                 Hello, {profile?.name?.split(" ")[0] ?? "there"}
               </h1>
-              <p className="mt-2 text-[14px] text-gray-600 leading-5 max-w-105.75">
+              <p className="mt-2 max-w-105.75 text-[14px] leading-5 text-gray-600">
                 From your account dashboard. you can easily check &amp; view
                 your Recent Orders, manage your Shipping and Billing Addresses
                 and edit your Password and Account Details.
@@ -187,22 +187,22 @@ export default function AccountDashboardPage() {
             {/* Top row: Account Info + Billing Address + Stats */}
             <div className="flex gap-6">
               {/* Account Info */}
-              <div className="w-78 flex-none bg-white border border-gray-100 rounded-[4px]">
+              <div className="w-78 flex-none rounded-[4px] border border-gray-100 bg-white">
                 <SectionHeading title="Account Info" />
-                <div className="px-6 pt-5.5 pb-6 flex flex-col gap-5">
+                <div className="flex flex-col gap-5 px-6 pt-5.5 pb-6">
                   <div className="flex items-center gap-4">
                     <Image
                       src={imgUserAvatar}
                       alt={profile?.name ?? "User avatar"}
                       width={48}
                       height={48}
-                      className="rounded-full size-12 object-cover flex-none"
+                      className="size-12 flex-none rounded-full object-cover"
                     />
                     <div>
-                      <p className="text-[16px] font-semibold text-gray-900 leading-6">
+                      <p className="text-[16px] leading-6 font-semibold text-gray-900">
                         {profile?.name ?? "-"}
                       </p>
-                      <p className="text-[14px] text-gray-600 leading-5">
+                      <p className="text-[14px] leading-5 text-gray-600">
                         {defaultAddress
                           ? `${defaultAddress.city}, ${defaultAddress.country}`
                           : "No address added"}
@@ -229,7 +229,7 @@ export default function AccountDashboardPage() {
                   </div>
                   <Link
                     href="/account/settings"
-                    className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 flex items-center text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors no-underline"
+                    className="flex h-12 items-center self-start rounded-[2px] border-2 border-secondary-100 px-6 text-[14px] font-bold tracking-[0.012em] text-secondary-500 uppercase no-underline transition-colors hover:bg-secondary-50"
                   >
                     Edit Account
                   </Link>
@@ -237,9 +237,9 @@ export default function AccountDashboardPage() {
               </div>
 
               {/* Billing Address */}
-              <div className="w-[312px] flex-none bg-white border border-gray-100 rounded-[4px]">
+              <div className="w-[312px] flex-none rounded-[4px] border border-gray-100 bg-white">
                 <SectionHeading title="Billing Address" />
-                <div className="px-6 pt-[22px] pb-6 flex flex-col gap-5">
+                <div className="flex flex-col gap-5 px-6 pt-[22px] pb-6">
                   {defaultAddress ? (
                     <div className="flex flex-col gap-2 text-[14px] leading-5">
                       <p className="font-medium text-gray-900">
@@ -269,13 +269,13 @@ export default function AccountDashboardPage() {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-[14px] text-gray-600 leading-5">
+                    <p className="text-[14px] leading-5 text-gray-600">
                       You haven&apos;t added an address yet.
                     </p>
                   )}
                   <Link
                     href="/account/address"
-                    className="self-start border-2 border-secondary-100 rounded-[2px] px-6 h-12 flex items-center text-[14px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors no-underline"
+                    className="flex h-12 items-center self-start rounded-[2px] border-2 border-secondary-100 px-6 text-[14px] font-bold tracking-[0.012em] text-secondary-500 uppercase no-underline transition-colors hover:bg-secondary-50"
                   >
                     Edit Address
                   </Link>
@@ -283,9 +283,9 @@ export default function AccountDashboardPage() {
               </div>
 
               {/* Stats */}
-              <div className="flex-1 flex flex-col gap-6">
-                <div className="flex items-center gap-4 p-4 bg-secondary-50 rounded-[4px]">
-                  <div className="bg-white p-3 rounded-[2px] flex-none">
+              <div className="flex flex-1 flex-col gap-6">
+                <div className="flex items-center gap-4 rounded-[4px] bg-secondary-50 p-4">
+                  <div className="flex-none rounded-[2px] bg-white p-3">
                     <svg
                       width="32"
                       height="32"
@@ -313,16 +313,16 @@ export default function AccountDashboardPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                    <p className="text-[20px] leading-7 font-semibold text-gray-900">
                       {String(totalOrders).padStart(2, "0")}
                     </p>
-                    <p className="text-[14px] text-gray-700 leading-5">
+                    <p className="text-[14px] leading-5 text-gray-700">
                       Total Orders
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-primary-50 rounded-[4px]">
-                  <div className="bg-white p-3 rounded-[2px] flex-none">
+                <div className="flex items-center gap-4 rounded-[4px] bg-primary-50 p-4">
+                  <div className="flex-none rounded-[2px] bg-white p-3">
                     <svg
                       width="32"
                       height="32"
@@ -357,16 +357,16 @@ export default function AccountDashboardPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                    <p className="text-[20px] leading-7 font-semibold text-gray-900">
                       {String(pendingOrders).padStart(2, "0")}
                     </p>
-                    <p className="text-[14px] text-gray-700 leading-5">
+                    <p className="text-[14px] leading-5 text-gray-700">
                       Pending Orders
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 bg-success-50 rounded-[4px]">
-                  <div className="bg-white p-3 rounded-[2px] flex-none">
+                <div className="flex items-center gap-4 rounded-[4px] bg-success-50 p-4">
+                  <div className="flex-none rounded-[2px] bg-white p-3">
                     <svg
                       width="32"
                       height="32"
@@ -389,10 +389,10 @@ export default function AccountDashboardPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-[20px] font-semibold text-gray-900 leading-7">
+                    <p className="text-[20px] leading-7 font-semibold text-gray-900">
                       {String(completedOrders).padStart(2, "0")}
                     </p>
-                    <p className="text-[14px] text-gray-700 leading-5">
+                    <p className="text-[14px] leading-5 text-gray-700">
                       Completed Orders
                     </p>
                   </div>
@@ -401,7 +401,7 @@ export default function AccountDashboardPage() {
             </div>
 
             {/* Payment Option */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               <SectionHeading
                 title="Payment Option"
                 action="View All"
@@ -412,34 +412,34 @@ export default function AccountDashboardPage() {
                   payments.data.map((payment, i) => (
                     <div
                       key={payment.id}
-                      className="relative w-[296px] h-[196px] rounded-[4px] overflow-hidden flex-none"
+                      className="relative h-[196px] w-[296px] flex-none overflow-hidden rounded-[4px]"
                       style={{
                         background:
                           PAYMENT_GRADIENTS[i % PAYMENT_GRADIENTS.length],
                       }}
                     >
                       <div className="absolute top-6 left-6">
-                        <p className="text-white text-[16px] leading-6">
+                        <p className="text-[16px] leading-6 text-white">
                           <span className="font-semibold">
                             {formatCurrency(payment.amount)}{" "}
                           </span>
                         </p>
                       </div>
                       <div className="absolute top-[72px] left-6">
-                        <p className="text-white text-[11px] font-medium uppercase opacity-70 mb-2">
+                        <p className="mb-2 text-[11px] font-medium text-white uppercase opacity-70">
                           Method
                         </p>
-                        <p className="text-white text-[18px] font-normal tracking-wide">
+                        <p className="text-[18px] font-normal tracking-wide text-white">
                           {PAYMENT_METHOD_LABEL[payment.method]}
                         </p>
                       </div>
                       <div className="absolute bottom-6 left-6">
-                        <span className="text-white text-[13px] font-semibold uppercase tracking-wide">
+                        <span className="text-[13px] font-semibold tracking-wide text-white uppercase">
                           {payment.status}
                         </span>
                       </div>
-                      <div className="absolute bottom-6 right-6">
-                        <p className="text-white text-[12px] opacity-80">
+                      <div className="absolute right-6 bottom-6">
+                        <p className="text-[12px] text-white opacity-80">
                           {formatDate(payment.createdAt)}
                         </p>
                       </div>
@@ -454,13 +454,13 @@ export default function AccountDashboardPage() {
             </div>
 
             {/* Recent Orders */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               <SectionHeading
                 title="Recent Order"
                 action="View All"
                 actionHref="/account/orders"
               />
-              <div className="flex items-center gap-6 px-6 py-[10px] bg-gray-50 border-y border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+              <div className="flex items-center gap-6 border-y border-gray-100 bg-gray-50 px-6 py-[10px] text-[12px] font-medium text-gray-700 uppercase">
                 <span className="w-[124px] flex-none">Order ID</span>
                 <span className="w-[152px] flex-none">Status</span>
                 <span className="w-[200px] flex-none">Date</span>
@@ -475,7 +475,7 @@ export default function AccountDashboardPage() {
               {recentOrders.map((order) => (
                 <div
                   key={order.id}
-                  className="flex items-center gap-6 px-6 py-3 border-b border-gray-100 last:border-b-0"
+                  className="flex items-center gap-6 border-b border-gray-100 px-6 py-3 last:border-b-0"
                 >
                   <span className="w-[124px] flex-none text-[14px] font-medium text-gray-900">
                     {order.orderNumber}
@@ -493,7 +493,7 @@ export default function AccountDashboardPage() {
                   </span>
                   <Link
                     href={`/account/orders/${order.id}`}
-                    className="flex items-center gap-2 text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors no-underline"
+                    className="flex items-center gap-2 text-[14px] font-semibold text-secondary-500 no-underline transition-colors hover:text-secondary-600"
                   >
                     View Details
                     <svg
@@ -517,7 +517,7 @@ export default function AccountDashboardPage() {
             </div>
 
             {/* Browsing History */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               <SectionHeading
                 title="Browsing History"
                 action="View All"
@@ -525,7 +525,7 @@ export default function AccountDashboardPage() {
               />
               <div className="grid grid-cols-4 divide-x divide-gray-100 px-3 pt-5 pb-3">
                 {BROWSING_PRODUCTS.map((product, i) => (
-                  <div key={i} className="px-3 flex flex-col gap-3">
+                  <div key={i} className="flex flex-col gap-3 px-3">
                     <div className="relative h-43">
                       <Image
                         src={product.img}
@@ -536,7 +536,7 @@ export default function AccountDashboardPage() {
                       />
                       {product.badge && (
                         <span
-                          className={`absolute top-3 left-3 ${product.badge.color} text-white text-[12px] font-semibold px-[10px] py-[5px] rounded-[2px]`}
+                          className={`absolute top-3 left-3 ${product.badge.color} rounded-[2px] px-[10px] py-[5px] text-[12px] font-semibold text-white`}
                         >
                           {product.badge.label}
                         </span>
@@ -548,7 +548,7 @@ export default function AccountDashboardPage() {
                         ({product.reviews})
                       </span>
                     </div>
-                    <p className="text-[14px] text-gray-900 leading-5 line-clamp-2">
+                    <p className="line-clamp-2 text-[14px] leading-5 text-gray-900">
                       {product.name}
                     </p>
                     <p className="text-[14px] font-semibold text-secondary-500">

@@ -29,7 +29,7 @@ export function HeaderUserMenu() {
     return (
       <Link
         href="/login"
-        className="flex items-center gap-2 text-[14px] font-medium text-ink no-underline px-2.5 py-2 rounded-[8px] hover:bg-cream-2 transition-colors duration-150"
+        className="text-ink hover:bg-cream-2 flex items-center gap-2 rounded-[8px] px-2.5 py-2 text-[14px] font-medium no-underline transition-colors duration-150"
       >
         <svg
           width="18"
@@ -56,8 +56,8 @@ export function HeaderUserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 text-[14px] font-medium text-ink px-2 py-1.5 rounded-[8px] hover:bg-cream-2 transition-colors duration-150 outline-none cursor-pointer">
-          <span className="w-8 h-8 rounded-full bg-persimmon text-white text-[13px] font-semibold flex items-center justify-center flex-none">
+        <button className="text-ink hover:bg-cream-2 flex cursor-pointer items-center gap-2 rounded-[8px] px-2 py-1.5 text-[14px] font-medium transition-colors duration-150 outline-none">
+          <span className="bg-persimmon flex h-8 w-8 flex-none items-center justify-center rounded-full text-[13px] font-semibold text-white">
             {initial}
           </span>
           <span className="max-w-[120px] truncate">{displayName}</span>
@@ -76,7 +76,7 @@ export function HeaderUserMenu() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel className="text-[13px] font-normal text-text-secondary truncate">
+        <DropdownMenuLabel className="truncate text-[13px] font-normal text-text-secondary">
           {user!.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

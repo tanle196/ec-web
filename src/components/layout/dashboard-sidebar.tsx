@@ -96,7 +96,13 @@ const NAV_ITEMS = [
           strokeWidth="1.5"
           strokeLinejoin="round"
         />
-        <circle cx="10" cy="7.5" r="2" stroke="currentColor" strokeWidth="1.5" />
+        <circle
+          cx="10"
+          cy="7.5"
+          r="2"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
       </svg>
     ),
   },
@@ -201,7 +207,7 @@ export function DashboardSidebar() {
   };
 
   return (
-    <aside className="w-[264px] flex-none bg-white border border-gray-100 rounded-[4px] shadow-[0px_8px_20px_rgba(0,0,0,0.08)] py-4">
+    <aside className="w-[264px] flex-none rounded-[4px] border border-gray-100 bg-white py-4 shadow-[0px_8px_20px_rgba(0,0,0,0.08)]">
       {NAV_ITEMS.map((item) => {
         if (item.href === "/logout") {
           return (
@@ -209,7 +215,7 @@ export function DashboardSidebar() {
               key={item.href}
               type="button"
               onClick={handleLogout}
-              className="w-full h-10 flex items-center gap-4 px-6 transition-colors text-left text-gray-600 hover:bg-gray-50"
+              className="flex h-10 w-full items-center gap-4 px-6 text-left text-gray-600 transition-colors hover:bg-gray-50"
             >
               <span className="flex-none">{item.icon}</span>
               <span className="text-[14px] leading-5 font-normal">
@@ -227,7 +233,7 @@ export function DashboardSidebar() {
           <Link
             key={item.href}
             href={item.href}
-            className={`w-full h-10 flex items-center gap-4 px-6 transition-colors text-left ${
+            className={`flex h-10 w-full items-center gap-4 px-6 text-left transition-colors ${
               isActive
                 ? "bg-primary-500 text-white"
                 : "text-gray-600 hover:bg-gray-50"

@@ -7,33 +7,33 @@ export function Hero() {
   return (
     <Container size="wide" className="pt-8">
       <div
-        className="rounded-[24px] border border-marlo-border grid grid-cols-2 gap-12 items-center px-14 py-16"
+        className="border-marlo-border grid grid-cols-2 items-center gap-12 rounded-[24px] border px-14 py-16"
         style={{ background: "var(--muted)" }}
       >
         {/* Text */}
         <div>
           <Badge kind="persimmon">Mới ra mắt · Tháng 5/2026</Badge>
-          <h1 className="text-[clamp(52px,5.5vw,80px)] font-bold leading-[0.97] tracking-[-0.03em] text-foreground mt-5 mb-4">
+          <h1 className="mt-5 mb-4 text-[clamp(52px,5.5vw,80px)] leading-[0.97] font-bold tracking-[-0.03em] text-foreground">
             Ngày mua sắm.
             <br />
             <span style={{ color: "var(--color-cta)" }}>
               Tiết kiệm đến 8 triệu.
             </span>
           </h1>
-          <p className="text-[18px] leading-relaxed text-text-secondary max-w-110 mb-7">
+          <p className="mb-7 max-w-110 text-[18px] leading-relaxed text-text-secondary">
             Đổi máy cũ, nhận credit ngay — mua điện thoại mới với giá tốt nhất
             thị trường. Giao miễn phí, đổi trả miễn phí.
           </p>
           <div className="flex gap-3">
             <Link
               href="/phones"
-              className="inline-flex items-center px-7 py-4 rounded-[8px] bg-persimmon text-white font-semibold text-[16px] leading-none no-underline hover:bg-persimmon-hover transition-colors duration-150"
+              className="bg-persimmon hover:bg-persimmon-hover inline-flex items-center rounded-[8px] px-7 py-4 text-[16px] leading-none font-semibold text-white no-underline transition-colors duration-150"
             >
               Mua điện thoại
             </Link>
             <Link
               href="/trade-in"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-[8px] border border-marlo-border-strong font-semibold text-[16px] leading-none no-underline text-foreground hover:bg-cream-2 transition-colors duration-150"
+              className="border-marlo-border-strong hover:bg-cream-2 inline-flex items-center gap-2 rounded-[8px] border px-7 py-4 text-[16px] leading-none font-semibold text-foreground no-underline transition-colors duration-150"
             >
               Ước tính thu đổi
               <svg

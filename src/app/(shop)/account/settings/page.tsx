@@ -10,8 +10,8 @@ import { useAddresses } from "@/queries/addresses";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-13 -mx-6 -mt-6 px-6 flex items-center border-b border-gray-100 mb-6">
-      <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+    <div className="-mx-6 -mt-6 mb-6 flex h-13 items-center border-b border-gray-100 px-6">
+      <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
         {children}
       </span>
     </div>
@@ -43,46 +43,46 @@ export default function SettingsPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             {/* Account Setting */}
-            <div className="bg-white border border-gray-100 rounded-[4px] p-6">
+            <div className="rounded-[4px] border border-gray-100 bg-white p-6">
               <SectionHeading>Account Info</SectionHeading>
 
               {profilePending ? (
                 <p className="text-[14px] text-gray-600">Loading...</p>
               ) : (
-                <div className="flex gap-8 items-start">
+                <div className="flex items-start gap-8">
                   {/* Avatar */}
                   <div className="flex-none">
-                    <div className="w-24 h-24 rounded-full bg-secondary-100 flex items-center justify-center text-[28px] font-semibold text-secondary-500">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-secondary-100 text-[28px] font-semibold text-secondary-500">
                       {profile?.name?.[0]?.toUpperCase() ?? "?"}
                     </div>
                   </div>
 
                   {/* Fields */}
-                  <div className="flex-1 grid grid-cols-2 gap-x-6 gap-y-4">
+                  <div className="grid flex-1 grid-cols-2 gap-x-6 gap-y-4">
                     <div>
-                      <label className="block text-[13px] text-gray-600 mb-1.5">
+                      <label className="mb-1.5 block text-[13px] text-gray-600">
                         Display name
                       </label>
-                      <p className="text-[14px] text-gray-900 h-10 flex items-center">
+                      <p className="flex h-10 items-center text-[14px] text-gray-900">
                         {profile?.name ?? "-"}
                       </p>
                     </div>
                     <div>
-                      <label className="block text-[13px] text-gray-600 mb-1.5">
+                      <label className="mb-1.5 block text-[13px] text-gray-600">
                         Email
                       </label>
-                      <p className="text-[14px] text-gray-900 h-10 flex items-center">
+                      <p className="flex h-10 items-center text-[14px] text-gray-900">
                         {profile?.email ?? "-"}
                       </p>
                     </div>
                     <div className="col-span-2">
-                      <label className="block text-[13px] text-gray-600 mb-1.5">
+                      <label className="mb-1.5 block text-[13px] text-gray-600">
                         Roles
                       </label>
                       <p className="text-[14px] text-gray-900">
@@ -97,14 +97,14 @@ export default function SettingsPage() {
             </div>
 
             {/* Addresses */}
-            <div className="bg-white border border-gray-100 rounded-[4px] p-6">
-              <div className="-mx-6 -mt-6 mb-6 px-6 h-13 flex items-center justify-between border-b border-gray-100">
-                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+            <div className="rounded-[4px] border border-gray-100 bg-white p-6">
+              <div className="-mx-6 -mt-6 mb-6 flex h-13 items-center justify-between border-b border-gray-100 px-6">
+                <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Addresses
                 </span>
                 <AddressFormDialog
                   trigger={
-                    <button className="text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
+                    <button className="cursor-pointer text-[14px] font-semibold text-primary-500 transition-colors hover:text-primary-600">
                       Add Address
                     </button>
                   }
@@ -120,13 +120,13 @@ export default function SettingsPage() {
                   {addresses.map((address) => (
                     <div
                       key={address.id}
-                      className="flex items-center justify-between gap-4 border border-gray-100 rounded-[4px] px-4 py-3"
+                      className="flex items-center justify-between gap-4 rounded-[4px] border border-gray-100 px-4 py-3"
                     >
                       <div className="text-[14px] leading-5">
-                        <p className="font-medium text-gray-900 flex items-center gap-2">
+                        <p className="flex items-center gap-2 font-medium text-gray-900">
                           {address.fullName}
                           {address.isDefault && (
-                            <span className="text-[11px] font-semibold text-primary-500 bg-primary-50 px-2 py-0.5 rounded-[2px]">
+                            <span className="rounded-[2px] bg-primary-50 px-2 py-0.5 text-[11px] font-semibold text-primary-500">
                               Default
                             </span>
                           )}
@@ -146,7 +146,7 @@ export default function SettingsPage() {
                       <AddressFormDialog
                         address={address}
                         trigger={
-                          <button className="flex-none border-2 border-secondary-100 rounded-[2px] px-4 h-9 text-[13px] font-bold text-secondary-500 uppercase tracking-[0.012em] hover:bg-secondary-50 transition-colors cursor-pointer">
+                          <button className="h-9 flex-none cursor-pointer rounded-[2px] border-2 border-secondary-100 px-4 text-[13px] font-bold tracking-[0.012em] text-secondary-500 uppercase transition-colors hover:bg-secondary-50">
                             Edit
                           </button>
                         }
@@ -158,10 +158,10 @@ export default function SettingsPage() {
             </div>
 
             {/* Reset Password */}
-            <div className="bg-white border border-gray-100 rounded-[4px] p-6">
+            <div className="rounded-[4px] border border-gray-100 bg-white p-6">
               <SectionHeading>Password</SectionHeading>
-              <div className="max-w-lg flex flex-col gap-4">
-                <p className="text-[14px] text-gray-600 leading-5">
+              <div className="flex max-w-lg flex-col gap-4">
+                <p className="text-[14px] leading-5 text-gray-600">
                   We&apos;ll send a password reset link to{" "}
                   <span className="font-medium text-gray-900">
                     {profile?.email ?? "your email"}
@@ -173,7 +173,7 @@ export default function SettingsPage() {
                     type="button"
                     onClick={handleSendResetLink}
                     disabled={forgotPassword.isPending || !profile?.email}
-                    className="h-11 px-8 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="h-11 cursor-pointer rounded-[2px] bg-primary-500 px-8 text-[14px] font-bold tracking-[0.04em] text-white uppercase transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {forgotPassword.isPending
                       ? "Sending..."

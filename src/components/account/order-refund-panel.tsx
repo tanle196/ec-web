@@ -13,7 +13,10 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useOrderPayments } from "@/queries/payments";
-import { useOrderRefundRequests, useCreateRefundRequest } from "@/queries/refunds";
+import {
+  useOrderRefundRequests,
+  useCreateRefundRequest,
+} from "@/queries/refunds";
 import {
   refundRequestStatusColor,
   refundRequestStatusLabel,
@@ -21,7 +24,10 @@ import {
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { OrderResponseDto } from "@/api/main";
 
-const REFUNDABLE_PAYMENT_STATUSES = new Set(["completed", "partially_refunded"]);
+const REFUNDABLE_PAYMENT_STATUSES = new Set([
+  "completed",
+  "partially_refunded",
+]);
 
 function getErrorMessage(err: unknown): string {
   const body = (err as { error?: { message?: string | string[] } })?.error;
@@ -60,12 +66,12 @@ function QuantityStepper({
   onChange: (value: number) => void;
 }) {
   return (
-    <div className="flex items-center gap-2 flex-none">
+    <div className="flex flex-none items-center gap-2">
       <button
         type="button"
         onClick={() => onChange(Math.max(0, value - 1))}
         disabled={value <= 0}
-        className="w-7 h-7 flex items-center justify-center border border-gray-200 rounded-[2px] text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-[2px] border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
       >
         −
       </button>
@@ -74,7 +80,7 @@ function QuantityStepper({
         type="button"
         onClick={() => onChange(Math.min(max, value + 1))}
         disabled={value >= max}
-        className="w-7 h-7 flex items-center justify-center border border-gray-200 rounded-[2px] text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-[2px] border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
       >
         +
       </button>
@@ -141,28 +147,30 @@ function RequestRefundDialog({
       <DialogTrigger asChild>
         <button
           type="button"
-          className="h-11 px-6 border border-gray-200 text-gray-900 text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-gray-50 transition-colors cursor-pointer self-start"
+          className="h-11 cursor-pointer self-start rounded-[2px] border border-gray-200 px-6 text-[14px] font-bold tracking-[0.04em] text-gray-900 uppercase transition-colors hover:bg-gray-50"
         >
           Request Refund
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Request Refund for Order {order.orderNumber}</DialogTitle>
+          <DialogTitle>
+            Request Refund for Order {order.orderNumber}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[13px] font-medium text-gray-700">
               Select items to refund
             </p>
-            <div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
+            <div className="flex max-h-64 flex-col gap-2 overflow-y-auto">
               {order.items.map((item, index) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between gap-4 border border-gray-100 rounded-[4px] px-4 py-3"
+                  className="flex items-center justify-between gap-4 rounded-[4px] border border-gray-100 px-4 py-3"
                 >
-                  <div className="flex flex-col gap-0.5 min-w-0">
-                    <span className="text-[14px] text-gray-900 truncate">
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <span className="truncate text-[14px] text-gray-900">
                       {item.productName}
                     </span>
                     <span className="text-[13px] text-gray-600">
@@ -205,7 +213,7 @@ function RequestRefundDialog({
           <button
             type="submit"
             disabled={createRefundRequest.isPending}
-            className="h-11 px-8 bg-primary-500 text-white text-[14px] font-bold uppercase tracking-[0.04em] rounded-[2px] hover:bg-primary-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-start"
+            className="h-11 cursor-pointer self-start rounded-[2px] bg-primary-500 px-8 text-[14px] font-bold tracking-[0.04em] text-white uppercase transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {createRefundRequest.isPending ? "Submitting..." : "Submit Request"}
           </button>
@@ -248,8 +256,8 @@ export function OrderRefundPanel({ order }: { order: OrderResponseDto }) {
   }
 
   return (
-    <div className="bg-white border border-gray-100 rounded-[4px] p-6 flex flex-col gap-4">
-      <p className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+    <div className="flex flex-col gap-4 rounded-[4px] border border-gray-100 bg-white p-6">
+      <p className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
         Refund
       </p>
 
@@ -258,19 +266,19 @@ export function OrderRefundPanel({ order }: { order: OrderResponseDto }) {
           {requests.map((request) => (
             <div
               key={request.id}
-              className="flex items-center justify-between gap-4 border border-gray-100 rounded-[4px] px-4 py-3"
+              className="flex items-center justify-between gap-4 rounded-[4px] border border-gray-100 px-4 py-3"
             >
               <div className="flex flex-col gap-1 text-[14px] leading-5">
                 <span className="text-gray-900">
                   {formatCurrency(request.amount)} ·{" "}
                   {request.items.reduce((s, i) => s + i.quantity, 0)} item(s)
                 </span>
-                <span className="text-gray-500 text-[13px]">
+                <span className="text-[13px] text-gray-500">
                   Requested on {formatDate(request.createdAt)}
                 </span>
               </div>
               <span
-                className={`text-[13px] font-semibold flex-none ${refundRequestStatusColor(request.status)}`}
+                className={`flex-none text-[13px] font-semibold ${refundRequestStatusColor(request.status)}`}
               >
                 {refundRequestStatusLabel(request.status)}
               </span>

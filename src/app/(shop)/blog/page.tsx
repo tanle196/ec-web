@@ -225,20 +225,22 @@ export default function BlogListPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
-          <PageBreadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
+          <PageBreadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Blog" }]}
+          />
         </Container>
       </div>
 
       {/* Main layout */}
       <Container className="py-18">
-        <div className="flex gap-12 items-start">
+        <div className="flex items-start gap-12">
           {/* ── Sidebar ── */}
-          <aside className="w-[400px] shrink-0 flex flex-col gap-6">
+          <aside className="flex w-[400px] shrink-0 flex-col gap-6">
             {/* Category */}
-            <div className="bg-white border border-[#e4e7e9] rounded-[4px] p-6 flex flex-col gap-4">
-              <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+            <div className="flex flex-col gap-4 rounded-[4px] border border-[#e4e7e9] bg-white p-6">
+              <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                 Category
               </h3>
               <div className="flex flex-col gap-3">
@@ -249,17 +251,17 @@ export default function BlogListPage() {
                       key={cat}
                       type="button"
                       onClick={() => setActiveCategory(cat)}
-                      className="flex items-center gap-2 cursor-pointer"
+                      className="flex cursor-pointer items-center gap-2"
                     >
                       <div
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
                           isActive
-                            ? "bg-[#fa8232] border-[#fa8232]"
-                            : "bg-white border-[#c9cfd2]"
+                            ? "border-[#fa8232] bg-[#fa8232]"
+                            : "border-[#c9cfd2] bg-white"
                         }`}
                       >
                         {isActive && (
-                          <div className="w-2 h-2 rounded-full bg-white" />
+                          <div className="h-2 w-2 rounded-full bg-white" />
                         )}
                       </div>
                       <span
@@ -278,17 +280,17 @@ export default function BlogListPage() {
             </div>
 
             {/* Latest Blog */}
-            <div className="bg-white border border-[#e4e7e9] rounded-[6px] p-6 flex flex-col gap-6">
-              <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+            <div className="flex flex-col gap-6 rounded-[6px] border border-[#e4e7e9] bg-white p-6">
+              <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                 Latest Blog
               </h3>
               {LATEST_POSTS.map((post) => (
                 <Link
                   key={post.id}
                   href="#"
-                  className="flex gap-4 items-center no-underline group"
+                  className="group flex items-center gap-4 no-underline"
                 >
-                  <div className="relative w-[104px] h-20 rounded-[2px] overflow-hidden shrink-0">
+                  <div className="relative h-20 w-[104px] shrink-0 overflow-hidden rounded-[2px]">
                     <Image
                       src={IMG_LATEST_BLOG}
                       alt={post.title}
@@ -297,10 +299,10 @@ export default function BlogListPage() {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p className="text-[14px] font-medium leading-5 text-[#191c1f] line-clamp-2 group-hover:text-[#fa8232] transition-colors">
+                    <p className="line-clamp-2 text-[14px] leading-5 font-medium text-[#191c1f] transition-colors group-hover:text-[#fa8232]">
                       {post.title}
                     </p>
-                    <p className="text-[14px] font-normal leading-5 text-[#77878f]">
+                    <p className="text-[14px] leading-5 font-normal text-[#77878f]">
                       {post.date}
                     </p>
                   </div>
@@ -309,8 +311,8 @@ export default function BlogListPage() {
             </div>
 
             {/* Gallery */}
-            <div className="bg-white border border-[#e4e7e9] rounded-[6px] p-6 flex flex-col gap-6">
-              <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+            <div className="flex flex-col gap-6 rounded-[6px] border border-[#e4e7e9] bg-white p-6">
+              <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                 Gallery
               </h3>
               <div className="flex flex-col gap-3">
@@ -323,7 +325,7 @@ export default function BlogListPage() {
                       {row.map((src, i) => (
                         <div
                           key={i}
-                          className="relative w-20 h-20 rounded-[2px] overflow-hidden"
+                          className="relative h-20 w-20 overflow-hidden rounded-[2px]"
                         >
                           <Image
                             src={src}
@@ -341,7 +343,7 @@ export default function BlogListPage() {
 
             {/* Popular Tags */}
             <div className="flex flex-col gap-[18px]">
-              <h3 className="text-[16px] font-medium leading-6 text-[#191c1f] uppercase tracking-wide">
+              <h3 className="text-[16px] leading-6 font-medium tracking-wide text-[#191c1f] uppercase">
                 Popular Tag
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -352,10 +354,10 @@ export default function BlogListPage() {
                       key={tag}
                       type="button"
                       onClick={() => setActiveTag(tag)}
-                      className={`px-3 py-1.5 rounded-[2px] border text-[14px] font-medium leading-5 cursor-pointer transition-colors ${
+                      className={`cursor-pointer rounded-[2px] border px-3 py-1.5 text-[14px] leading-5 font-medium transition-colors ${
                         isActive
-                          ? "bg-[#fff3eb] border-[#fa8232] text-[#fa8232]"
-                          : "bg-white border-[#e4e7e9] text-[#191c1f] hover:border-[#fa8232] hover:text-[#fa8232]"
+                          ? "border-[#fa8232] bg-[#fff3eb] text-[#fa8232]"
+                          : "border-[#e4e7e9] bg-white text-[#191c1f] hover:border-[#fa8232] hover:text-[#fa8232]"
                       }`}
                     >
                       {tag}
@@ -367,28 +369,28 @@ export default function BlogListPage() {
           </aside>
 
           {/* ── Main content ── */}
-          <main className="flex-1 min-w-0 flex flex-col gap-10">
+          <main className="flex min-w-0 flex-1 flex-col gap-10">
             {/* Search & Sort */}
             <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2 bg-white border border-[#e4e7e9] rounded-[2px] px-4 py-3 flex-1 max-w-[424px]">
+              <div className="flex max-w-[424px] flex-1 items-center gap-2 rounded-[2px] border border-[#e4e7e9] bg-white px-4 py-3">
                 <input
                   type="text"
                   placeholder="Search..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="flex-1 text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none border-0 bg-transparent"
+                  className="flex-1 border-0 bg-transparent text-[14px] leading-5 text-[#191c1f] outline-none placeholder:text-[#77878f]"
                 />
                 <SearchIcon />
               </div>
               <div className="flex items-center gap-[22px]">
-                <span className="text-[14px] leading-5 text-[#191c1f] whitespace-nowrap">
+                <span className="text-[14px] leading-5 whitespace-nowrap text-[#191c1f]">
                   Sort by:
                 </span>
                 <div className="relative">
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
-                    className="appearance-none bg-white border border-[#e4e7e9] rounded-[2px] h-11 pl-4 pr-10 text-[14px] leading-5 text-[#475156] outline-none cursor-pointer w-[180px]"
+                    className="h-11 w-[180px] cursor-pointer appearance-none rounded-[2px] border border-[#e4e7e9] bg-white pr-10 pl-4 text-[14px] leading-5 text-[#475156] outline-none"
                   >
                     {SORT_OPTIONS.map((opt) => (
                       <option key={opt} value={opt}>
@@ -396,7 +398,7 @@ export default function BlogListPage() {
                       </option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+                  <div className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2">
                     <CaretDownIcon />
                   </div>
                 </div>
@@ -408,9 +410,9 @@ export default function BlogListPage() {
               {BLOG_POSTS.map((post) => (
                 <article
                   key={post.id}
-                  className="bg-white border border-[#e4e7e9] rounded-[4px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.04)] p-8 flex flex-col gap-6"
+                  className="flex flex-col gap-6 rounded-[4px] border border-[#e4e7e9] bg-white p-8 shadow-[0px_8px_24px_0px_rgba(0,0,0,0.04)]"
                 >
-                  <div className="relative w-full aspect-[360/248] rounded-[3px] overflow-hidden">
+                  <div className="relative aspect-[360/248] w-full overflow-hidden rounded-[3px]">
                     <Image
                       src={IMG_BLOG_CARD}
                       alt={post.title}
@@ -420,7 +422,7 @@ export default function BlogListPage() {
                   </div>
                   <div className="flex flex-col gap-3">
                     {/* Meta */}
-                    <div className="flex items-center gap-4 flex-wrap">
+                    <div className="flex flex-wrap items-center gap-4">
                       <div className="flex items-center gap-1.5">
                         <UserIcon />
                         <span className="text-[14px] leading-5 text-[#475156]">
@@ -441,7 +443,7 @@ export default function BlogListPage() {
                       </div>
                     </div>
                     {/* Title */}
-                    <h2 className="text-[18px] font-medium leading-6 text-[#191c1f]">
+                    <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                       {post.title}
                     </h2>
                     {/* Excerpt */}
@@ -451,7 +453,7 @@ export default function BlogListPage() {
                   </div>
                   <Link
                     href={`/blog/${post.id}`}
-                    className="inline-flex items-center gap-2 border-2 border-[#ffe7d6] rounded-[2px] px-6 text-[14px] font-bold tracking-[0.168px] uppercase text-[#fa8232] leading-[48px] no-underline hover:border-[#fa8232] transition-colors self-start whitespace-nowrap"
+                    className="inline-flex items-center gap-2 self-start rounded-[2px] border-2 border-[#ffe7d6] px-6 text-[14px] leading-[48px] font-bold tracking-[0.168px] whitespace-nowrap text-[#fa8232] uppercase no-underline transition-colors hover:border-[#fa8232]"
                   >
                     Read more
                     <ArrowRightIcon />
@@ -466,7 +468,7 @@ export default function BlogListPage() {
                 type="button"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="border-[1.5px] border-[#fa8232] rounded-full p-2 flex items-center justify-center cursor-pointer hover:bg-[#fff3eb] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex cursor-pointer items-center justify-center rounded-full border-[1.5px] border-[#fa8232] p-2 transition-colors hover:bg-[#fff3eb] disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Previous page"
               >
                 <ArrowLeftIcon />
@@ -480,10 +482,10 @@ export default function BlogListPage() {
                         key={page}
                         type="button"
                         onClick={() => setCurrentPage(page)}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center text-[14px] leading-5 cursor-pointer transition-colors ${
+                        className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-[14px] leading-5 transition-colors ${
                           isActive
-                            ? "bg-[#fa8232] text-white font-semibold"
-                            : "bg-white border border-[#e4e7e9] text-[#191c1f] font-normal hover:border-[#fa8232]"
+                            ? "bg-[#fa8232] font-semibold text-white"
+                            : "border border-[#e4e7e9] bg-white font-normal text-[#191c1f] hover:border-[#fa8232]"
                         }`}
                         aria-current={isActive ? "page" : undefined}
                       >
@@ -499,7 +501,7 @@ export default function BlogListPage() {
                   setCurrentPage((p) => Math.min(TOTAL_PAGES, p + 1))
                 }
                 disabled={currentPage === TOTAL_PAGES}
-                className="border-[1.5px] border-[#fa8232] rounded-full p-2 flex items-center justify-center cursor-pointer hover:bg-[#fff3eb] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex cursor-pointer items-center justify-center rounded-full border-[1.5px] border-[#fa8232] p-2 transition-colors hover:bg-[#fff3eb] disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label="Next page"
               >
                 <ArrowRightIcon color="#fa8232" />

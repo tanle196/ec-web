@@ -12,28 +12,33 @@ export function SectionHeader({
   href?: string;
 }) {
   return (
-    <div className="flex items-end justify-between mb-6">
+    <div className="mb-6 flex items-end justify-between">
       <div>
         {eyebrow && (
-          <div
-            className="text-[11px] font-semibold tracking-[0.14em] uppercase text-text-secondary mb-2"
-          >
+          <div className="mb-2 text-[11px] font-semibold tracking-[0.14em] text-text-secondary uppercase">
             {eyebrow}
           </div>
         )}
-        <h2
-          className="text-[clamp(28px,3vw,36px)] font-semibold leading-[1.05] tracking-[-0.02em] text-foreground m-0"
-        >
+        <h2 className="m-0 text-[clamp(28px,3vw,36px)] leading-[1.05] font-semibold tracking-[-0.02em] text-foreground">
           {title}
         </h2>
       </div>
       {action && (
         <Link
           href={href}
-          className="text-[14px] font-semibold text-foreground flex items-center gap-1.5 no-underline hover:underline underline-offset-3"
+          className="flex items-center gap-1.5 text-[14px] font-semibold text-foreground no-underline underline-offset-3 hover:underline"
         >
           {action}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <line x1="5" y1="12" x2="19" y2="12" />
             <polyline points="12 5 19 12 12 19" />
           </svg>

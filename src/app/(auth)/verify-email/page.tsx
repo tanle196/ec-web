@@ -37,7 +37,7 @@ export default function VerifyEmailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[
@@ -51,13 +51,13 @@ export default function VerifyEmailPage() {
 
       {/* Form card */}
       <div className="flex justify-center py-25">
-        <div className="bg-white border border-[#e4e7e9] rounded-[4px] shadow-[0px_8px_20px_0px_rgba(0,0,0,0.12)] w-[424px] p-8 flex flex-col gap-6">
+        <div className="flex w-[424px] flex-col gap-6 rounded-[4px] border border-[#e4e7e9] bg-white p-8 shadow-[0px_8px_20px_0px_rgba(0,0,0,0.12)]">
           {/* Heading */}
           <div className="flex flex-col gap-3">
-            <h1 className="text-[20px] font-semibold leading-7 text-[#191c1f] m-0">
+            <h1 className="m-0 text-[20px] leading-7 font-semibold text-[#191c1f]">
               Verify Your Email Address
             </h1>
-            <p className="text-[14px] leading-5 text-[#5f6c72] m-0">
+            <p className="m-0 text-[14px] leading-5 text-[#5f6c72]">
               We&apos;ve sent a verification code to your email address. Enter
               the code below to verify your account.
             </p>
@@ -75,7 +75,7 @@ export default function VerifyEmailPage() {
                 </label>
                 <button
                   type="button"
-                  className="text-[14px] leading-5 font-medium text-[#2da5f3] bg-transparent border-0 p-0 cursor-pointer hover:underline"
+                  className="cursor-pointer border-0 bg-transparent p-0 text-[14px] leading-5 font-medium text-[#2da5f3] hover:underline"
                 >
                   Resend Code
                 </button>
@@ -87,12 +87,12 @@ export default function VerifyEmailPage() {
                 autoComplete="one-time-code"
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
-                className="w-full bg-white border border-[#e4e7e9] rounded-xs h-11 px-3.5 text-[14px] leading-5 text-[#191c1f] placeholder:text-[#77878f] outline-none focus:border-[#191c1f] transition-colors"
+                className="h-11 w-full rounded-xs border border-[#e4e7e9] bg-white px-3.5 text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#77878f] focus:border-[#191c1f]"
               />
             </div>
 
             {verify.isError && (
-              <p className="text-[13px] text-[#fa4232] m-0">
+              <p className="m-0 text-[13px] text-[#fa4232]">
                 Invalid or expired verification code. Please try again.
               </p>
             )}
@@ -101,7 +101,7 @@ export default function VerifyEmailPage() {
             <button
               type="submit"
               disabled={verify.isPending}
-              className="w-full h-12 rounded-xs bg-[#fa8232] text-white text-[14px] font-bold tracking-[0.012em] uppercase border-0 cursor-pointer hover:opacity-90 transition-opacity duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xs border-0 bg-[#fa8232] text-[14px] font-bold tracking-[0.012em] text-white uppercase transition-opacity duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {verify.isPending ? (
                 <>

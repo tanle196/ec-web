@@ -10,39 +10,41 @@ export function PromoBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="bg-gray-900 h-20 flex items-center">
+    <div className="flex h-20 items-center bg-gray-900">
       <Container className="flex items-center justify-between gap-4">
         {/* "Black Friday" */}
-        <div className="flex items-center gap-3 flex-none">
-          <span className="bg-warning-300 text-gray-900 font-semibold text-body-xl px-2 py-0.5 -rotate-3 inline-block leading-snug">
+        <div className="flex flex-none items-center gap-3">
+          <span className="inline-block -rotate-3 bg-warning-300 px-2 py-0.5 text-body-xl leading-snug font-semibold text-gray-900">
             Black
           </span>
-          <span className="text-white font-semibold text-heading-3 hidden sm:block">
+          <span className="hidden text-heading-3 font-semibold text-white sm:block">
             Friday
           </span>
         </div>
 
         {/* Discount */}
-        <div className="flex items-center gap-2 flex-1 justify-center">
-          <span className="text-white text-body-sm hidden sm:inline">Up to</span>
-          <span className="text-warning-500 font-semibold text-display-4 leading-none">
+        <div className="flex flex-1 items-center justify-center gap-2">
+          <span className="hidden text-body-sm text-white sm:inline">
+            Up to
+          </span>
+          <span className="text-display-4 leading-none font-semibold text-warning-500">
             59%
           </span>
-          <span className="text-white font-semibold text-body-xl">OFF</span>
+          <span className="text-body-xl font-semibold text-white">OFF</span>
         </div>
 
         {/* CTA + close */}
-        <div className="flex items-center gap-3 flex-none">
+        <div className="flex flex-none items-center gap-3">
           <Link
             href="/sale"
-            className="bg-warning-500 text-gray-900 font-bold text-body-sm uppercase tracking-[0.168px] px-5 sm:px-6 h-12 flex items-center gap-2 rounded-sm no-underline hover:bg-warning-400 transition-colors"
+            className="flex h-12 items-center gap-2 rounded-sm bg-warning-500 px-5 text-body-sm font-bold tracking-[0.168px] text-gray-900 uppercase no-underline transition-colors hover:bg-warning-400 sm:px-6"
           >
             <span className="hidden sm:inline">Shop now</span>
             <ArrowRight size={18} />
           </Link>
           <button
             onClick={() => setDismissed(true)}
-            className="bg-gray-800 p-2 rounded-sm hover:bg-gray-700 transition-colors"
+            className="rounded-sm bg-gray-800 p-2 transition-colors hover:bg-gray-700"
             aria-label="Close promotion"
           >
             <X size={16} className="text-white" />

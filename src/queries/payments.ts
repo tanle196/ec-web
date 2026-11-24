@@ -16,7 +16,9 @@ export const paymentKeys = {
     [...paymentKeys.all, "list", params] as const,
 };
 
-export function useMyPayments(params?: PaymentsControllerFindMineData["query"]) {
+export function useMyPayments(
+  params?: PaymentsControllerFindMineData["query"],
+) {
   return useQuery({
     queryKey: paymentKeys.list(params),
     queryFn: () =>

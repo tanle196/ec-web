@@ -55,7 +55,7 @@ function AddressDropdown({
   return (
     <div
       ref={ref}
-      className="absolute top-8 right-0 z-20 bg-white border border-gray-100 rounded-[4px] shadow-[0px_8px_40px_rgba(0,0,0,0.12)] py-2 min-w-[160px]"
+      className="absolute top-8 right-0 z-20 min-w-[160px] rounded-[4px] border border-gray-100 bg-white py-2 shadow-[0px_8px_40px_rgba(0,0,0,0.12)]"
     >
       {!address.isDefault && (
         <button
@@ -63,7 +63,7 @@ function AddressDropdown({
             setDefault.mutate(address.id);
             onClose();
           }}
-          className="w-full text-left px-4 h-9 text-[14px] text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors cursor-pointer"
+          className="h-9 w-full cursor-pointer px-4 text-left text-[14px] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
         >
           Set as Default
         </button>
@@ -73,7 +73,7 @@ function AddressDropdown({
           deleteAddress.mutate(address.id);
           onClose();
         }}
-        className="w-full text-left px-4 h-9 text-[14px] text-danger-500 hover:bg-gray-50 transition-colors cursor-pointer"
+        className="h-9 w-full cursor-pointer px-4 text-left text-[14px] text-danger-500 transition-colors hover:bg-gray-50"
       >
         Delete Address
       </button>
@@ -85,32 +85,32 @@ function AddressRow({ address }: { address: AddressResponseDto }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-4 px-6 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
-      <span className="w-45 flex-none text-[14px] font-medium text-gray-900 truncate">
+    <div className="flex items-center gap-4 border-b border-gray-100 px-6 py-3 transition-colors last:border-b-0 hover:bg-gray-50">
+      <span className="w-45 flex-none truncate text-[14px] font-medium text-gray-900">
         {address.fullName}
       </span>
-      <span className="flex-1 min-w-0 text-[14px] text-gray-600 truncate">
+      <span className="min-w-0 flex-1 truncate text-[14px] text-gray-600">
         {address.addressLine1}
         {address.addressLine2 ? `, ${address.addressLine2}` : ""},{" "}
         {address.city}, {address.province}, {address.country}
       </span>
-      <span className="w-35 flex-none text-[14px] text-gray-600 truncate">
+      <span className="w-35 flex-none truncate text-[14px] text-gray-600">
         {address.phone}
       </span>
       <span className="w-22.5 flex-none">
         {address.isDefault ? (
-          <span className="text-[11px] font-semibold text-primary-500 bg-primary-50 px-2 py-0.5 rounded-[2px]">
+          <span className="rounded-[2px] bg-primary-50 px-2 py-0.5 text-[11px] font-semibold text-primary-500">
             Default
           </span>
         ) : (
           <span className="text-[13px] text-gray-400">—</span>
         )}
       </span>
-      <div className="w-25 flex-none flex items-center justify-end gap-3">
+      <div className="flex w-25 flex-none items-center justify-end gap-3">
         <AddressFormDialog
           address={address}
           trigger={
-            <button className="text-[14px] font-semibold text-secondary-500 hover:text-secondary-600 transition-colors cursor-pointer">
+            <button className="cursor-pointer text-[14px] font-semibold text-secondary-500 transition-colors hover:text-secondary-600">
               Edit
             </button>
           }
@@ -118,7 +118,7 @@ function AddressRow({ address }: { address: AddressResponseDto }) {
         <div className="relative">
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+            className="cursor-pointer text-gray-400 transition-colors hover:text-gray-700"
             aria-label="Address options"
           >
             <DotsIcon />
@@ -148,21 +148,21 @@ export default function AddressPage() {
           ]}
         />
 
-        <div className="flex gap-18 items-start mt-2">
+        <div className="mt-2 flex items-start gap-18">
           <DashboardSidebar />
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             {/* Addresses */}
-            <div className="bg-white border border-gray-100 rounded-[4px]">
+            <div className="rounded-[4px] border border-gray-100 bg-white">
               {/* Table heading */}
-              <div className="px-6 h-13 flex items-center justify-between border-b border-gray-100">
-                <span className="text-[14px] font-medium text-gray-900 uppercase tracking-wide">
+              <div className="flex h-13 items-center justify-between border-b border-gray-100 px-6">
+                <span className="text-[14px] font-medium tracking-wide text-gray-900 uppercase">
                   Your Addresses
                 </span>
                 <AddressFormDialog
                   trigger={
-                    <button className="flex items-center gap-2 text-[14px] font-semibold text-primary-500 hover:text-primary-600 transition-colors cursor-pointer">
+                    <button className="flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-primary-500 transition-colors hover:text-primary-600">
                       Add Address
                       <svg
                         width="20"
@@ -185,7 +185,7 @@ export default function AddressPage() {
               </div>
 
               {/* Column headers */}
-              <div className="flex items-center gap-4 px-6 py-2.5 bg-gray-50 border-b border-gray-100 text-[12px] font-medium text-gray-700 uppercase">
+              <div className="flex items-center gap-4 border-b border-gray-100 bg-gray-50 px-6 py-2.5 text-[12px] font-medium text-gray-700 uppercase">
                 <span className="w-45 flex-none">Name</span>
                 <span className="flex-1">Address</span>
                 <span className="w-35 flex-none">Phone</span>

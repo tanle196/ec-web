@@ -17,7 +17,7 @@ export type BreadcrumbSegment = {
 export function PageBreadcrumb({ items }: { items: BreadcrumbSegment[] }) {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="text-[#5f6c72] flex items-center gap-2 text-[14px] leading-5">
+      <BreadcrumbList className="flex items-center gap-2 text-[14px] leading-5 text-[#5f6c72]">
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           return (
@@ -31,7 +31,7 @@ export function PageBreadcrumb({ items }: { items: BreadcrumbSegment[] }) {
                   <BreadcrumbLink asChild>
                     <Link
                       href={item.href}
-                      className="hover:text-gray-900 transition-colors no-underline flex items-center gap-1.5"
+                      className="flex items-center gap-1.5 no-underline transition-colors hover:text-gray-900"
                     >
                       {item.href === "/" && (
                         <svg

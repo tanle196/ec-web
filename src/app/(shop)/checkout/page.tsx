@@ -237,11 +237,11 @@ const PAYMENT_OPTIONS: {
 function RadioCircle({ checked }: { checked: boolean }) {
   return (
     <div
-      className={`w-5 h-5 rounded-full border flex items-center justify-center flex-none ${
-        checked ? "bg-[#fa8232] border-[#fa8232]" : "bg-white border-[#c9cfd2]"
+      className={`flex h-5 w-5 flex-none items-center justify-center rounded-full border ${
+        checked ? "border-[#fa8232] bg-[#fa8232]" : "border-[#c9cfd2] bg-white"
       }`}
     >
-      {checked && <div className="w-2 h-2 rounded-full bg-white" />}
+      {checked && <div className="h-2 w-2 rounded-full bg-white" />}
     </div>
   );
 }
@@ -259,7 +259,7 @@ function AddressOption({
     <button
       type="button"
       onClick={onSelect}
-      className={`w-full flex items-start gap-3 text-left border rounded-[4px] px-4 py-4 transition-colors cursor-pointer ${
+      className={`flex w-full cursor-pointer items-start gap-3 rounded-[4px] border px-4 py-4 text-left transition-colors ${
         selected
           ? "border-[#fa8232] bg-[#fff8f4]"
           : "border-[#e4e7e9] hover:border-[#c9cfd2]"
@@ -268,13 +268,13 @@ function AddressOption({
       <div className="pt-0.5">
         <RadioCircle checked={selected} />
       </div>
-      <div className="flex-1 min-w-0 flex flex-col gap-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-center gap-2">
           <span className="text-[14px] font-medium text-[#191c1f]">
             {address.fullName}
           </span>
           {address.isDefault && (
-            <span className="text-[11px] font-semibold text-[#fa8232] bg-[#ffe7d6] px-2 py-0.5 rounded-[2px]">
+            <span className="rounded-[2px] bg-[#ffe7d6] px-2 py-0.5 text-[11px] font-semibold text-[#fa8232]">
               Default
             </span>
           )}
@@ -313,15 +313,15 @@ function AddressSelectDialog({
         {selected ? (
           <button
             type="button"
-            className="w-full flex items-start gap-3 text-left border border-[#e4e7e9] rounded-[4px] px-4 py-4 hover:border-[#c9cfd2] transition-colors cursor-pointer"
+            className="flex w-full cursor-pointer items-start gap-3 rounded-[4px] border border-[#e4e7e9] px-4 py-4 text-left transition-colors hover:border-[#c9cfd2]"
           >
-            <div className="flex-1 min-w-0 flex flex-col gap-1">
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
               <div className="flex items-center gap-2">
                 <span className="text-[14px] font-medium text-[#191c1f]">
                   {selected.fullName}
                 </span>
                 {selected.isDefault && (
-                  <span className="text-[11px] font-semibold text-[#fa8232] bg-[#ffe7d6] px-2 py-0.5 rounded-[2px]">
+                  <span className="rounded-[2px] bg-[#ffe7d6] px-2 py-0.5 text-[11px] font-semibold text-[#fa8232]">
                     Default
                   </span>
                 )}
@@ -337,14 +337,14 @@ function AddressSelectDialog({
                 Phone: {selected.phone}
               </p>
             </div>
-            <span className="text-[14px] font-semibold text-[#fa8232] flex-none">
+            <span className="flex-none text-[14px] font-semibold text-[#fa8232]">
               Change
             </span>
           </button>
         ) : (
           <button
             type="button"
-            className="w-full h-11 border border-dashed border-[#c9cfd2] rounded-[4px] text-[14px] text-[#5f6c72] hover:border-[#fa8232] hover:text-[#fa8232] transition-colors cursor-pointer"
+            className="h-11 w-full cursor-pointer rounded-[4px] border border-dashed border-[#c9cfd2] text-[14px] text-[#5f6c72] transition-colors hover:border-[#fa8232] hover:text-[#fa8232]"
           >
             {addressesPending
               ? "Loading addresses..."
@@ -356,7 +356,7 @@ function AddressSelectDialog({
         <DialogHeader>
           <DialogTitle>Select Shipping Address</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto">
+        <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
           {addressesPending && (
             <p className="text-[14px] text-[#5f6c72]">Loading addresses...</p>
           )}
@@ -381,7 +381,7 @@ function AddressSelectDialog({
           trigger={
             <button
               type="button"
-              className="flex items-center gap-2 text-[14px] font-semibold text-[#fa8232] hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-0 p-0 self-start"
+              className="flex cursor-pointer items-center gap-2 self-start border-0 bg-transparent p-0 text-[14px] font-semibold text-[#fa8232] transition-opacity hover:opacity-80"
             >
               Add Address
               <svg
@@ -501,8 +501,8 @@ export default function CheckoutPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#fa8232] border-t-transparent rounded-full animate-spin" />
+      <div className="flex min-h-screen items-center justify-center bg-white">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#fa8232] border-t-transparent" />
       </div>
     );
   }
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-white">
         {/* Breadcrumb */}
-        <div className="bg-[#f2f4f5] h-18 flex items-center">
+        <div className="flex h-18 items-center bg-[#f2f4f5]">
           <Container>
             <PageBreadcrumb
               items={[
@@ -524,8 +524,8 @@ export default function CheckoutPage() {
         </div>
 
         {/* Success content */}
-        <div className="flex flex-col gap-8 items-center justify-center py-[124px]">
-          <div className="flex flex-col gap-6 items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-8 py-[124px]">
+          <div className="flex flex-col items-center justify-center gap-6">
             {/* Duotone check circle */}
             <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
               <circle
@@ -553,16 +553,16 @@ export default function CheckoutPage() {
               />
             </svg>
 
-            <div className="flex flex-col gap-3 items-center text-center">
-              <p className="text-[24px] font-semibold leading-8 text-[#191c1f]">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <p className="text-[24px] leading-8 font-semibold text-[#191c1f]">
                 Your order is successfully placed
               </p>
-              <p className="text-[14px] leading-5 text-[#5f6c72] max-w-[424px]">
+              <p className="max-w-[424px] text-[14px] leading-5 text-[#5f6c72]">
                 Pellentesque sed lectus nec tortor tristique accumsan quis
                 dictum risus. Donec volutpat mollis nulla non facilisis.
               </p>
               {paymentWarning && (
-                <p className="text-[13px] leading-5 text-red-600 max-w-[424px]">
+                <p className="max-w-[424px] text-[13px] leading-5 text-red-600">
                   We couldn&apos;t process your payment automatically (
                   {paymentWarning}). You can retry payment from your order page.
                 </p>
@@ -570,10 +570,10 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="flex items-center gap-2 px-6 h-12 border-2 border-[#ffe7d6] rounded-[2px] text-[#fa8232] font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:bg-[#fff8f4] transition-colors"
+              className="flex h-12 items-center gap-2 rounded-[2px] border-2 border-[#ffe7d6] px-6 text-[14px] font-bold tracking-[0.012em] text-[#fa8232] uppercase no-underline transition-colors hover:bg-[#fff8f4]"
             >
               <svg
                 width="20"
@@ -594,7 +594,7 @@ export default function CheckoutPage() {
             </Link>
             <Link
               href={placedOrderId ? `/account/orders/${placedOrderId}` : "/"}
-              className="flex items-center gap-2 px-6 h-12 bg-[#fa8232] rounded-[2px] text-white font-bold text-[14px] uppercase tracking-[0.012em] no-underline hover:opacity-90 transition-opacity"
+              className="flex h-12 items-center gap-2 rounded-[2px] bg-[#fa8232] px-6 text-[14px] font-bold tracking-[0.012em] text-white uppercase no-underline transition-opacity hover:opacity-90"
             >
               View Order
               <svg
@@ -620,7 +620,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-[#f2f4f5] h-18 flex items-center">
+      <div className="flex h-18 items-center bg-[#f2f4f5]">
         <Container>
           <PageBreadcrumb
             items={[
@@ -634,18 +634,18 @@ export default function CheckoutPage() {
 
       {/* Main */}
       <form onSubmit={onSubmit}>
-        <Container className="py-18 pb-24 flex gap-6 items-start">
+        <Container className="flex items-start gap-6 py-18 pb-24">
           {/* ── Left column ─────────────────────────────── */}
-          <div className="flex-1 min-w-0 flex flex-col gap-10">
+          <div className="flex min-w-0 flex-1 flex-col gap-10">
             {/* Billing Information */}
             <section className="flex flex-col gap-6">
-              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                 Billing Information
               </h2>
               <div className="flex flex-col gap-4">
                 {/* Name row */}
-                <div className="flex gap-4 items-start">
-                  <div className="flex flex-col gap-2 w-51.5">
+                <div className="flex items-start gap-4">
+                  <div className="flex w-51.5 flex-col gap-2">
                     <FieldLabel>User name</FieldLabel>
                     <input
                       className={inputCls}
@@ -654,7 +654,7 @@ export default function CheckoutPage() {
                     />
                     <FieldError message={errors.firstName?.message} />
                   </div>
-                  <div className="flex flex-col gap-2 w-51.5">
+                  <div className="flex w-51.5 flex-col gap-2">
                     <FieldLabel>
                       <span className="invisible">User name</span>
                     </FieldLabel>
@@ -665,7 +665,7 @@ export default function CheckoutPage() {
                     />
                     <FieldError message={errors.lastName?.message} />
                   </div>
-                  <div className="flex flex-col gap-2 flex-1">
+                  <div className="flex flex-1 flex-col gap-2">
                     <FieldLabel optional>Company Name</FieldLabel>
                     <input className={inputCls} {...register("company")} />
                   </div>
@@ -673,7 +673,7 @@ export default function CheckoutPage() {
 
                 {/* Email / Phone */}
                 <div className="flex gap-4">
-                  <div className="flex flex-col gap-2 flex-1">
+                  <div className="flex flex-1 flex-col gap-2">
                     <FieldLabel>Email</FieldLabel>
                     <input
                       className={inputCls}
@@ -682,7 +682,7 @@ export default function CheckoutPage() {
                     />
                     <FieldError message={errors.email?.message} />
                   </div>
-                  <div className="flex flex-col gap-2 flex-1">
+                  <div className="flex flex-1 flex-col gap-2">
                     <FieldLabel>Phone Number</FieldLabel>
                     <input
                       className={inputCls}
@@ -697,7 +697,7 @@ export default function CheckoutPage() {
 
             {/* Shipping Address */}
             <section className="flex flex-col gap-6">
-              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                 Shipping Address
               </h2>
               <AddressSelectDialog
@@ -709,27 +709,27 @@ export default function CheckoutPage() {
             </section>
 
             {/* Payment Option */}
-            <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-8">
-              <div className="px-6 py-5 border-b border-[#e4e7e9]">
-                <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+            <div className="overflow-hidden rounded-[4px] border border-[#e4e7e9] bg-white pb-8">
+              <div className="border-b border-[#e4e7e9] px-6 py-5">
+                <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                   Payment Option
                 </h2>
               </div>
 
               {/* Payment method pills */}
-              <div className="flex items-stretch border-b border-[#e4e7e9] px-6 py-6 gap-0">
+              <div className="flex items-stretch gap-0 border-b border-[#e4e7e9] px-6 py-6">
                 {PAYMENT_OPTIONS.map((opt, i) => (
                   <div key={opt.id} className="flex items-center">
                     {i > 0 && (
-                      <div className="w-px self-stretch bg-[#e4e7e9] mx-0" />
+                      <div className="mx-0 w-px self-stretch bg-[#e4e7e9]" />
                     )}
                     <button
                       type="button"
                       onClick={() => setValue("payment", opt.id)}
-                      className="flex flex-col items-center gap-4 px-8 py-0 bg-transparent border-0 cursor-pointer"
+                      className="flex cursor-pointer flex-col items-center gap-4 border-0 bg-transparent px-8 py-0"
                     >
                       {opt.icon}
-                      <span className="text-[14px] font-medium text-[#191c1f] leading-5 text-center w-25">
+                      <span className="w-25 text-center text-[14px] leading-5 font-medium text-[#191c1f]">
                         {opt.label}
                       </span>
                       <RadioCircle checked={payment === opt.id} />
@@ -751,13 +751,13 @@ export default function CheckoutPage() {
 
             {/* Additional Information */}
             <section className="flex flex-col gap-6">
-              <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                 Additional Information
               </h2>
               <div className="flex flex-col gap-2">
                 <FieldLabel optional>Order Notes</FieldLabel>
                 <textarea
-                  className="w-full h-31 bg-white border border-[#e4e7e9] rounded-xs px-3.75 py-2.75 text-[14px] text-[#191c1f] leading-5 outline-none focus:border-[#2da5f3] transition-colors placeholder:text-[#929fa5] resize-none"
+                  className="h-31 w-full resize-none rounded-xs border border-[#e4e7e9] bg-white px-3.75 py-2.75 text-[14px] leading-5 text-[#191c1f] transition-colors outline-none placeholder:text-[#929fa5] focus:border-[#2da5f3]"
                   placeholder="Notes about your order, e.g. special notes for delivery"
                   {...register("note")}
                 />
@@ -766,31 +766,31 @@ export default function CheckoutPage() {
           </div>
 
           {/* ── Right column: Order Summary ──────────────── */}
-          <aside className="flex-none w-106 sticky top-8">
-            <div className="bg-white border border-[#e4e7e9] rounded-[4px] overflow-hidden pb-6">
+          <aside className="sticky top-8 w-106 flex-none">
+            <div className="overflow-hidden rounded-[4px] border border-[#e4e7e9] bg-white pb-6">
               {/* Heading */}
-              <div className="px-6 py-5 border-b border-[#e4e7e9]">
-                <h2 className="text-[18px] font-medium text-[#191c1f] leading-6">
+              <div className="border-b border-[#e4e7e9] px-6 py-5">
+                <h2 className="text-[18px] leading-6 font-medium text-[#191c1f]">
                   Order Summary
                 </h2>
               </div>
 
               {/* Products */}
               {items.length > 0 && (
-                <div className="flex flex-col gap-4 px-6 py-6 border-b border-[#e4e7e9]">
+                <div className="flex flex-col gap-4 border-b border-[#e4e7e9] px-6 py-6">
                   {items.map((item) => (
-                    <div key={item.lineId} className="flex gap-4 items-center">
-                      <div className="w-16 h-16 rounded-xs overflow-hidden bg-[#f2f4f5] flex-none">
+                    <div key={item.lineId} className="flex items-center gap-4">
+                      <div className="h-16 w-16 flex-none overflow-hidden rounded-xs bg-[#f2f4f5]">
                         <ProductImage
                           src={item.img}
                           alt={item.name}
                           width={64}
                           height={64}
-                          className="w-full h-full object-cover"
+                          className="h-full w-full object-cover"
                         />
                       </div>
-                      <div className="flex-1 min-w-0 flex flex-col gap-1.5">
-                        <p className="text-[14px] leading-5 text-[#191c1f] line-clamp-2">
+                      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                        <p className="line-clamp-2 text-[14px] leading-5 text-[#191c1f]">
                           {item.name}
                         </p>
                         <div className="flex gap-1 text-[14px] leading-5">
@@ -806,7 +806,7 @@ export default function CheckoutPage() {
               )}
 
               {/* Totals */}
-              <div className="flex flex-col gap-3 px-6 py-6 border-b border-[#e4e7e9] text-[14px] leading-5">
+              <div className="flex flex-col gap-3 border-b border-[#e4e7e9] px-6 py-6 text-[14px] leading-5">
                 <div className="flex items-center justify-between">
                   <span className="text-[#5f6c72]">Sub-total</span>
                   <span className="font-medium text-[#191c1f]">
@@ -857,7 +857,7 @@ export default function CheckoutPage() {
                     items.length === 0 ||
                     !effectiveAddressId
                   }
-                  className="w-full h-14 bg-[#fa8232] text-white text-[16px] font-bold uppercase tracking-[0.012em] rounded-[3px] border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  className="flex h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-[3px] border-0 bg-[#fa8232] text-[16px] font-bold tracking-[0.012em] text-white uppercase transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {createOrder.isPending ||
                   createPayment.isPending ||

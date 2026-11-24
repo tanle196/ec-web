@@ -14,17 +14,12 @@ const robotParts =
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col min-h-full">
+    <div className="flex min-h-full flex-col">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center py-20 bg-white">
+      <main className="flex flex-1 flex-col items-center justify-center bg-white py-20">
         {/* Robot illustration */}
-        <div className="relative w-[320px] h-[320px] mb-10">
-          <Image
-            src={robotBackground}
-            alt=""
-            fill
-            className="object-contain"
-          />
+        <div className="relative mb-10 h-[320px] w-[320px]">
+          <Image src={robotBackground} alt="" fill className="object-contain" />
           <Image
             src={robotShadow}
             alt=""
@@ -46,20 +41,20 @@ export default function NotFound() {
         </div>
 
         {/* Text + buttons */}
-        <div className="flex flex-col items-center gap-6 text-center max-w-[536px]">
-          <h1 className="text-[36px] font-semibold leading-[44px] text-[#191c1f]">
+        <div className="flex max-w-[536px] flex-col items-center gap-6 text-center">
+          <h1 className="text-[36px] leading-[44px] font-semibold text-[#191c1f]">
             404, Page not found
           </h1>
-          <p className="text-[16px] font-normal leading-6 text-[#475156]">
+          <p className="text-[16px] leading-6 font-normal text-[#475156]">
             Something went wrong. It&apos;s look that your requested could not
             be found. It&apos;s look like the link is broken or the page is
             removed.
           </p>
-          <div className="flex gap-4 items-center mt-2">
+          <div className="mt-2 flex items-center gap-4">
             <GoBackButton />
             <Link
               href="/"
-              className="inline-flex items-center gap-2 border-2 border-[#ffe7d6] rounded-[2px] px-6 h-12 text-[14px] font-bold tracking-[0.012em] uppercase text-[#fa8232] no-underline hover:bg-[#ffe7d6] transition-colors"
+              className="inline-flex h-12 items-center gap-2 rounded-[2px] border-2 border-[#ffe7d6] px-6 text-[14px] font-bold tracking-[0.012em] text-[#fa8232] uppercase no-underline transition-colors hover:bg-[#ffe7d6]"
             >
               <svg
                 width="20"
@@ -88,7 +83,7 @@ function GoBackButton() {
   return (
     <a
       href="javascript:history.back()"
-      className="inline-flex items-center gap-2 bg-[#fa8232] rounded-[2px] px-6 h-12 text-[14px] font-bold tracking-[0.012em] uppercase text-white no-underline hover:opacity-90 transition-opacity"
+      className="inline-flex h-12 items-center gap-2 rounded-[2px] bg-[#fa8232] px-6 text-[14px] font-bold tracking-[0.012em] text-white uppercase no-underline transition-opacity hover:opacity-90"
     >
       <svg
         width="20"

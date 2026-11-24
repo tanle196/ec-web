@@ -26,7 +26,8 @@ export async function generateMetadata({
   const product = await fetchProduct(slug);
   if (!product) return {};
 
-  const primaryImage = product.images.find((i) => i.isPrimary) ?? product.images[0];
+  const primaryImage =
+    product.images.find((i) => i.isPrimary) ?? product.images[0];
 
   return {
     title: `${product.name} | Marlo`,

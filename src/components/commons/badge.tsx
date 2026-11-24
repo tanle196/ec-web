@@ -1,13 +1,7 @@
 import type { ReactNode } from "react";
 
 export type BadgeKind =
-  | "new"
-  | "sale"
-  | "discount"
-  | "gold"
-  | "persimmon"
-  | "default"
-  | null;
+  "new" | "sale" | "discount" | "gold" | "persimmon" | "default" | null;
 
 const kindStyles: Record<string, string> = {
   new: "bg-foreground text-white tracking-[0.14em] uppercase text-[10px]",
@@ -30,7 +24,7 @@ export function Badge({
   const cls = kindStyles[kind ?? "default"] ?? kindStyles.default;
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-[5px] rounded-full font-semibold text-[12px] leading-none whitespace-nowrap w-fit ${cls} ${className ?? ""}`}
+      className={`inline-flex w-fit items-center rounded-full px-2.5 py-[5px] text-[12px] leading-none font-semibold whitespace-nowrap ${cls} ${className ?? ""}`}
     >
       {children}
     </span>
